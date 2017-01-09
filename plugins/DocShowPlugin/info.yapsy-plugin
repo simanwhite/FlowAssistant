@@ -1,0 +1,9 @@
+[Core]
+Name = Doc Showing
+Module = plugin
+
+[Documentation]
+Author = Zuo Quan
+Version = 0.1
+Website = http://weibo.com
+Description = This plugin take care of showing all docs for flows.
