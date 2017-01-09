@@ -8,12 +8,14 @@ import ui_ComboFrame
 
 
 class ComboFrame(QFrame, ui_ComboFrame.Ui_Frame):
-    def __init__(self):
+    def __init__(self, form_list=None):
         super(ComboFrame, self).__init__(parent=None)
         self._current_form = None  # to store the form instance which is showing now
         self._form_map = {}  # to store {form_title: form}
         self.setupUi(self)
         self.connect(self.comboBox, SIGNAL('currentIndexChanged(int)'), self.combobox_change_slot)
+        if form_list:
+            self.load_form_list(form_list)
 
     def load_form_list(self, form_list):
         """
@@ -60,8 +62,6 @@ class ComboFrame(QFrame, ui_ComboFrame.Ui_Frame):
 
     def combobox_change_slot(self):
         new_text = str(self.comboBox.currentText())
-        print 'slot called'
-        print new_text
         self.set_current_form(new_text)
 
 
@@ -74,8 +74,8 @@ def main():
     f2.setWindowTitle('Form2')
     f3 = PluginForm('Test form 3')
     f3.setWindowTitle('Form3')
-    form = ComboFrame()
-    form.load_form_list([f1, f2, f3])
+    form = ComboFrame(form_list=[f1, f2, f3])
+    # form.load_form_list([f1, f2, f3])
     form.show()
     app.exec_()
 
