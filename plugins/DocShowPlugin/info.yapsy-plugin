@@ -1,6 +1,6 @@
 [Core]
 Name = Doc Showing
-Module = plugin
+Module = doc_showing
 
 [Documentation]
 Author = Zuo Quan
