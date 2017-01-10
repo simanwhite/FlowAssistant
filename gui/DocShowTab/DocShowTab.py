@@ -24,6 +24,11 @@ class DocForm(QWidget, ui_DocShowTab.Ui_Dialog):
         tree_view = TreeView.TreeView(model, model.index(doc_root))
         attach_one_form_to_another(tree_view, self.frame)
         attach_one_form_to_another(web_view, self.frame_2)
+        for column_index in range(1, 4):  # Hide columns for size, data, etc.
+            tree_view.setColumnHidden(column_index, True)
+
+    def update_web_view(self):
+        pass
 
 
 def main():

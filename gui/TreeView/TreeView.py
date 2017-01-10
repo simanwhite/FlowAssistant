@@ -12,6 +12,9 @@ class TreeView(QTreeView, ui_TreeView.Ui_Frame):
         if isinstance(root_index, type(QModelIndex())):
             self.treeView.setRootIndex(root_index)
 
+    def setColumnHidden(self, p_int, flag):
+        self.treeView.setColumnHidden(p_int, flag)
+
 
 def main():
     app = QApplication(sys.argv)
