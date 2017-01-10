@@ -6,7 +6,7 @@ import ui_TreeView
 
 class TreeView(QTreeView, ui_TreeView.Ui_Frame):
     def __init__(self, model, root_index=None):
-        super(TreeView, self).__init__(parant=None)
+        super(TreeView, self).__init__(parent=None)
         self.setupUi(self)
         self.treeView.setModel(model)
         if isinstance(root_index, type(QModelIndex())):
