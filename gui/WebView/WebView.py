@@ -17,6 +17,10 @@ class WebViewForm(QFrame, ui_WebView.Ui_Frame):
     def load_url(self):
         self.webView.load(self.url)
 
+    def set_url(self, url):
+        self.url = QUrl(url)
+        self.load_url()
+
 
 def main():
     app = QApplication(sys.argv)

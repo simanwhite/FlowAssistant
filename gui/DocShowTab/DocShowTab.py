@@ -17,19 +17,24 @@ class DocForm(QWidget, ui_DocShowTab.Ui_Dialog):
         possible_url = os.path.join(doc_root, index_url)
         if os.path.exists(possible_url):
             index_url = possible_url
-        web_view = WebView.WebViewForm(index_url)
-        model = QDirModel()
-        model.setNameFilters(['*.html'])
-        model.setFilter(QDir.AllDirs | QDir.Files | QDir.NoDotAndDotDot)
+        self.web_view = WebView.WebViewForm(index_url)
+        self.model = QDirModel()
+        self.model.setNameFilters(['*.html'])
+        self.model.setFilter(QDir.AllDirs | QDir.Files | QDir.NoDotAndDotDot)
         doc_root = os.path.abspath(doc_root)
-        tree_view = TreeView.TreeViewForm(model, model.index(doc_root))
-        attach_one_form_to_another(tree_view, self.frame)
-        attach_one_form_to_another(web_view, self.frame_2)
+        self.tree_view = TreeView.TreeViewForm(self.model, self.model.index(doc_root))
+        attach_one_form_to_another(self.tree_view, self.frame)
+        attach_one_form_to_another(self.web_view, self.frame_2)
         for column_index in range(1, 4):  # Hide columns for size, data, etc.
-            tree_view.treeView.setColumnHidden(column_index, True)
+            self.tree_view.treeView.setColumnHidden(column_index, True)
+        self.connect(self.tree_view.treeView, SIGNAL('clicked(const QModelIndex&)'), self.update_web_view)
 
     def update_web_view(self):
-        pass
+        selected_index = self.tree_view.treeView.selectedIndexes()[0]
+        file_path = unicode(self.model.filePath(selected_index))
+        if os.path.isfile(file_path):
+            print file_path
+            self.web_view.set_url(file_path)
 
 
 def main():
