@@ -4,16 +4,13 @@ from PyQt4.QtCore import *
 import ui_TreeView
 
 
-class TreeView(QTreeView, ui_TreeView.Ui_Frame):
+class TreeViewForm(QTreeView, ui_TreeView.Ui_Frame):
     def __init__(self, model, root_index=None):
-        super(TreeView, self).__init__(parent=None)
+        super(TreeViewForm, self).__init__(parent=None)
         self.setupUi(self)
         self.treeView.setModel(model)
         if isinstance(root_index, type(QModelIndex())):
             self.treeView.setRootIndex(root_index)
-
-    def setColumnHidden(self, p_int, flag):
-        self.treeView.setColumnHidden(p_int, flag)
 
 
 def main():

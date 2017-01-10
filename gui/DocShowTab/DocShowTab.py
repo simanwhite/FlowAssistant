@@ -22,11 +22,11 @@ class DocForm(QWidget, ui_DocShowTab.Ui_Dialog):
         model.setNameFilters(['*.html'])
         model.setFilter(QDir.AllDirs | QDir.Files | QDir.NoDotAndDotDot)
         doc_root = os.path.abspath(doc_root)
-        tree_view = TreeView.TreeView(model, model.index(doc_root))
+        tree_view = TreeView.TreeViewForm(model, model.index(doc_root))
         attach_one_form_to_another(tree_view, self.frame)
         attach_one_form_to_another(web_view, self.frame_2)
         for column_index in range(1, 4):  # Hide columns for size, data, etc.
-            tree_view.setColumnHidden(column_index, True)
+            tree_view.treeView.setColumnHidden(column_index, True)
 
     def update_web_view(self):
         pass
