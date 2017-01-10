@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<title>Ruby参考手册 - 内部常数</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+<div class="body"><h1><a name="a.c1.c8.a4.df.b9.fe.a4.df.c4.ea.bf.f4" id="a.c1.c8.a4.df.b9.fe.a4.df.c4.ea.bf.f4">内部常数</a><!-- RDLabel: "内部常数" --></h1>
+<dl>
+<dt><a name="TRUE" id="TRUE"><code>TRUE        ((&lt;<var>obsolete</var>&gt;))</code></a><!-- RDLabel: "TRUE" --></dt>
+<dd>
+<p>真值的代表。与true相同。Ruby中把所有非伪值(即非false又非nil的值)都看作真。(请参考<font color=blue>obsolete</font>。)</p></dd>
+<dt><a name="FALSE" id="FALSE"><code>FALSE       ((&lt;<var>obsolete</var>&gt;))</code></a><!-- RDLabel: "FALSE" --></dt>
+<dd>
+<p>伪值。与false相同。(请参考<font color=blue>obsolete</font>。)</p></dd>
+<dt><a name="NIL" id="NIL"><code>NIL         ((&lt;<var>obsolete</var>&gt;))</code></a><!-- RDLabel: "NIL" --></dt>
+<dd>
+<p>与nil相同。(请参考<font color=blue>obsolete</font>。)</p></dd>
+<dt><a name="STDIN" id="STDIN"><code>STDIN</code></a><!-- RDLabel: "STDIN" --></dt>
+<dd>
+<p>标准输入。<font color=blue>$stdin</font>的默认值。</p></dd>
+<dt><a name="STDOUT" id="STDOUT"><code>STDOUT</code></a><!-- RDLabel: "STDOUT" --></dt>
+<dd>
+<p>标准输出。<font color=blue>$stdout</font>的默认值。</p></dd>
+<dt><a name="STDERR" id="STDERR"><code>STDERR</code></a><!-- RDLabel: "STDERR" --></dt>
+<dd>
+<p>标准错误输出。<font color=blue>$stderr</font>的默认值。</p></dd>
+<dt><a name="ENV" id="ENV"><code>ENV</code></a><!-- RDLabel: "ENV" --></dt>
+<dd>
+<p>表示环境变量的(伪)哈希表(详情请参考<font color=blue>ENV</font>)。若改变该哈希表的值时，将作为子进程环境而被继承下来。</p></dd>
+<dt><a name="ARGF" id="ARGF"><code>ARGF</code></a><!-- RDLabel: "ARGF" --></dt>
+<dd>
+<p>由参数(若没的话就使用标准输入)构成的虚拟文件(详情请参考<font color=blue>ARGF</font>)。也就是说，<font color=blue>gets</font>与<font color=blue>ARGF.gets</font>的意义相同。可以使用<font color=blue>ARGF.file</font>得到当前读入的文件对象，使用<font color=blue>ARGF.filename</font>得到当前读入的文件名。</p></dd>
+<dt><a name="ARGV" id="ARGV"><code>ARGV</code></a><!-- RDLabel: "ARGV" --></dt>
+<dd>
+<p>传给Ruby脚本的参数。内部变量<font color=blue>$*</font>的别名。而面向Ruby自身的参数已经被摘除。</p></dd>
+<dt><a name="DATA" id="DATA"><code>DATA</code></a><!-- RDLabel: "DATA" --></dt>
+<dd>
+<p>访问脚本中<code>__END__</code>(<font color=blue>脚本终点</font>)以后部分的<font color=blue>File</font>对象。</p>
+<p><em>注意</em>:</p>
+<ul>
+<li>使用<code>DATA.rewind</code>后的读取位置不再是<code>__END__</code>后面，而是脚本文件的开头。</li>
+<li>若读入脚本时使用的是标准输入的话，则为标准输入。</li>
+<li>如果读入脚本时并没有使用文件或标准输入，或者脚本并非以<code>__END__</code>结束时，则该定义将不再适用。</li>
+<li>即使用<font color=blue>require</font>或<font color=blue>load</font>加载文件时，也并不是指该文件(_FILE_)，而是指运行文件($0)。</li>
+</ul></dd>
+<dt><a name="TOPLEVEL_BINDING" id="TOPLEVEL_BINDING"><code>TOPLEVEL_BINDING</code></a><!-- RDLabel: "TOPLEVEL_BINDING" --></dt>
+<dd>
+<p>顶层中的<font color=blue>Binding</font>对象。</p></dd>
+<dt><a name="RUBY_VERSION" id="RUBY_VERSION"><code>RUBY_VERSION</code></a><!-- RDLabel: "RUBY_VERSION" --></dt>
+<dd>
+<p>显示Ruby版本的字符串。Ruby版本信息的形式为<var>major</var>.<var>minor</var>.<var>teeny</var>。(当前)各个号码的位数不会超过2位，因此</p>
+<pre>
+if RUBY_VERSION &gt;= '1.6.7'
+  # 在1.6.7以后的版本中有效的操作
+else
+  # 在此之前的版本中有效地操作
+end
+</pre>
+
+<p>按照版本信息的不同来进行分支处理。</p>
+<p>在1.8以前的版本中，minor是奇数时则为开发版，minor是偶数时则为稳定版。在1.9.0以后的版本中，teeny为0的版本是开发版。</p></dd>
+<dt><a name="RUBY_RELEASE_DATE" id="RUBY_RELEASE_DATE"><code>RUBY_RELEASE_DATE</code></a><!-- RDLabel: "RUBY_RELEASE_DATE" --></dt>
+<dd>
+<p>显示Ruby发布日期的字符串。</p></dd>
+<dt><a name="RUBY_PLATFORM" id="RUBY_PLATFORM"><code>RUBY_PLATFORM</code></a><!-- RDLabel: "RUBY_PLATFORM" --></dt>
+<dd>
+<p>显示平台信息的字符串。</p></dd>
+<dt><a name="VERSION" id="VERSION"><code>VERSION             ((&lt;<var>obsolete</var>&gt;))</code></a><!-- RDLabel: "VERSION" --></dt>
+<dt><a name="RELEASE_DATE" id="RELEASE_DATE"><code>RELEASE_DATE        ((&lt;<var>obsolete</var>&gt;))</code></a><!-- RDLabel: "RELEASE_DATE" --></dt>
+<dt><a name="PLATFORM" id="PLATFORM"><code>PLATFORM            ((&lt;<var>obsolete</var>&gt;))</code></a><!-- RDLabel: "PLATFORM" --></dt>
+<dd>
+<p>这些都是前面那些常数<code>RUBY_XXX</code>的旧名称。请参考<font color=blue>obsolete</font>。</p>
+<p><font color=blue>ruby 1.9 特性</font>: 这些常数已经停用。</p></dd>
+<dt><a name="SCRIPT_LINES__" id="SCRIPT_LINES__"><code>SCRIPT_LINES__</code></a><!-- RDLabel: "SCRIPT_LINES__" --></dt>
+<dd>
+<p>默认情况下，该常数不会被定义。</p>
+<p>若将该常数定义为哈希表后，在<em>编译</em>源代码时，源文件名将成为哈希表元素的索引，而源文件的内容会被按行切分后转化为数组，该数组将成为哈希表元素的内容。在调试(<font color=blue>debug.rb</font>)等场合会用到该常数。</p>
+<pre>
+SCRIPT_LINES__ = {}
+require 'English'
+p SCRIPT_LINES__
+
+# 注: 输出内容被处理过。
+# =&gt; {"/usr/local/lib/ruby/1.6/English.rb"=&gt;
+      ["alias $ERROR_INFO              $!\n",
+       "alias $ERROR_POSITION          $@\n",
+       "alias $LOADED_FEATURES         $\"\n",
+                :
+                :
+       "alias $POSTMATCH               $'\n",
+       "alias $LAST_PAREN_MATCH        $+\n"]}
+</pre>
+
+<p>另外,只有在<font color=blue>$SAFE</font>等级为0时才有效。同时，也不能由<font color=blue>eval</font>进行编译。</p></dd>
+</dl>
+
+</div>
+<hr />
+
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

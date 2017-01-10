@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<title>Ruby参考手册 - sprintf格式</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+<div class="body"><h1><a name="sprintf.a5.d5.a5.a9.a1.bc.a5.de.a5.c3.a5.c8" id="sprintf.a5.d5.a5.a9.a1.bc.a5.de.a5.c3.a5.c8">sprintf格式</a><!-- RDLabel: "sprintf格式" --></h1>
+<p>Ruby的sprintf格式与C语言的<font color=blue>sprintf(3)</font>基本相同。但还是有些差别: 它没有针对C特有类型的修饰符,如short或long等; 它包含2进制数的指示符(%b); 它不支持sprintf的方言式的语法。</p>
+<p>下面就对ruby的sprintf格式进行详细的说明。</p>
+<p>sprintf格式的规格如下所示。<code>[]</code>中的部分是可选的。</p>
+<pre>
+%[指定参数$][标识符][宽度][.精度]指示符
+</pre>
+
+<p>若想输出`<code>%</code>'本身时, 请这样`<code>%%</code>'处理。</p>
+<p>下面就分别介绍一下各元素的用法。</p>
+<h2><a name="a.a5.d5.a5.e9.a5.b0" id="a.a5.d5.a5.e9.a5.b0">标识符</a><!-- RDLabel: "标识符" --></h2>
+<p>标识符包括`#', `+', ` '(空格), `-'和`0'这5个。</p>
+<dl>
+<dt><a name="a.23" id="a.23">#</a><!-- RDLabel: "#" --></dt>
+<dd>
+<p>使用2进制、8进制、16进制的指示符(`b', `o', `x', `X')时, 会分别添加"0b", "0", "0x", "0X"前缀。</p>
+<pre>
+p sprintf("%#b", 10) # =&gt; "0b1010"
+p sprintf("%#o", 10) # =&gt; "012"
+p sprintf("%#x", 10) # =&gt; "0xa"
+p sprintf("%#X", 10) # =&gt; "0XA"
+</pre>
+
+<p>对于浮点数 (`f', `e', `E', `g', `G'), 则必定在输出中添加"."。</p>
+<pre>
+p sprintf("%.0f", 10) # =&gt; "10"
+p sprintf("%#.0f", 10) # =&gt; "10."
+p sprintf("%.0e", 10) # =&gt; "1e+01"
+p sprintf("%#.0e", 10) # =&gt; "1.e+01"
+</pre>
+
+<p>`g', `G'除了具有上述特性外, 还会在末尾添加多余的0。</p>
+<pre>
+p sprintf("%.05g", 10) # =&gt; "10"
+p sprintf("%#.05g", 10) # =&gt; "10.000"
+</pre>
+</dd>
+<dt><a name="a.2b" id="a.2b">+</a><!-- RDLabel: "+" --></dt>
+<dd>
+<p>使输出字符串带上符号。如果是正数的话, 就会添加`+'。它只对数值指示符(`d', `i', `b', `o', `x', `X', `u', `f', `e', `E', `g', `G')起作用。另外, 如果是`b', `o', `x', `X', `u'的话, 则会为负数添加`-'。</p>
+<pre>
+p sprintf("%d", 1)   # =&gt; "1"
+p sprintf("%+d", 1)  # =&gt; "+1"
+
+p sprintf("%x", -1)  # =&gt; "..f"  # ".." 表示f无限延续
+p sprintf("%+x", -1) # =&gt; "-1"
+</pre>
+</dd>
+<dt><a name="a.27.20.27.28.a5.b9.a5.da.a1.bc.a5.b9.29" id="a.27.20.27.28.a5.b9.a5.da.a1.bc.a5.b9.29">' '(空格)</a><!-- RDLabel: "' '(空格)" --></dt>
+<dd>
+<p>与`+'相同, 用空格来代替正号`+'。它只对数值指示符(`d', `i', `b', `o', `x', `X', `u', `f', `e', `E', `g', `G')起作用。</p>
+<pre>
+p sprintf("%d", 1)   # =&gt; "1"
+p sprintf("%+d", 1)  # =&gt; "+1"
+p sprintf("% d", 1)  # =&gt; " 1"
+
+p sprintf("%x", -1)  # =&gt; "..f"
+p sprintf("% x", 1)  # =&gt; " 1"
+p sprintf("% x", -1) # =&gt; "-1"
+</pre>
+</dd>
+<dt><a name="a-" id="a-">-</a><!-- RDLabel: "-" --></dt>
+<dd>
+<p>使输出内容靠左.  若尚未指定<a href="#a.c9.fd" title="sprintf格式 (224d)" class="modified-year">宽度</a>的话,则不起作用。</p>
+</dd>
+<dt><a name="a0" id="a0">0</a><!-- RDLabel: "0" --></dt>
+<dd>
+<p>当输出内容靠右时, 使用`0'而并非空格来填充多余部分。</p>
+<p>它只对数值指示符(`d', `i', `b', `o', `x', `X', `u', `f', `g', `G')起作用(对`e', `E'无效)</p>
+<pre>
+p sprintf("%010d", 10)
+# =&gt; "0000000010"
+</pre>
+
+<p>与`#'一起使用时, 输出情况如下。</p>
+<pre>
+p sprintf("%#010x", 10)  # =&gt; "0x0000000a"
+p sprintf("%#010o", 10)  # =&gt; "0000000012"
+p sprintf("%#010b", 10)  # =&gt; "0b00001010"
+</pre>
+
+<p>它等同于下例。</p>
+<pre>
+p sprintf("%#10.8x", 10) # =&gt; "0x0000000a"
+p sprintf("%#10.9o", 10) # =&gt; "0000000012"
+p sprintf("%#10.8b", 10) # =&gt; "0b00001010"
+</pre>
+
+<p>通常情况下, 会输出如下内容。</p>
+<pre>
+p sprintf("%#10x", 10)   # =&gt; "       0xa"
+p sprintf("%#10o", 10)   # =&gt; "       012"
+p sprintf("%#10b", 10)   # =&gt; "    0b1010"
+</pre>
+</dd>
+</dl>
+<h2><a name="a.c9.fd" id="a.c9.fd">宽度</a><!-- RDLabel: "宽度" --></h2>
+<p>以非0数字开头的数串负责指定宽度。宽度是指生成字符串的宽度, 它不受后文中的<a href="#a.c0.ba.c5.d9" title="sprintf格式 (224d)" class="modified-year">精度</a>的限制。</p>
+<p>确定宽度时, 也会考虑<a href="#a.a5.d5.a5.e9.a5.b0" title="sprintf格式 (224d)" class="modified-year">标识符</a>中附加的" ", "+","-", "0b", "0", "0x", "0X"的长度。</p>
+<pre>
+p sprintf("%#05x", 10) # =&gt; "0x00a"
+</pre>
+
+<p>宽度是指"必要的最小宽度". 若结果字符串的宽度超过指定宽度时, 指定宽度就会失效。</p>
+<p>若将宽度指定为`*'时, 将从参数中取得宽度值。</p>
+<pre>
+p sprintf("%10s", "foo")    # =&gt; "       foo"
+p sprintf("%*s", 10, "foo") # =&gt; "       foo"
+</pre>
+
+<h2><a name="a.c0.ba.c5.d9" id="a.c0.ba.c5.d9">精度</a><!-- RDLabel: "精度" --></h2>
+<p>紧跟在"."后面的数串表示精度(若只有"."的话，则为".0")。若遇到整数的指示符(`d', `i', `b', `o', `x', `X', `u')的话，精度表示数值部分的长度。</p>
+<pre>
+p sprintf("%10.5d", 1)  # =&gt; "     00001"
+p sprintf("%#10.5x", 1) # =&gt; "   0x00001"
+p sprintf("%+10.5x", 1) # =&gt; "    +00001"
+</pre>
+
+<p>若遇到浮点数的指示符(`f')的话，它表示小数部分的位数。</p>
+<pre>
+p sprintf("%10.5f", 1)   # =&gt; "   1.00000"
+p sprintf("%10.5f", 10)  # =&gt; "  10.00000"
+</pre>
+
+<p>若遇到浮点数的指示符(`e', `E', `g', `G')的话，它表示有效位数。</p>
+<pre>
+p sprintf("%10.5e", 1)   # =&gt; "1.00000e+00"
+p sprintf("%10.5e", 10)  # =&gt; "1.00000e+01"
+p sprintf("%10.5g",  10)  # =&gt; "        10"
+p sprintf("%#10.5G", 10)  # =&gt; "    10.000"
+</pre>
+
+<p>如果是字符串指示符(`s', `p')的话，将会按照精度的规定来检查参数中的字符串长度，并切除多余部分。若将宽度和精度设为同值的话，则只输出参数字符串中的符合精度规定的部分。</p>
+<pre>
+p sprintf("%10.2s", "foo")  # =&gt; "        fo"
+
+p sprintf("%5.5s", "foo")     # =&gt; # =&gt; "  foo"
+p sprintf("%5.5s", "foobar")  # =&gt; # =&gt; "fooba"
+</pre>
+
+<p>若将精度设为`*'的话，将从参数中提取精度的值。</p>
+<pre>
+p sprintf("%.5s", "foobar")    # =&gt; "fooba"
+p sprintf("%.*s", 5, "foobar") # =&gt; "fooba"
+</pre>
+
+<h2><a name="a.bb.d8.bc.a8.bb.d2" id="a.bb.d8.bc.a8.bb.d2">指示符</a><!-- RDLabel: "指示符" --></h2>
+<p>指示符指出参数的类型，且是必选的。大体说来它包括：</p>
+<ul>
+<li>表示字符串的指示符: `c', `s', `p'</li>
+<li>表示整数的指示符: `d', `i', `u', `b', `o', `x', `X',</li>
+<li>表示浮点数的指示符: `f', `g', `e', `E', `G'</li>
+</ul>
+<p>这几类。</p>
+<dl>
+<dt><a name="c" id="c">c</a><!-- RDLabel: "c" --></dt>
+<dd>
+<p>将参数的数值(0×255)看作是字符代码，并输出对应的字符。若参数并非数值、String、 nil, true或false的话，将尝试用to_int方法进行变换。</p>
+<p>此时，只有<a href="#a.a5.d5.a5.e9.a5.b0" title="sprintf格式 (224d)" class="modified-year">标识符</a>`-'和"<a href="#a.c9.fd" title="sprintf格式 (224d)" class="modified-year">宽度</a>"的设定是有效的。</p>
+</dd>
+<dt><a name="s" id="s">s</a><!-- RDLabel: "s" --></dt>
+<dd>
+<p>输出字符串。</p>
+<p>若参数并非<font color=blue>String</font>对象的话，将使用to_s方法对其进行变换。</p>
+</dd>
+<dt><a name="p" id="p">p</a><!-- RDLabel: "p" --></dt>
+<dd>
+<p><font color=blue>ruby 1.8 特性</font>: 输出<font color=blue>Object#inspect</font>的结果。</p>
+<pre>
+p sprintf("%s", [1, 2, 3])      # =&gt; "123"
+p sprintf("%p", [1, 2, 3])      # =&gt; "[1, 2, 3]"
+</pre>
+</dd>
+<dt><a name="d" id="d">d</a><!-- RDLabel: "d" --></dt>
+<dt><a name="i" id="i">i</a><!-- RDLabel: "i" --></dt>
+<dd>
+<p>以10进制整数的形式输出参数中的数值。</p>
+<p>若参数并非整数，则使用与<font color=blue>Integer</font>函数相同的规则将其变为整数。</p>
+</dd>
+<dt><a name="u" id="u">u</a><!-- RDLabel: "u" --></dt>
+<dd>
+<p>将参数的数值看作是无符号整数，并以10进制整数的形式输出它。</p>
+<pre>
+p sprintf("%u", -1) # =&gt; "..4294967295"
+</pre>
+
+<p>上面的代码会输出 p ".." + 0xffff_ffff.to_s。</p>
+<p><font color=blue>ruby 1.7 特性</font>: 在version 1.7中，不会附加".."。若是'%u'的话，则将参数看作是定长整数。此时，对于负整数n来说</p><pre>
+printf("%u", n)
+</pre>
+
+<p>与</p>
+<pre>
+printf("%d", n &amp; ~(-1 &lt;&lt; n.size*8))
+</pre>
+
+<p>是一个意思。</p>
+</dd>
+<dt><a name="b" id="b">b</a><!-- RDLabel: "b" --></dt>
+<dt><a name="o" id="o">o</a><!-- RDLabel: "o" --></dt>
+<dt><a name="x" id="x">x</a><!-- RDLabel: "x" --></dt>
+<dt><a name="X" id="X">X</a><!-- RDLabel: "X" --></dt>
+<dd>
+<p>分别以2进制、8进制、16进制、16进制(大写字母)字符串的形式输出整数。</p>
+<p>若使用了`#' 标识符的话，则分别在前面添加"0b", "0", "0x", "0X"。</p>
+<p>若没有使用`+', ` ' 标识符时，将在负数的前面(若有`#' 标识符，则在"0x"等的后面)添加".."。这表示最高位字符无限延伸，它采用了2的补数形式来表现负数。</p>
+<pre>
+p sprintf("%#b", 10)    # =&gt; "0b1010"
+p sprintf("%#o", 10)    # =&gt; "012"
+p sprintf("%#x", 10)    # =&gt; "0xa"
+
+# 对负数添加".."
+p sprintf("%#b", -1)    # =&gt; "0b..1"
+p sprintf("%#o", -1)    # =&gt; "0..7"
+p sprintf("%#x", -1)    # =&gt; "0x..f"
+
+p sprintf("%10x", -1)   # =&gt; "       ..f"
+p sprintf("%-10x", -1)  # =&gt; "..f       "
+
+# 若指定了"精度"的话，则不会添加".."
+p sprintf("%.10x", -1)  # =&gt; "ffffffffff"
+</pre>
+</dd>
+<dt><a name="f" id="f">f</a><!-- RDLabel: "f" --></dt>
+<dt><a name="e" id="e">e</a><!-- RDLabel: "e" --></dt>
+<dt><a name="E" id="E">E</a><!-- RDLabel: "E" --></dt>
+<dt><a name="g" id="g">g</a><!-- RDLabel: "g" --></dt>
+<dt><a name="G" id="G">G</a><!-- RDLabel: "G" --></dt>
+<dd>
+<p>`f' 以小数点形式(xxx.xxx)输出数值。</p>
+<p>`e' 以指数形式(x.xxxe+xx)输出数值。</p>
+<p>`g' 的情况比较特殊。当指数小于-4或者超出精度范围时，它采用`e'方式进行输出。除此之外，它采用`f'方式进行输出。另外，它会删除小数部分尾部的0。</p>
+<p>大写字母指示符(`E', `G')会将输出中的字母变为大写形式。</p>
+<pre>
+p sprintf("%f", 1.0) # =&gt; "1.000000"
+p sprintf("%e", 1.0) # =&gt; "1.000000e+00"
+p sprintf("%g", 1.0) # =&gt; "1"
+
+p sprintf("%f", 10.1) # =&gt; "10.100000"
+p sprintf("%e", 10.1) # =&gt; "1.010000e+01"
+p sprintf("%g", 10.1) # =&gt; "10.1"
+
+p sprintf("%g", 10 ** 6)  # =&gt; "1e+06"
+p sprintf("%g", 10 ** -5) # =&gt; "1e-05"
+</pre>
+
+<p>精度的缺省值为6。</p>
+<p>若遇到无限大值或NaN(Not a Number)时，输出情况如下。</p>
+<pre>
+p sprintf("%f",  1.0/0)  # =&gt; "inf"
+p sprintf("%f", -1.0/0)  # =&gt; "-inf"
+p sprintf("%f",  0.0/0)  # =&gt; "nan"
+
+p sprintf("%E",  1.0/0)  # =&gt; "INF"
+p sprintf("%E", -1.0/0)  # =&gt; "-INF"
+p sprintf("%E",  0.0/0)  # =&gt; "NAN"
+</pre>
+
+</dd>
+</dl>
+<h2><a name="a.b0.fa.bf.f4.bb.d8.c4.ea" id="a.b0.fa.bf.f4.bb.d8.c4.ea">指定参数</a><!-- RDLabel: "指定参数" --></h2>
+<p>这部分的利用频率最低，所以放在最后。</p>
+<dl>
+<dt><a name="nth.24" id="nth.24">nth$</a><!-- RDLabel: "nth$" --></dt>
+<dd>
+<p>表示将使用第<var>nth</var>个参数进行格式化操作。</p>
+<pre>
+p sprintf("%1$d, %1$x, %1$o", 10)
+=&gt; "10, a, 12"
+
+p sprintf("%3$d, %2$x, %1$o", 1, 2, 3)
+=&gt; "3, 2, 1"
+</pre>
+
+<p>若您不想改变参数的顺序而只想改变格式的话，也可以使用它。</p>
+<pre>
+case ENV['LC_TIME']
+when /^ja_JP/
+   fmt = "%1$d年%2$d月%3$d日"
+else
+   fmt = "%2$02d/%03$2d/%1$02d"
+end
+
+p sprintf(fmt, 1, 4, 22)
+=&gt; "04/22/01"
+</pre>
+
+<p>您也可以先插入"*"，然后借用参数来设定"<a href="#a.c9.fd" title="sprintf格式 (224d)" class="modified-year">宽度</a>"和"<a href="#a.c0.ba.c5.d9" title="sprintf格式 (224d)" class="modified-year">精度</a>"的值。</p>
+<pre>
+p sprintf("%5.2f", 1);              # =&gt; " 1.00"
+p sprintf("%*.*f", 5, 2, 1);        # =&gt; " 1.00"
+p sprintf("%1$*2$.*3$f", 1, 5, 2);  # =&gt; " 1.00"
+</pre>
+</dd>
+</dl>
+
+</div>
+<hr />
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+

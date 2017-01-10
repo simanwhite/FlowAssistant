@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-JIRA369</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Dec_2016.html" class="wikidpad">calendar_Dec_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-JIRA369</h2>
+<hr class="wikidpad" />
+标题: out/powerflow_pkg/38.2.4/src/params Issue with nbio_pcie_txrx_t<br class="wikidpad" />
+JIRA地址: <span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DMVMTVRF-369" class="wikidpad">http://ontrack-internal.amd.com/browse/DMVMTVRF-369</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h236" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" />根本原因: tile_info.params不能适应nbio_pcie_txrx_t名字抓取.<br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h396" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+vnc atlhen-vdi0203:1<br class="wikidpad" />
+123456<br class="wikidpad" />
+<br class="wikidpad" />
+/proj/nbio_dv_atl_02/stxu/nbio5_2/atl2_nbio5_2-3/out/linux_2.6.32_64.VCS/nbio_na<br class="wikidpad" />
+vi10/config/nbio_standalone_dgpu_nlp/pub/sim<br class="wikidpad" />
+<br class="wikidpad" />
+38.2.4<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+<br class="wikidpad" />
+In both Navi10 and Starship UPFG, I found nbio_pcie_txrx_t are not connected in <br class="wikidpad" />
+nbio.upf. <br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h762" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+<a name=".h865" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-12-13</h4>
+/proj/nbio_dv_atl_02/stxu/nbio5_2/atl2_nbio5_2-3/out/linux_2.6.32_64.VCS/nbio_na<br class="wikidpad" />
+vi10/common/pub/src/meta/dfp/params/tile.params<br class="wikidpad" />
+<pre class="wikidpad">DFP_PG_TILES =  nbio_pcie_txrx_t nbio_pcie_lc_t nbio_nbif_t nbio_shub_t 
+
+DFP_AON_PGPIN_TILES = 
+
+DFP_BACO_TILES =  nbio_nbif_t nbio_shub_t 
+</pre>
+@TILE_CLASS_INSTANCE_NAMES = ( <ul class="wikidpad normalindent">"nbio_pcs_t.nbio_pcs_t", <br class="wikidpad" />
+"serdes_cphy_t.serdes_cphy_t", <br class="wikidpad" />
+"nbio_nbif_t.nbio_nbif_t", <br class="wikidpad" />
+"nbio_shub_t.nbio_shub_t", <br class="wikidpad" />
+"nbio_pcie_txrx_t.nbio_pcie_txrx_t", <br class="wikidpad" />
+"nbio_pcie_lc_t.nbio_pcie_lc_t"</ul>
+);<br class="wikidpad" />
+<br class="wikidpad" />
+pg_top = nbio<br class="wikidpad" />
+<br class="wikidpad" />
+nbio.upf.2.0中load_upf时只load了:<ul class="wikidpad bulletlist">
+<li class="wikidpad" />nbio_shub_t
+<li class="wikidpad" />nbio_nbif_t
+<li class="wikidpad" />nbio_pcie_lc_t<br class="wikidpad" />
+</ul>
+最后发现, 是tile_info.params中出了问题, <br class="wikidpad" />
+正则表达式^(w+?_t)(w+)改为了^(w+?_t)(w+)$<br class="wikidpad" />
+详见JIRA<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1588" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-12-19</h4>
+使用rls_test_jira369后之前的问题没有了, 但又出现了后续问题<br class="wikidpad" />
+vcs_compile的时候出现了一个没有waive掉的warning:<br class="wikidpad" />
+<pre class="wikidpad">Warning-[MULTIPLE_ISO_POL] Multiple policies applied on a port
+/proj/nbio_dv_atl_02/stxu/nbio5_2/atl2_nbio5_2-3/out/linux_2.6.32_64.VCS/
+nbio_navi10/config/nbio_standalone_dgpu_nlp/pub/sim/LIKE_VERILOG/proj/nbio_dv_atl_02
+/stxu/nbio5_2/atl2_nbio5_2-3/out/linux_2.6.32_64.VCS/nbio_navi10/config/
+nbio_standalone_dgpu_nlp/pub/sim/publish/tiles/tile/nbio_pcie_txrx_t/publish_rtl/
+xprop/slv_req_credit_bif256_ci512_swus1x16_serial.v, 47
+  Multiple isolation policies 
+  'tb/ig/nbio_wrap/nbio/nbio_pcie_txrx_t/PD_GLB/isolation/ISO_HI_P1_GLB' and 
+  'tb/ig/nbio_wrap/nbio/nbio_pcie_txrx_t/PD_GLB/isolation/CLK1_ISO_LO_P1_GLB' 
+  are applied to port 
+  'tb.ig.nbio_wrap.nbio.nbio_pcie_txrx_t.ubif_core_rsmu_wrap.ubif_core.uci.uslave.uslv_req_credit.[0]'.
+  No Isolation will be applied on this port for policy 
+  'tb/ig/nbio_wrap/nbio/nbio_pcie_txrx_t/PD_GLB/isolation/ISO_HI_P1_GLB'
+  Use -location fanout policy for this port to fix this.
+</pre>
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+[tags: <br class="wikidpad" />
+    </body>
+</html>

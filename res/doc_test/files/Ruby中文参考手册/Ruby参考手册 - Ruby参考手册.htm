@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<title>Ruby参考手册 - Ruby参考手册</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+<div class="body"><h1><a name="a.a5.aa.a5.d6.a5.b8.a5.a7.a5.af.a5.c8.bb.d8.b8.fe.a5.b9.a5.af.a5.ea.a5.d7.a5.c8.b8.c0.b8.ec.20Ruby.20.a5.ea.a5.d5.a5.a1.a5.ec.a5.f3.a5.b9.a5.de.a5.cb.a5.e5.a5.a2.a5.eb" id="a.a5.aa.a5.d6.a5.b8.a5.a7.a5.af.a5.c8.bb.d8.b8.fe.a5.b9.a5.af.a5.ea.a5.d7.a5.c8.b8.c0.b8.ec.20Ruby.20.a5.ea.a5.d5.a5.a1.a5.ec.a5.f3.a5.b9.a5.de.a5.cb.a5.e5.a5.a2.a5.eb">面向对象脚本语言 Ruby 参考手册</a></h1>
+<pre>
+对应版本 version 1.6.8, 1.8.1
+原著:松本行弘
+</pre>
+
+<h2><a name="a.bc.b9.c9.ae.bc.d4.ca.e7.bd.b8.c3.e6" id="a.bc.b9.c9.ae.bc.d4.ca.e7.bd.b8.c3.e6">招募撰稿人</a></h2>
+<p>为了使该参考手册能够日趋完善,我们一直在<font color=blue>招募撰稿人</font>.期待您的加入.
+</p>
+<h2><a name="a.cc.dc.bc.a1" id="a.cc.dc.bc.a1">目录</a></h2>
+<ul>
+<li>更新记录</li>
+<li><a href="hajimeni.html" title="卷首语 (12d)" class="modified-month">卷首语</a></li>
+<li><a href="kidou.html" title="Ruby的启动 (284d)" class="modified-year">Ruby的启动</a>
+<ul>
+<li><a href="kidou.html" title="Ruby的启动 (284d)" class="modified-year">命令行选项</a></li>
+<li><a href="kidou.html" title="Ruby的启动 (284d)" class="modified-year">关于解释器行</a></li>
+</ul></li>
+<li><a href="ev.html" title="环境变量 (292d)" class="modified-year">环境变量</a></li>
+<li>Ruby 语言样式
+<ul>
+<li><a href="lanstyle_object.html" title="对象 (292d)" class="modified-year">对象</a></li>
+<li><a href="lanstyle_class.html" title="类 (292d)" class="modified-year">类</a></li>
+<li><a href="lanstyle_run.html" title="执行 (12d)" class="modified-month">执行</a></li>
+<li><a href="lanstyle_exit.html" title="结束时的相关处理 (290d)" class="modified-year">结束时的相关处理</a></li>
+<li><a href="lanstyle_thread.html" title="Ruby 线程 (3d)" class="modified-month">线程</a></li>
+<li><a href="lanstyle_securitymodel.html" title="安全模型 (109d)" class="modified-year">安全模型</a></li>
+<li><a href="lanstyle_seiki.html" title="正则表达式 (218d)" class="modified-year">正则表达式</a></li>
+</ul></li>
+<li>Ruby的语法
+<ul>
+<li><a href="syntax_jikukouzou.html" title="字句构造 (292d)" class="modified-year">字句构造</a></li>
+<li><a href="syntax_program.html" title="程序 (292d)" class="modified-year">程序</a></li>
+<li><a href="syntax_vac.html" title="变量和常数 (292d)" class="modified-year">变量和常数</a></li>
+<li><a href="syntax_literal.html" title="字面值 (292d)" class="modified-year">字面值</a></li>
+<li><a href="syntax_operatorexpression.html" title="操作符表达式 (211d)" class="modified-year">操作符表达式</a></li>
+<li><a href="syntax_control.html" title="控制结构 (12d)" class="modified-month">控制结构</a>／异常处理</li>
+<li><a href="syntax_callmethod.html" title="方法调用 (12d)" class="modified-month">方法调用</a></li>
+<li><a href="syntax_defcm.html" title="类／方法的定义 (292d)" class="modified-year">类／方法的定义</a></li>
+</ul></li>
+<li>标准库
+<ul>
+<li><a href="stdlib_function.html" title="内部函数 (18d)" class="modified-month">内部函数</a></li>
+<li><a href="stdlib_variable.html" title="内部变量 (18d)" class="modified-month">内部变量</a></li>
+<li><a href="stdlib_constant.html" title="内部常数 (18d)" class="modified-month">内部常数</a></li>
+<li><a href="./built-in-class/index.html" title="内部类／模块／异常类 (18d)" class="modified-month">内部类／模块／异常类</a></li>
+</ul></li>
+<li><a href="./addlib/index.html" title="附加库 (12d)" class="modified-month">附加库</a></li>
+<li><a href="./upgrade/index.html" class="modified-month">Ruby变更记录</a>
+<ul>
+<li><a href="./upgrade/version_1-6.html" class="modified-month">ruby 1.6 特性</a></li>
+<li><a href="./upgrade/version_1-7.html" class="modified-month">ruby 1.7 特性</a></li>
+<li><a class="modified-month">ruby 1.8 特性</a>
+<ul>
+<li><a class="modified-month">1.6.8到1.8.0的变更点(总结)</a></li>
+</ul></li>
+<li><a class="modified-month">ruby 1.9 特性</a></li>
+<li><a class="modified-month">obsolete</a></li>
+<li><a class="modified-month">对应DOSISH</a></li>
+</ul></li>
+<li>附录
+<ul>
+<li>疑似BNF的Ruby语法</li>
+<li><a href="./appendix_dic.html" title="Ruby术语集 (12d)" class="modified-month">Ruby术语集</a></li>
+<li><a href="./platform/index.html" class="modified-month">Ruby的运行平台</a></li>
+<li><a href="./pack_template_string.html" class="modified-month">pack模板字符串</a></li>
+<li><a href="./sprintf_format.html" class="modified-month">sprintf格式</a></li>
+<li><a href="./Marshal_format.html" class="modified-month">Marshal格式</a></li>
+<li><a href="../faq/index.html" title="Ruby FAQ" class="modified-year">Ruby FAQ</a></li>
+<li><a href="./trap/index.html" class="modified-year">Ruby的陷阱</a></li>
+<li>Ruby/Tk FAQ</li>
+<li>Ruby的相关书籍</li>
+<li>Ruby Documentation Project (RDP)</li>
+<li>HTML Help版和分立HTML</li>
+<li>ReFe</li>
+</ul></li>
+<li>索引</li>
+<li>功能分类索引</li>
+<li>发布条件</li>
+</ul>
+</div>
+<hr />
+
+
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

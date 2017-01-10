@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>nlp</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_July_2016.html" class="wikidpad">calendar_July_2016</a></span> | <span class="wikidpad parent-node"><a href="plan_nlp及vsi介绍.html" class="wikidpad">plan_nlp及vsi介绍</a></span> | <span class="wikidpad parent-node"><a href="work_process-SCBU_UPFG_training.html" class="wikidpad">work_process-SCBU_UPFG_training</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">nlp</h2>
+<hr class="wikidpad" />
+twikipage: <span class="wikidpad url-link"><a href="http://twiki.amd.com/twiki/bin/view/DesignCAD/NLPSetup" class="wikidpad">http://twiki.amd.com/twiki/bin/view/DesignCAD/NLPSetup</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+文件project_config.xml的地址由变量PROJECTCONFIG_COMPONENT_LOC设置<br class="wikidpad" />
+<br class="wikidpad" />
+可以通过删除exec/vcs.work后重跑的方式解决VFS_CORRUPT_CHECK ERROR<br class="wikidpad" />
+<br class="wikidpad" />
+怎样修改<span class="wikidpad wiki-link"><a href="VCS.html" class="wikidpad">VCS</a></span>版本? 修改modulefile. 刚给Yangjun修改过.<br class="wikidpad" />
+<br class="wikidpad" />
+关于lp_config和nlp.params文件. <br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h334" class="wikidpad"></a><h3 class="wikidpad heading-level3">怎样setup</h3>
+<hr class="wikidpad" />
+<ul class="wikidpad bulletlist">
+<li class="wikidpad" />_env/local/setup.proj中要加一路分支</ul>
+<pre class="wikidpad">if { [string equal $env(ENV_VIEW) default] } {
+    setenv DJ_CONTEXT kryptos
+} elseif { [string equal $env(ENV_VIEW) gio_only] } {
+    setenv DJ_CONTEXT kryptos_gio_only
+
+} elseif { [string equal $env(ENV_VIEW) kryptos_lite] } {
+    setenv DJ_CONTEXT kryptos_lite
+++++++++++++++++++++++++++++++++++++++++++++++++
+} elseif { [string equal $env(ENV_VIEW) nlp] } {
+    setenv DJ_CONTEXT kryptos
+++++++++++++++++++++++++++++++++++++++++++++++++
+} else {
+    reportWarning "ERROR: Unknown view setting: $env(ENV_VIEW)"
+    reportWarning "ERROR: Bootenv failed"
+    exit 1
+}
+</pre>
+<ul class="wikidpad bulletlist">
+<li class="wikidpad" />modulefile也要做修改. 同样加入了if { [string equal $env(ENV_VIEW) nlp] }分支, <br class="wikidpad" />
+在这个分支下面更新了setenv PROJECTCONFIG_COMPONENT_LOC $env(CBW_CONFIG_LOACTION)/nlp<br class="wikidpad" />
+和vcs版本. PROJECTCONFIG_COMPONENT_LOC, 并不知道是怎么被用到的. <br class="wikidpad" />
+
+<li class="wikidpad" />修改 project.config.xml , 把一些由于NLP产生的VCS编译错误降级<pre class="wikidpad">	&lt;key name="allowed_vcs_warnings"&gt;
+		&lt;value default="true"&gt; PHNE, IOPT, ACC_CLI_ON, PCWM-L, TFIPC, TFIPC-L, TMR, IPC, IPDASP, IPDW, IWNF, PLI_TAB_NV, 
+	LCA_FEATURES_ENABLED, APP_LRN_VDC, ECMDSMPD2, TEIF, NARW, DFLT_OPT, TMBIN, EPIMD, INAV, SIOB, SVA-LDRF, CWUC, IRIID-W, 
+	ENUMASSIGN, PCTO, PCTIO, PCTO-L, PCTIO-L, PCTI-L, DCTTSW, AOUP, UII-L, IOPCWM, WIOPCWM, VCM-INSOPTMIS, VCM-HFEI, 
+	#注: 下面是新增的
+	SV-ANDNMD, SV-CBMIE, SV-CEBS, SV-EMNI, SV-IVPSA, SV-NFIVC, SV-SELS, MV_DB_RD_FAIL, UPF_CNYI, UPF_MNF, 
+	SRC_SNK_PWR_ATTR_MISSING, MULTIPLE_ISO_POL, CONFLICTING_ISO_POL,  ISO_ON_NON_POWER_REGION_NA, HETEROGENEOUS_FANOUTS,  ISO_FLOATING_NET, ISO_UNCONNECTED_NET
+	  &lt;/value&gt;
+	&lt;/key&gt;
+</pre>
+
+<li class="wikidpad" />tb_archpro.sv changes<br class="wikidpad" />
+top level的power port名字也要改. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+</ul>
+    </body>
+</html>

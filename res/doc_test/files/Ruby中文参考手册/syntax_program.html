@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<title>Ruby参考手册 - 程序</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+<div class="body"><h1><a name="a.a5.d7.a5.ed.a5.b0.a5.e9.a5.e0" id="a.a5.d7.a5.ed.a5.b0.a5.e9.a5.e0">程序</a><!-- RDLabel: "程序" --></h1>
+<ul>
+<li><a href="#a.bc.b0" title="程序 (292d)" class="modified-year">表达式</a></li>
+<li><a href="#a.a5.d7.a5.ed.a5.b0.a5.e9.a5.e0.a4.ce.bd.aa.a4.ea" title="程序 (292d)" class="modified-year">程序的结束</a></li>
+</ul>
+<p>将<a href="#a.bc.b0" title="程序 (292d)" class="modified-year">表达式</a>连接起来就构成程序。使用分号(;)或换行将表达式分隔开来。但反斜线后出现的换行并非分隔符，它表示该行将继续下去。</p>
+<p>例:</p>
+<pre>
+print "hello world!\n"
+</pre>
+
+<h2><a name="a.bc.b0" id="a.bc.b0">表达式</a><!-- RDLabel: "表达式" --></h2>
+<p>例:</p>
+<pre>
+true
+(1+2)*3
+foo()
+if test then ok else ng end
+</pre>
+
+<p>Ruby的表达式包括，<font color=blue>变量和常数</font>、各种<font color=blue>字面值</font>、相关<font color=blue>计算和赋值</font>、if或while等<font color=blue>控制结构</font>、<font color=blue>方法调用</font>、<font color=blue>类/方法的定义</font>。</p>
+<p>还可以使用括号将表达式括起来进行群组化。</p>
+<p>空表达式 () 返回nil。</p>
+<p>Ruby的表达式包括返回值的表达式和不返回值的表达式。</p>
+<dl>
+<dt><a name="a.c3.cd.a4.f2.ca.d6.a4.b5.a4.ca.a4.a4.bc.b0.a4.ce.ce.e3" id="a.c3.cd.a4.f2.ca.d6.a4.b5.a4.ca.a4.a4.bc.b0.a4.ce.ce.e3">不返回值的表达式的例子</a></dt>
+<dd>
+<ul>
+<li>while, until, while 修饰表达式, until 修饰表达式</li>
+</ul>
+</dd>
+</dl>
+<p>另外，有的表达式不能用作某方法的参数，而有的则可以(有时将这种表达式称作“句”以示区别)。</p>
+<dl>
+<dt><a name="a.a5.e1.a5.bd.a5.c3.a5.c9.a4.ce.b0.fa.bf.f4.a4.cb.bb.d8.c4.ea.a4.c7.a4.ad.a4.ca.a4.a4.bc.b0.a4.ce.ce.e3" id="a.a5.e1.a5.bd.a5.c3.a5.c9.a4.ce.b0.fa.bf.f4.a4.cb.bb.d8.c4.ea.a4.c7.a4.ad.a4.ca.a4.a4.bc.b0.a4.ce.ce.e3">不能用作参数的表达式的例子</a></dt>
+<dd>
+<ul>
+<li>and, or, not</li>
+<li>if/unless/rescue 修饰表达式, ...</li>
+</ul>
+</dd>
+</dl>
+<p>若使用括号将那些不能用作参数的表达式括起来进行群组化之后，就可以像使用普通表达式一样使用它们了。</p>
+<h2><a name="a.a5.d7.a5.ed.a5.b0.a5.e9.a5.e0.a4.ce.bd.aa.a4.ea" id="a.a5.d7.a5.ed.a5.b0.a5.e9.a5.e0.a4.ce.bd.aa.a4.ea">程序的结束</a><!-- RDLabel: "程序的结束" --></h2>
+<p>Ruby解释器在读取程序时，若遇到下列标识就会停止读取动作。</p>
+<ul>
+<li>文件的末尾(eval中字符串的末尾)</li>
+<li>^D(control D)、^Z(control Z)</li>
+<li>只包含__END__的行(若前后出现空白字符将无法辨认)</li>
+</ul>
+</div>
+<hr />
+
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

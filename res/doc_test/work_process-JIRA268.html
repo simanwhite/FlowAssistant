@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-JIRA268</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Augst_2016.html" class="wikidpad">calendar_Augst_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-JIRA268</h2>
+<hr class="wikidpad" />
+标题: upf failed when running power gate test<br class="wikidpad" />
+JIRA地址: <span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DMVMTVRF-268" class="wikidpad">http://ontrack-internal.amd.com/browse/DMVMTVRF-268</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h212" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" /><br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h325" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+/local_vol1_nobackup/liszhao/mcip_pi_navi10<br class="wikidpad" />
+hubs2/hubs2_main@2441977<br class="wikidpad" />
+powerflow_pkg/38.1.47<br class="wikidpad" />
+<br class="wikidpad" />
+dj -DGENERATE_GLOBAL_FEATURES -DAUTOMGR_OPTS=-nostrict -DPUBLISH_DEPERL_VPP 
+<ul class="wikidpad normalindent">-DUSE_FDL -c -v -e 'run_test "athub sanity -v"' -DUSE_NLP -DATHUB_PARAM -m 
+-l athub_sanity_gate.log<br class="wikidpad" />
+</ul>
+报很多amdparser.pl错误<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">运行环境</b>:<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h742" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+$现象$:<br class="wikidpad" />
+发现禁用amdparser以后, rhea_drop_flow没有生成pub/sim/Publish文件夹.<br class="wikidpad" />
+$原因$:<br class="wikidpad" />
+问题出在用户提供的rgb/project.rbg.makefile<br class="wikidpad" />
+如果用户不提供这个makefile, 则生效的是各文件夹下的makefile. <br class="wikidpad" />
+而用户提供了project.rgb.makefile, 它的行为覆盖了正常的makefile. 编译时的依赖关系<br class="wikidpad" />
+绕过了publish. 这可能是为了amdparser的使用. <br class="wikidpad" />
+现在amdparser被禁掉, 所以要把publish的过程包含进project.rbg.makefile, 才能正常生成<br class="wikidpad" />
+Publish文件夹.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<span class="wikidpad property attribute">[tags: amdparser]</span><span class="wikidpad property attribute">[tags: rhea_parser]</span><br class="wikidpad" />
+    </body>
+</html>

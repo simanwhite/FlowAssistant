@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+
+<title>Ruby参考手册 - 内部类／模块／异常类</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="../index.html">参考手册</a>]</span>
+<span class="navi">[<a href="./index.html">内部类/模块/异常类</a>]  </span>
+</div>
+
+
+<div class="body"><h1><a name="a.c1.c8.a4.df.b9.fe.a4.df.a5.af.a5.e9.a5.b9.a1.bf.a5.e2.a5.b8.a5.e5.a1.bc.a5.eb.a1.bf.ce.e3.b3.b0.a5.af.a5.e9.a5.b9" id="a.c1.c8.a4.df.b9.fe.a4.df.a5.af.a5.e9.a5.b9.a1.bf.a5.e2.a5.b8.a5.e5.a1.bc.a5.eb.a1.bf.ce.e3.b3.b0.a5.af.a5.e9.a5.b9">内部类／模块／异常类</a><!-- RDLabel: "内部类／模块／异常类" --></h1>
+<h2><a name="a.c1.c8.a4.df.b9.fe.a4.df.a5.af.a5.e9.a5.b9" id="a.c1.c8.a4.df.b9.fe.a4.df.a5.af.a5.e9.a5.b9">内部类</a><!-- RDLabel: "内部类" --></h2>
+<ul>
+<li><a href="./class_object.html" title="Object (38d)" class="modified-year">Object</a>
+<ul>
+<li><a href="./class_object_array.html">Array</a>
+<ul>
+<li><font color=blue>Values</font>         (<font color=blue>ruby 1.9 特性</font>)</li>
+</ul></li>
+<li><a href="./class_object_binding.html">Binding</a></li>
+<li><a href="./class_object_continuation.html">Continuation</a></li>
+<li><a href="./class_object_data.html">Data</a></li>
+<li><a href="./class_object_exception.html">Exception</a> (参考<a href="#a.ce.e3.b3.b0.a5.af.a5.e9.a5.b9" title="内部类／模块／异常类 (39d)" class="modified-year">异常类</a>)</li>
+<li><a href="./class_object_dir.html">Dir</a></li>
+<li><a href="./class_object_falseclass.html">FalseClass</a></li>
+<li><a href="./class_object_filestat.html">File::Stat</a></li>
+<li><a href="./class_object_hash.html">Hash</a></li>
+<li><a href="./class_object_io.html">IO</a>
+<ul>
+<li><a href="./class_object_io_file.html">File</a></li>
+</ul></li>
+<li><a href="./class_object_matchdata.html">MatchData</a></li>
+<li><a href="./class_object_method.html">Method</a>
+<ul>
+<li>(<a href="./class_object_method_unbound.html">UnboundMethod</a>)  (<font color=blue>ruby 1.7 特性</font> <em>version 1.6以前的位置</em>)</li>
+</ul></li>
+<li><a href="./class_object_module.html">Module</a>
+<ul>
+<li><a href="./class_object_module_class.html">Class</a></li>
+</ul></li>
+<li><a href="./class_object_numeric.html">Numeric</a>
+<ul>
+<li><a href="./class_object_numeric_integer.html">Integer</a>
+<ul>
+<li><a href="./class_object_numeric_integer_big.html">Bignum</a></li>
+<li><a href="./class_object_numeric_integer_fix.html">Fixnum</a></li>
+</ul></li>
+<li><a href="./class_object_numeric_float.html">Float</a></li>
+</ul></li>
+<li><a href="./class_object_proc.html">Proc</a></li>
+<li><a href="./class_object_process-status.html">Process::Status</a>  (<font color=blue>ruby 1.7 特性</font>)</li>
+<li><a href="./class_object_range.html">Range</a></li>
+<li><a href="./class_object_regexp.html">Regexp</a></li>
+<li><a href="./class_object_string.html">String</a></li>
+<li><a href="./class_object_struct.html">Struct</a></li>
+<li><a href="./class_object_symbol.html">Symbol</a></li>
+<li><a href="./class_object_thread.html">Thread</a></li>
+<li><a href="./class_object_threadgroup.html">ThreadGroup</a></li>
+<li><a href="./class_object_time.html">Time</a></li>
+<li><a href="./class_object_trueclass.html">TrueClass</a></li>
+<li><a href="./class_object_method_unbound.html">UnboundMethod</a>         (<font color=blue>ruby 1.7 特性</font>)</li>
+<li><a href="./class_object_nilclass.html">NilClass</a></li>
+</ul></li>
+</ul>
+<h2><a name="a.c1.c8.a4.df.b9.fe.a4.df.a5.e2.a5.b8.a5.e5.a1.bc.a5.eb" id="a.c1.c8.a4.df.b9.fe.a4.df.a5.e2.a5.b8.a5.e5.a1.bc.a5.eb">内部模块</a><!-- RDLabel: "内部模块" --></h2>
+<ul>
+<li><a href="./module_comparable.html">Comparable</a></li>
+<li><a href="./module_enumerable.html">Enumerable</a></li>
+<li><a href="./module_errno.html">Errno</a></li>
+<li><a href="./module_file-constants.html">File::Constants</a></li>
+<li><a href="./module_filetest.html">FileTest</a></li>
+<li><a href="./module_gc.html">GC</a></li>
+<li><a href="./module_kernel.html">Kernel</a></li>
+<li><a href="./module_marshal.html">Marshal</a></li>
+<li><a href="./module_math.html">Math</a></li>
+<li><a href="./module_objectspace.html">ObjectSpace</a></li>
+<li><a href="./module_precision.html">Precision</a></li>
+<li><a href="./module_process.html">Process</a></li>
+<li><a href="./module_process-gid.html">Process::GID</a>  (<font color=blue>ruby 1.8 特性</font>)</li>
+<li><a href="./module_process-sys.html">Process::Sys</a>  (<font color=blue>ruby 1.8 特性</font>)</li>
+<li><a href="./module_process-uid.html">Process::UID</a>  (<font color=blue>ruby 1.8 特性</font>)</li>
+<li><a href="./module_signal.html">Signal</a>        (<font color=blue>ruby 1.7 特性</font>)</li>
+</ul>
+<h2><a name="a.ce.e3.b3.b0.a5.af.a5.e9.a5.b9" id="a.ce.e3.b3.b0.a5.af.a5.e9.a5.b9">异常类</a><!-- RDLabel: "异常类" --></h2>
+<ul>
+<li><a href="./errorclass_object.html">Object</a>
+<ul>
+<li><a href="./errorclass_object_exception.html">Exception</a>
+<ul>
+<li>(<a href="./errorclass_interrupt.html">Interrupt</a>) (<font color=blue>ruby 1.7 特性</font> <em>version 1.6以前的位置</em>)</li>
+<li><a href="./errorclass_nomemoryerror.html">NoMemoryError</a></li>
+<li><a href="./errorclass_scripterror.html">ScriptError</a>
+<ul>
+<li><a href="./errorclass_scperr_loaderror.html">LoadError</a></li>
+<li>(<a href="./errorclass_scperr_nameerror.html">NameError</a>)  (<font color=blue>ruby 1.7 特性</font> <em>version 1.6以前的位置</em>)</li>
+<li><a href="./errorclass_scperr_notimplementederror.html">NotImplementedError</a></li>
+<li><a href="./errorclass_scperr_syntaxerror.html">SyntaxError</a></li>
+</ul></li>
+<li><a href="./errorclass_signalexception.html">SignalException</a>
+<ul>
+<li><a href="./errorclass_interrupt.html">Interrupt</a> (<font color=blue>ruby 1.7 特性</font>)</li>
+</ul></li>
+<li><a href="./errorclass_standarderror.html">StandardError</a>
+<ul>
+<li><a href="./errorclass_stderr_argumenterror.html">ArgumentError</a></li>
+<li><a href="./errorclass_stderr_indexerror.html">IndexError</a>
+<ul>
+<li><a href="./errorclass_stderr_indexerr_keyerror.html">KeyError</a> (ruby 1.9 特性)</li>
+</ul>
+</li>
+<li><a href="./errorclass_stderr_ioerror.html">IOError</a>
+<ul>
+<li><a href="./errorclass_stderr_ioerr_eoferror.html">EOFError</a></li>
+</ul></li>
+<li><a href="./errorclass_stderr_localjumperror.html">LocalJumpError</a></li>
+<li><a href="./errorclass_scperr_nameerror.html">NameError</a>  (<font color=blue>ruby 1.7 特性</font>)
+<ul>
+<li><a href="./errorclass_stderr_nameerr_nomethoderror.html">NoMethodError</a> (<font color=blue>ruby 1.7 特性</font>)</li>
+</ul></li>
+<li><a href="./errorclass_stderr_rangeerror.html">RangeError</a>
+<ul>
+<li><a href="./errorclass_stderr_rangeerr_fderror.html">FloatDomainError</a></li>
+</ul></li>
+<li><a href="./errorclass_stderr_regexperror.html">RegexpError</a></li>
+<li><a href="./errorclass_stderr_runtimeerror.html">RuntimeError</a></li>
+<li><a href="./errorclass_stderr_securityerror.html">SecurityError</a></li>
+<li><a href="./errorclass_stderr_systemcallerror.html">SystemCallError</a>
+<ul>
+<li><a href="./errorclass_stderr_scerr_errno-exxx.html">Errno::EXXX</a></li>
+</ul></li>
+<li><a href="./errorclass_stderr_systemstackerror.html">SystemStackError</a></li>
+<li><a href="./errorclass_stderr_threaderror.html">ThreadError</a></li>
+<li><a href="./errorclass_stderr_typeerror.html">TypeError</a></li>
+<li><a href="./errorclass_stderr_zerodivisionerror.html">ZeroDivisionError</a></li>
+</ul></li>
+<li><a href="./errorclass_systemexit.html">SystemExit</a></li>
+<li><a href="./errorclass_fatal.html">fatal</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<hr />
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

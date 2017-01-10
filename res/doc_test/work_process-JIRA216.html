@@ -1,0 +1,330 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-JIRA216</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Augst_2016.html" class="wikidpad">calendar_Augst_2016</a></span> | <span class="wikidpad parent-node"><a href="calendar_July_2016.html" class="wikidpad">calendar_July_2016</a></span> | <span class="wikidpad parent-node"><a href="calendar_Sept_2016.html" class="wikidpad">calendar_Sept_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-JIRA216</h2>
+<hr class="wikidpad" />
+标题: SATA RV2: powerflow_pkg/38.1.50 cause sata NLP test hang<br class="wikidpad" />
+JIRA地址:<br class="wikidpad" />
+<span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DMVMTVRF-216" class="wikidpad">DMVMTVRF-216</a></span><br class="wikidpad" />
+codereview: <span class="wikidpad url-link"><a href="http://codereview/ui#review:id=63770" class="wikidpad">http://codereview/ui#review:id=63770</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h295" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" />按Angela建议, 将powerflow_pkg切换到.38.2.rc7, 运行中. 等结果.
+<li class="wikidpad" />design说已经fix了. 下一步把qzuo_DMVMTVRF-216的change让大家review一下, 然后准备<br class="wikidpad" />
+发布. 
+<li class="wikidpad" />root cause: fch特殊性, hier.pm没有考虑到<br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h564" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+powerflow用的是38.1.50_for_rv1<br class="wikidpad" />
+调用的template是: chip.upf.tmpl. <br class="wikidpad" />
+输出的upf文件是: ip_sata.upf.2.0<br class="wikidpad" />
+vnc: cybgar-vdi0982:3<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+整个故事: 鱼丸说他用38.1.50及38.1.50_for_rv1都出现了hang住的问题. 而且ip_sata.upf<br class="wikidpad" />
+也没有生成. Miao Gorge认为hang机发生在chip.upf.tmpl在试图生成assert_dis.vh或者是<br class="wikidpad" />
+assert_disable.vh的时候. 但是如果把assert_dis.tmpl一开头的#paramMerge...去掉就可<br class="wikidpad" />
+以正常工作了. 但是这样的解决方法不知道会引入什么问题<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">运行环境</b>:<br class="wikidpad" />
+VNC: cybgar-vdi0982:3 pw:123456.<br class="wikidpad" />
+sata main tree path: /proj/sandstone_fe2/yuwan/ra21/main/<br class="wikidpad" />
+sata nlp+PostSMS command: setenv USE_SMS_RTL 1 ; dvsb -D UPF_DJ_SMS -D VIRAGE_MODELS=1 -D SATA_MEM_REP_EN -D UVM_VERBOSITY=UVM_LOW -D RAND_SEED -D USE_VRQ -D NLP -uniqueid sata_rtl_full -t sanity_simple_serial -b sata -D PUBLISH_QUEUE=${SB_QUEUE_NAME_B}-D PUBLISH -D UNIQUIFY -D SMS -D PUBLISH_TILES="fch_sata_t" -D SMS_TILES="fch_sata_t" -D LSF_PROJECT=${SB_LSF_PNAME_DV}-D PUBLISH_FINE_VIEW -threads 100 -D AOAC_SHORT_EN -D AXIM_SLOW -user yuwan<br class="wikidpad" />
+环境特点: tree目录与输出的pub/sim目录不在同一目录下, 比较别扭. pub/sim目录如下<br class="wikidpad" />
+pub/sim目录:<br class="wikidpad" />
+/proj/sb_veri4/ssshdv_yuwan/RV2_sata_nlp_May24_tool_fix/fch_sata/config/<br class="wikidpad" />
+sata_standalone_arch_sata/pub/sim/fch_sata/config/sata.../pub/sim/build.log<br class="wikidpad" />
+<br class="wikidpad" />
+/proj/sb_veri4/ssshdv_yuwan/RV2_sata_nlp_new/fch_sata/config/sata_standalone_arch_<br class="wikidpad" />
+sata/pub/sim<br class="wikidpad" />
+<br class="wikidpad" />
+主目录:<br class="wikidpad" />
+/proj/sandstone_fe2/yuwan/ra21/main<br class="wikidpad" />
+运行命令:<br class="wikidpad" />
+setenv USE_SMS_RTL 1 ; dvsb -D UPF_DJ_SMS -D VIRAGE_MODELS=1 -D SATA_MEM_REP_EN -D UVM_VERBOSITY=UVM_LOW -D RAND_SEED -D USE_VRQ -D NLP -uniqueid sata_rtl_full -t sanity_simple_serial -b sata -D PUBLISH_QUEUE=$<br class="wikidpad" />
+{SB_QUEUE_NAME_B}<br class="wikidpad" />
+-D PUBLISH -D UNIQUIFY -D SMS -D PUBLISH_TILES="fch_sata_t" -D SMS_TILES="fch_sata_t" -D LSF_PROJECT=$<br class="wikidpad" />
+{SB_LSF_PNAME_DV}<br class="wikidpad" />
+-D PUBLISH_FINE_VIEW -threads 100 -D AOAC_SHORT_EN -D AXIM_SLOW -user yuwan<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h2329" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+$log$:<br class="wikidpad" />
+JIRA-216 SATA RV2: powerflow_pkg/38.1.50 cause sata NLP test hang<br class="wikidpad" />
+现在的状态: powerflow用的是38.1.50_for_rv1<br class="wikidpad" />
+调用的template是: chip.upf.tmpl. <br class="wikidpad" />
+输出的upf文件是: ip_sata.upf.2.0<br class="wikidpad" />
+整个故事: 鱼丸说他用38.1.50及38.1.50_for_rv1都出现了hang住的问题. 而且ip_sata.upf<br class="wikidpad" />
+也没有生成. Miao Gorge认为hang机发生在chip.upf.tmpl在试图生成assert_dis.vh或者是<br class="wikidpad" />
+assert_disable.vh的时候. 但是如果把assert_dis.tmpl一开头的#paramMerge...去掉就可<br class="wikidpad" />
+以正常工作了. 但是这样的解决方法不知道会引入什么问题. <br class="wikidpad" />
+Angela建议在38.2上做调试.<br class="wikidpad" />
+亲自调试, 发现assert_dis.vh生成了一个空文件. <br class="wikidpad" />
+<br class="wikidpad" />
+$log$:<br class="wikidpad" />
+跟代码: Xeperl 报找不到power.params / pg_block.params. 这两个文件就是assert_dis.<br class="wikidpad" />
+tmpl一开头paramMerge进来的. Xeperl去 common/src/meta/tools/dfp/template下面去找.<br class="wikidpad" />
+<br class="wikidpad" />
+到处都没找到power.params. 感觉dfp_params被build的时候就有问题.<br class="wikidpad" />
+切换到38.2.rc7上面, 再运行dj命令看看.<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h3087" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-19</h4>
+现象: 运行mut_upf_params.pl时, lsf确实会一直卡住. 昨天晚上五点半左右开始跑的, <br class="wikidpad" />
+ip_sata.upf.2.0和fch_sata.upf都已经生成出来了, 大概只用了几分钟. 但是lsf还是一直<br class="wikidpad" />
+挂死, 到今天早上上班还挂着. 手动结束后, console界面会显示<ul class="wikidpad normalindent">[Xeperl] Interpretor returned error</ul>
+所以还是在跑Xeperl的时候挂死了. <br class="wikidpad" />
+<br class="wikidpad" />
+挂前最后一条命令是lsf跑genTileSimUpf.csh<br class="wikidpad" />
+会调用到power.tmpl<br class="wikidpad" />
+<br class="wikidpad" />
+发现genTileSimUpf.csh最后的那句log已经打出来了, 说明它已经执行完成了:<ul class="wikidpad normalindent">echo "AMD_DFP INFO : (genTileSimUpf) end At"<br class="wikidpad" />
+date<br class="wikidpad" />
+</ul>
+所以不带lsf的命令是可以过的. 带lsf时存疑. 接下来需要<span class="wikidpad wiki-link"><a href="lsf.html" class="wikidpad">lsf</a></span> debug的能力了. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h3508" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-25</h4>
+powerflow_pkg 38.2, 运行chip.upf.tmpl命令生成ip.upf.2.0时会挂死.<br class="wikidpad" />
+<span class="wikidpad wiki-link"><a href="sata.html" class="wikidpad">sata</a></span>是个soc? 它和raven2有什么关系?<br class="wikidpad" />
+<br class="wikidpad" />
+总之当前的问题是个SoC问题. 是走chip.upf.tmpl这一路的. 生成的最上层是ip_sata.upf.2.0<br class="wikidpad" />
+它下面只有一个tile? 就是fch_sata_t<br class="wikidpad" />
+<br class="wikidpad" />
+运行genTileSimUpf.csh生成fch_sata_t.upf时没有任何问题. 也不会挂死. <br class="wikidpad" />
+<br class="wikidpad" />
+如果从chip.upf.log来看, lsf执行genTileSimUpf.csh命令时也可以成功, 之后的log如下造成<br class="wikidpad" />
+卡死:<br class="wikidpad" />
+<img src="files/jira216_hang.png" class="wikidpad" /><br class="wikidpad" />
+所以生成upf的命令并没有什么问题, 问题出在chip.upf.tmpl后续的动作.<br class="wikidpad" />
+<br class="wikidpad" />
+chip.upf.tmpl中, 1710行左右, 好多system去执行grep等命令, 这些命令以一种诡异的方式在<br class="wikidpad" />
+被不停执行. <br class="wikidpad" />
+<br class="wikidpad" />
+提一下, CHIP_UPF_MODE = pg<br class="wikidpad" />
+<br class="wikidpad" />
+每次卡住后断掉, 都会显示Xeperl被打断. 因此还是卡在了Xeperl里面. 但是如果单独运行<br class="wikidpad" />
+lsf命令跑genTileSimUpf.csh不会有问题, 难道后面还在地方会调用Xeperl? 答案应该就在<br class="wikidpad" />
+chip.upf.tmpl里面. <br class="wikidpad" />
+<br class="wikidpad" />
+好像走到胡同了, chip.upf.tmpl中只在lsf对genTileSimUpf.csh调用, 是通过<ul class="wikidpad normalindent">dfpUtils::do_parallel_commands</ul>
+调用的. <br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h4197" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-27</h4>
+chip.upf.tmpl不一定只对genTIleSimUpf.csh进行了调用. 因为中间还有数次的#include<br class="wikidpad" />
+对#include问题比较好的定位方法: <ul class="wikidpad normalindent">首先这是个Xeperl问题<br class="wikidpad" />
+通常出问题后会留下很多temp.xxx文件, 可以去看这些中间文件<br class="wikidpad" />
+这些中间文件会包含include进来的param文件的名字. 比如temp.7384.power.params.tmpl<br class="wikidpad" />
+</ul>
+针对216这个问题, 包含以下几个temp中间文件:<ul class="wikidpad normalindent">## 下面两个文件通常是OK的<br class="wikidpad" />
+opt_define<br class="wikidpad" />
+default_define<br class="wikidpad" />
+## 下面的文件中power.params大小为0<br class="wikidpad" />
+0.power.params<br class="wikidpad" />
+1.pg_block.params<br class="wikidpad" />
+2.fch_sata_t.sram_list.params<br class="wikidpad" />
+3.temp.xxxx.opt_define</ul>
+所以当生成第一个文件, tmp.xxxx.params.0.power.params时就出问题了.<br class="wikidpad" />
+<br class="wikidpad" />
+$vnc complain$<br class="wikidpad" />
+vnc不给copy权限很烦人啊<br class="wikidpad" />
+<br class="wikidpad" />
+$发现$:<br class="wikidpad" />
+运行chip.upf.tmpl时, Xeperl include进了以下文件:<ol class="wikidpad orderedlist">
+<li class="wikidpad" />$OUT_CMN_pub/src/meta/dfp/params/power.params
+<li class="wikidpad" />sata_t.params
+<li class="wikidpad" />tile_info.params
+<li class="wikidpad" />tile.params
+<li class="wikidpad" />upf_pst.tmpl<br class="wikidpad" />
+以上文件都处在同一文件夹下
+<li class="wikidpad" />repeater.tmpl  ## 当前文件夹 (pub/sim)
+<li class="wikidpad" />$OUT_CMN_pub/src/meta/tools/dfp/template/repeater.tmpl
+<li class="wikidpad" />nlp.upf.tmpl  ## 当前
+<li class="wikidpad" />$OUT_CMN_pub/src/meta/tools/dfp/template/top_plus_project.upf<br class="wikidpad" />
+</ol>
+可以在chip.upf.tmpl中去掉genTileSimUpf.csh的执行, 以节省实验时间. 目测问题不是发生<br class="wikidpad" />
+在genTileSimUpf.csh里面, 而是chip.upf.tmpl include进来的文件里. <br class="wikidpad" />
+<br class="wikidpad" />
+在Xeperl里面打了许多log, 所以需要做一版debug版的Xeperl. <br class="wikidpad" />
+最后发现template里面出现了许多<ul class="wikidpad normalindent">use ;</ul>
+这在perl中执行会出错. 原因是$HIER_FILE_BASE为空, 但没有被考虑为空的情况, 直接写进了<br class="wikidpad" />
+template. <ul class="wikidpad normalindent">use &lt;? print $HIER_FILE_BASE !&gt;;</ul>
+于是悲剧了. 那么, 现在已知是$HIER_FILE_BASE的问题, 回头追溯又要花半天时间...<br class="wikidpad" />
+<br class="wikidpad" />
+$Xeperl卡死的原因$:<br class="wikidpad" />
+Xeperl中有这样一段代码, 是用来处理template的出现的#paramDefine的,<pre class="wikidpad">    # replace #paramdefine(macro) to value
+    while (/#paramDefine\(([\w\d_-]+)\)/) {
+        my $macro = $1;
+        if (exists($opt_H-&gt;{'vars'}{$macro})) {
+            my $val = $opt_H-&gt;{'vars'}{$macro};
+            s/#paramDefine\(([\w\d_-]+)\)/$val/;
+        }
+    }
+</pre>
+这段代码的风险是, 一旦$opt_H-&gt;{'vars'}中找不到paramDefine的macro, 那将进入while的<br class="wikidpad" />
+死循环, 而且不会有任何提示. <br class="wikidpad" />
+<br class="wikidpad" />
+那么问题来了, 其他的情况下 DFP_PROJECT_PARAM_PATH 这个变量都是指向<ul class="wikidpad normalindent">$OUT_CMN_pub/src/meta/dfp/params/</ul>
+即已经被赋值的那些变量. 为什么现在assert_dis.tmpl生成assert_dis.vh时, 这个变量却指<br class="wikidpad" />
+向<ul class="wikidpad normalindent">$OUt_CMN_pub/src/meta/tools/dfp/params</ul>
+也就是还没有把#include等赋值的params文件上了呢?<br class="wikidpad" />
+<br class="wikidpad" />
+Xeperl里寻找<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h6026" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-28</h4>
+问题来了, 如果现在的powerflow有bug, 那么raven1是咋跑通的...<br class="wikidpad" />
+<br class="wikidpad" />
+修改: 给chip.upf.tmpl生成assert_dis.vh的命令加了一个option:<ul class="wikidpad normalindent">-d DFP_PROJECT_PARAM_PATH=$DFP_PROJECT_PARAM_PATH <br class="wikidpad" />
+</ul>
+要的fix第二个问题:<ul class="wikidpad normalindent">当assert_dis.tmpl开头paramMerge pg_block.params时, 会先把pg_block.params生成一<br class="wikidpad" />
+个temp.xxx.x.pg_block.params. 这时因为没有定义过$HIER_FILE_BASE, 所以里面一些东<br class="wikidpad" />
+西为空. 出现了'use ;'这样的语法错误. <br class="wikidpad" />
+</ul>
+其实两个问题都是以下参数没有传进来的结果, power.params和pg_block.params两个生成有问<br class="wikidpad" />
+题:<ul class="wikidpad normalindent">DFP_PROJECT_PARAM_PATH, HIER_FILE_BASE<br class="wikidpad" />
+</ul>
+$修改$:<br class="wikidpad" />
+为了解决找不到hier.pm的问题, 现将chip.upf.tmpl中产生assert_dis.vh之前, 把tile下面<br class="wikidpad" />
+的hier.pm链接过来:<ul class="wikidpad normalindent">ln -s fch_sata_t/hier.pm ./hier.pm</ul>
+当然前提是hier.pm要存在.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h6597" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-31</h4>
+还是会出现 <Job ... not found>的死循环, 但是不会有Xeperl报错了. 感觉问题不止出在<br class="wikidpad" />
+Xeperl上. <br class="wikidpad" />
+<br class="wikidpad" />
+写了一个简单的驱动程序测试dfpUtils.pm, 复现了卡死的现象. 所以卡死问题并不是出现在<br class="wikidpad" />
+Xeperl有Error上, 而是出现在dfpUtils.pm去调用do_parallel_commands时.<br class="wikidpad" />
+<br class="wikidpad" />
+进入一个while循环, 当all done时会exit 0. 这句其实已经执行了, 只是并没有完全退出来.<br class="wikidpad" />
+一定是lsf出了问题. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h6856" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-8-1</h4>
+dfpUtils.pm负责执行lsf命令. 在这个JIRA中, dfpUtils负责执行fch_sata_t.upf的生成命令, <br class="wikidpad" />
+过程如下:<ol class="wikidpad orderedlist">
+<li class="wikidpad" />用fork建立子进程1, 执行lsf命令
+<li class="wikidpad" />用fork建立子进程2, 每2分钟查询一个lsf有执行及被挂起的任务. <br class="wikidpad" />
+</ol>
+但是发现, 虽然子进程们都已经结束了, 但是命令行还是卡死.<br class="wikidpad" />
+<br class="wikidpad" />
+不过design那边更新说他们已经跑过了, 所以这个问题先放下.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h7074" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-8-19</h4>
+代码暂不提交, 可能并不是根本原因.<br class="wikidpad" />
+<span class="wikidpad url-link"><a href="http://codereview/ui#review:id=63770" class="wikidpad">http://codereview/ui#review:id=63770</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h7147" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-12</h4>
+现在报出, 如果这些修改不进formal release的话, 其它项目也有不过的现象. <br class="wikidpad" />
+原来的修改有两处改动:<ol class="wikidpad orderedlist">
+<li class="wikidpad" />Xeperl, line 992后面加入保护代码, 以防出现死while循环
+<li class="wikidpad" />chip.upf.tmpl中<ol class="wikidpad orderedlist">
+<li class="wikidpad" />生成assert_dis.vh时, 加option, define一些变量及路径, 
+<li class="wikidpad" />并把./$tile/hier.pm链接到当前目录. <br class="wikidpad" />
+</ol>
+</ol>
+Hi Quan,<br class="wikidpad" />
+Please use cybgar-vdi0982:1 password:123456. <br class="wikidpad" />
+main tree: /proj/sandstone_fe2/yuwan/ra20/main<br class="wikidpad" />
+simulation command: <br class="wikidpad" />
+1. setenv USE_SMS_RTL 1<br class="wikidpad" />
+2. dvsb -D UPF_DJ_SMS -D VIRAGE_MODELS=1 -D SATA_MEM_REP_EN -D UVM_VERBOSITY=UVM_LOW -D RAND_SEED -D USE_VRQ -D NLP -uniqueid sata_rtl_full -w 'self.when!/never/ &amp;&amp; self.when=nlp &amp;&amp; self.when!/ssc_en/' -b sata -D PUBLISH_QUEUE=$<br class="wikidpad" />
+{SB_QUEUE_NAME_B}<br class="wikidpad" />
+-D PUBLISH -D UNIQUIFY -D SMS -D PUBLISH_TILES="fch_sata_t" -D SMS_TILES="fch_sata_t" -D LSF_PROJECT=$<br class="wikidpad" />
+{SB_LSF_PNAME_DV}<br class="wikidpad" />
+-D PUBLISH_FINE_VIEW -threads 100 -D AOAC_SHORT_EN -D AXIM_SLOW -user yuwan<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h7952" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-13</h4>
+Oya给的DJ命令报如下错误: <br class="wikidpad" />
+[dj 21:57:55 E]: [cannot load such file -- zip<ul class="wikidpad normalindent">@ import/soc15/src/meta/ipxact/artifactory.rbx:3]<br class="wikidpad" />
+</ul>
+setenv USE_SMS_RTL 1<br class="wikidpad" />
+<br class="wikidpad" />
+dvsb -D UPF_DJ_SMS -D VIRAGE_MODELS=1 -D SATA_MEM_REP_EN -D UVM_VERBOSITY=UVM_LO<br class="wikidpad" />
+W -D RAND_SEED -D USE_VRQ -D NLP -uniqueid sata_rtl_full -w 'self.when &amp;&amp; self.w<br class="wikidpad" />
+hen=nlp &amp;&amp; self.when' -b sata -D PUBLISH_QUEUE=${SB_QUEUE_NAME_B} -D PUBLISH -D <br class="wikidpad" />
+UNIQUIFY -D SMS -D PUBLISH_TILES="fch_sata_t" -D SMS_TILES="fch_sata_t" -D LSF_P<br class="wikidpad" />
+ROJECT=${SB_LSF_PNAME_DV} -D PUBLISH_FINE_VIEW -threads 100 -D AOAC_SHORT_EN -D <br class="wikidpad" />
+AXIM_SLOW -user yuwan<br class="wikidpad" />
+<br class="wikidpad" />
+其实我的代码修改里只做了两件事:<ol class="wikidpad orderedlist">
+<li class="wikidpad" />chip.upf.tmpl里面把sms或者是publish下面的hier.pm拷到pub/sim下面(当前目录)
+<li class="wikidpad" />Xeperl的paramDefine加保护代码.<br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h8650" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-14</h4>
+fch_sata比较特殊, 只有一个tile, 顶层生成assert_dis的时候要调assert_dis.tmpl, 它又会<br class="wikidpad" />
+调pg_blk.params, 其中会有这样的地方:<ul class="wikidpad normalindent">use &lt;? print $HIER_FILE_BASE !&gt;;</ul>
+会去use hier.pm. 但是tile的hier.pm只存在于tile自己的目录下, 没有放到pub/sim下面. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h8853" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-20</h4>
+其实fch_sata之所以特殊, 是因为他们用跑soc的方式来跑ip, 因为他们要把东西直接<br class="wikidpad" />
+deliver给soc team, 自己handle了很多事情. 于是, 悲剧就发生了. <br class="wikidpad" />
+<br class="wikidpad" />
+现在来看, pg_block.params里面要可以兼容use当前目录的hier.pm, 或者, 到tile folder<br class="wikidpad" />
+下面去use hier.pm<br class="wikidpad" />
+<br class="wikidpad" />
+难点: 怎样拿到tile名称啊, 囧...<br class="wikidpad" />
+难点: 又要搭debug环境啦, 囧...<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h9085" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-21</h4>
+搭debug环境, 单独跑chip.upf.tmpl, 竟然没有生成assert_dis.vh, 生成的文件大小为0<br class="wikidpad" />
+<br class="wikidpad" />
+不是那么好复现的. 直接调assert_dis.tmpl生成assert_dis.vh, 会merge不到正确的<br class="wikidpad" />
+power.params 和 pg_block.params<br class="wikidpad" />
+<br class="wikidpad" />
+跟原来的错误不一样了, 囧, 怎么不打Xeperl Usage了? 懵<br class="wikidpad" />
+直接上fix吧.<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h9295" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-22</h4>
+修改chip.upf.tmpl, 在生成assert_dis.vh之前, 判断pub/sim下是否有hier.pm, 如果没有,<br class="wikidpad" />
+而且tile路径下有hier.pm, 那么就把tile路径下的hier.pm ln过来, 名字就叫hier_$tile.<br class="wikidpad" />
+pm<br class="wikidpad" />
+<br class="wikidpad" />
+<span class="wikidpad url-link"><a href="http://codereview/ui#file:review=65481/version=2068807" class="wikidpad">http://codereview/ui#file:review=65481/version=2068807</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+# ==== to fix JIRA DMVMTVRF-216 ====<br class="wikidpad" />
+$option ​.= " -d DFP_PROJECT_PARAM_PATH=$​DFP_PROJECT_PARAM_PATH";<br class="wikidpad" />
+if ( -e "./$tile/hier.pm" &amp;&amp; ​!(-e "hier.pm") ) {<ul class="wikidpad normalindent">system("ln -s ​./${tile}/hier.pm ​./hier_${tile}.pm");<br class="wikidpad" />
+$option ​.= " -d HIER_FILE_BASE=hier_${tile}";</ul>
+} else {<ul class="wikidpad normalindent">$option ​.= " -d HIER_FILE_BASE=hier";</ul>
+}<br class="wikidpad" />
+<br class="wikidpad" />
+if ( -e "./sms/tiles/tile/$tile/sms/" ) {<ul class="wikidpad normalindent">$option ​.= " -I ​./sms/tiles/tile/$tile/sms/";</ul>
+}<br class="wikidpad" />
+# =================================<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<hr class="wikidpad" />
+<span class="wikidpad property attribute">[tags: chip.upf.tmpl]</span><span class="wikidpad property attribute">[tags: Xeperl]</span><span class="wikidpad property attribute">[tags: raven2]</span><span class="wikidpad property attribute">[tags: dfpUtils.pm]</span>    </body>
+</html>

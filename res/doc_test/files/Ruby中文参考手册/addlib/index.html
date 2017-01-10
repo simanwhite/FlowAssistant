@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+
+<title>Ruby参考手册 - 附加库</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="../index.html">参考手册</a>]</span>
+<span class="navi">[<a href="./index.html">附加库</a>]  </span>
+</div>
+
+
+<div class="body"><h1><a name="a.c5.ba.c9.d5.a5.e9.a5.a4.a5.d6.a5.e9.a5.ea" id="a.c5.ba.c9.d5.a5.e9.a5.a4.a5.d6.a5.e9.a5.ea">附加库</a><!-- RDLabel: "附加库" --></h1>
+<p>在Ruby中, 可以使用库来添加新的类,模块或方法. 下列就是标准发布包中附加库的一览表. 读取库时需要使用<a href="../stdlib_function.html#require">require</a>或<a href="../stdlib_function.html#load">load</a>. </p>
+<h2><a name="a.c5.ba.c9.d5.a5.e9.a5.a4.a5.d6.a5.e9.a5.ea.b0.ec.cd.f7" id="a.c5.ba.c9.d5.a5.e9.a5.a4.a5.d6.a5.e9.a5.ea.b0.ec.cd.f7">附加库一览表</a><!-- RDLabel: "附加库一览表" --></h2>
+<p><a href="#a.a5.c6.a5.ad.a5.b9.a5.c8" title="附加库 (87d)" class="modified-year">文本</a>
+/<a href="#a.a5.d5.a5.a1.a5.a4.a5.eb" title="附加库 (87d)" class="modified-year">文件</a>
+/<a href="#a.a5.cd.a5.c3.a5.c8.a5.ef.a1.bc.a5.af" title="附加库 (87d)" class="modified-year">网络</a>
+/<a href="#a.c6.fe.bd.d0.ce.cf" title="附加库 (87d)" class="modified-year">输入输出</a>
+/<a href="#a.c6.fc.cb.dc.b8.ec" title="附加库 (87d)" class="modified-year">日语</a>
+/<a href="#a.bf.f4.b3.d8" title="附加库 (87d)" class="modified-year">数学</a>
+/<a href="#a.a5.c7.a1.bc.a5.bf.a5.d9.a1.bc.a5.b9" title="附加库 (87d)" class="modified-year">数据库</a>
+/<a href="#a.b2.e8.cc.cc.c0.a9.b8.e6.a1.bfCUI" title="附加库 (87d)" class="modified-year">画面控制/CUI</a>
+/<a href="#GUI" title="附加库 (87d)" class="modified-year">GUI</a>
+/<a href="#a.c6.fc.c9.d5.a1.a6.bb.fe.b4.d6" title="附加库 (87d)" class="modified-year">日期·时间</a>
+/<a href="#a.a5.de.a5.eb.a5.c1.a5.b9.a5.ec.a5.c3.a5.c9.a1.a6.c6.b1.b4.fc" title="附加库 (87d)" class="modified-year">多线程·同步</a>
+/<a href="#Unix" title="附加库 (87d)" class="modified-year">Unix</a>
+/<a href="#MS.20Windows" title="附加库 (87d)" class="modified-year">MS Windows</a>
+/<a href="#a.c0.b5.b5.ac.c9.bd.b8.bd" title="附加库 (87d)" class="modified-year">正则表达式</a>
+/<a href="#GC" title="附加库 (87d)" class="modified-year">GC</a>
+/<a href="#a.a5.c7.a5.b6.a5.a4.a5.f3.a5.d1.a5.bf.a1.bc.a5.f3" title="附加库 (87d)" class="modified-year">Design Pattern</a>
+/<a href="#a.b3.ab.c8.af.a5.c4.a1.bc.a5.eb" title="附加库 (87d)" class="modified-year">开发工具</a>
+/<a href="#a.a5.b3.a5.de.a5.f3.a5.c9.a5.e9.a5.a4.a5.f3" title="附加库 (87d)" class="modified-year">命令行</a>
+/<a href="#a.a4.bd.a4.ce.c2.be" title="附加库 (87d)" class="modified-year">其他</a></p>
+<ul>
+<li><a href="./English.html" title="English.rb (521d)">English.rb</a>      给特殊变量 $! 等添加英文别名($ERROR_INFO 等)</li>
+<li><a href="./Env.html" title="Env.rb (368d)">Env.rb</a>          <em>该库已经停用(obsolete)</em></li>
+<li><a href="./base64.html" title="base64.rb (1102d)">base64.rb</a>       处理Base64编码的模块</li>
+<li><a href="./benchmark.html" title="benchmark.rb (380d)">benchmark.rb</a>    <font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./bigdecimal.html" title="bigdecimal.so (520d)">bigdecimal.so</a>   可变长度浮点数运算 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./bigdecimal/jacobian.html" title="bigdecimal/jacobian.rb (-)" class="dangling">bigdecimal/jacobian.rb</a></li>
+<li><a href="./bigdecimal/ludcmp.html" title="bigdecimal/ludcmp.rb (-)" class="dangling">bigdecimal/ludcmp.rb</a></li>
+<li><a href="./bigdecimal/newton.html" title="bigdecimal/newton.rb (-)" class="dangling">bigdecimal/newton.rb</a></li>
+<li><a href="./bigdecimal/nlsolve.html" title="bigdecimal/nlsolve.rb (-)" class="dangling">bigdecimal/nlsolve.rb</a></li>
+<li><a href="./bigdecimal/utils.html" title="bigdecimal/utils.rb (-)" class="dangling">bigdecimal/utils.rb</a></li>
+<li><a href="./cgi/session.html" title="cgi/session.rb (1129d)">cgi/session.rb</a>  CGI会话管理
+<ul>
+<li><a href="./CGI-Session.html" title="CGI::Session (96d)" class="modified-year">CGI::Session</a></li>
+</ul></li>
+<li><a href="#">cgi/session/pstore.rb</a>
+<ul>
+<li><a href="#">CGI::Session::PStore</a></li>
+</ul></li>
+<li><a href="./cgi-lib.html" title="cgi-lib.rb (1073d)">cgi-lib.rb</a>      <em>该库已经停用(obsolete)</em>(请使用<a href="./cgi-rb.html" title="cgi.rb (1129d)">cgi.rb</a>)</li>
+<li><a href="./cgi-rb.html" title="cgi.rb (1129d)">cgi.rb</a>          辅助生成CGI
+<ul>
+<li><a href="./CGI.html" title="CGI (34d)" class="modified-year">CGI</a></li>
+</ul></li>
+<li><a href="./complex-rb.html" title="complex.rb (539d)">complex.rb</a>      复数类
+<ul>
+<li><a href="./Complex.html" title="Complex (410d)">Complex</a></li>
+</ul></li>
+<li><a href="./csv.html" title="csv.rb (306d)" class="modified-year">csv.rb</a>          CSV(Comma Separated Values)库 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./curses.html" title="curses.so (433d)">curses.so</a>       终端操作库 curses 的接口
+<ul>
+<li><a href="./curses.html#Curses.20.a5.e2.a5.b8.a5.e5.a1.bc.a5.eb" title="curses.so (433d)">Curses 模块</a></li>
+<li><a href="./curses.html#Curses.3a.3aWindow.20.a5.af.a5.e9.a5.b9" title="curses.so (433d)">Curses::Window 类</a></li>
+</ul></li>
+<li><a href="./date-rb.html" title="date.rb (435d)">date.rb</a>         日期类
+<ul>
+<li><a href="./Date.html" title="Date (291d)" class="modified-year">Date</a></li>
+<li><a href="./DateTime.html" title="DateTime (291d)" class="modified-year">DateTime</a></li>
+</ul></li>
+<li><a href="./date2.html" title="date2.rb (1129d)">date2.rb</a>        <em>该库已经停用(obsolete)</em>(请使用date.rb)</li>
+<li><a href="./dbm-so.html" title="dbm.so (55d)" class="modified-year">dbm.so</a>          可将ndbm用作哈希表的库
+<ul>
+<li><a href="./DBM.html" title="DBM (86d)" class="modified-year">DBM</a></li>
+</ul></li>
+<li><a href="./debug.html" title="debug.rb (161d)" class="modified-year">debug.rb</a>        Ruby 调试器</li>
+<li><a href="./delegate.html" title="delegate.rb (393d)">delegate.rb</a>     支持委托的类
+<ul>
+<li><a href="./delegate.html#Delegator">Delegator</a>
+<ul>
+<li><a href="./delegate.html#SimpleDelegator">SimpleDelegator</a></li>
+</ul></li>
+</ul></li>
+<li><a href="./digest.html" title="digest.so (387d)">digest.so</a>             消息摘要库  请参考<a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/ext/digest/digest.txt.ja?rev=HEAD">[ruby-src:ext/digest/digest.txt.ja]</a></li>
+<li><a href="./digest/md5.html" title="digest/md5.so (387d)">digest/md5.so</a></li>
+<li><a href="./digest/rmd160.html" title="digest/rmd160.so (387d)">digest/rmd160.so</a></li>
+<li><a href="./digest/sha1.html" title="digest/sha1.so (387d)">digest/sha1.so</a></li>
+<li><a href="./digest/sha2.html" title="digest/sha2.so (387d)">digest/sha2.so</a>
+<ul>
+<li><a href="./Digest-Base.html">Digest::Base</a>
+<ul>
+<li><a href="./Digest-MD5.html">Digest::MD5</a></li>
+<li><a href="./Digest-RMD160.html">Digest::RMD160</a></li>
+<li><a href="./Digest-SHA1.html">Digest::SHA1</a></li>
+<li><a href="./Digest-SHA256.html">Digest::SHA256</a></li>
+<li><a href="./Digest-SHA384.html">Digest::SHA384</a></li>
+<li><a href="./Digest-SHA512.html">Digest::SHA512</a></li>
+</ul></li>
+</ul></li>
+<li><a href="./dl.html" title="dl.so (712d)">dl.so</a>           <a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/ext/dl/doc/dl.txt?rev=HEAD">[ruby-src:ext/dl/doc/dl.txt]</a><font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./dl/import.html" title="dl/import.rb (734d)">dl/import.rb</a>  请参考dl.so 。<font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./dl/struct.html" title="dl/struct.rb (734d)">dl/struct.rb</a>  请参考dl.so 。<font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./dl/types.html" title="dl/types.rb (681d)">dl/types.rb</a>   请参考dl.so 。<font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./dl/win32.html" title="dl/win32.rb (734d)">dl/win32.rb</a>   用来代替Win32API。<font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./drb.html" title="drb.rb (381d)">drb.rb</a>          分布式 Ruby (dRuby) <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./e2mmap.html" title="e2mmap.rb (1129d)">e2mmap.rb</a>       异常类和消息的映象<ul>
+<li><a href="./Exception2MessageMapper.html" title="Exception2MessageMapper (1129d)">Exception2MessageMapper</a></li>
+</ul></li>
+<li><a href="./enumerator.html" title="enumerator.so (87d)" class="modified-year">enumerator.so</a>
+<ul>
+<li><a href="./Enumerable-Enumerator.html" title="Enumerable::Enumerator (87d)" class="modified-year">Enumerable::Enumerator</a></li>
+</ul></li>
+<li><a href="./erb-rb.html" title="erb.rb (699d)">erb.rb</a>          嵌入 Ruby (ERB) <font color=blue>ruby 1.8 特性</font>
+<ul>
+<li><a href="./ERB.html" title="ERB (238d)" class="modified-year">ERB</a></li>
+</ul></li>
+<li><a href="./eregex.html" title="eregex.rb (1129d)">eregex.rb</a>       可使用`|', `&amp;'操作符将2个正则表达式连接起来</li>
+<li><a href="./etc-so.html" title="etc.so (1129d)">etc.so</a>          操作<code>/etc/passwd</code>等的库
+<ul>
+<li><a href="./Etc.html" title="Etc (234d)" class="modified-year">Etc</a></li>
+</ul></li>
+<li><a href="./expect.html" title="expect.rb (521d)">expect.rb</a>       在脚本中控制交互程序</li>
+<li><a href="./fcntl-so.html" title="fcntl.so (1129d)">fcntl.so</a>        该模块中囊括了<a href="./manual+page" title="manual page (775d)">fcntl(2)</a>中用到的常数
+<ul>
+<li><a href="./Fcntl.html" title="Fcntl (315d)" class="modified-year">Fcntl</a></li>
+</ul></li>
+<li><a href="./fileutils.html" title="fileutils.rb (938d)">fileutils.rb</a>    文件操作utility (ftools.rb 的升级版)       <font color=blue>ruby 1.7 特性</font>
+<ul>
+<li><a href="./fileutils.html#module.20FileUtils" title="fileutils.rb (938d)">module FileUtils</a></li>
+<li><a href="./fileutils.html#module.20FileUtils.3a.3aVerbose" title="fileutils.rb (938d)">module FileUtils::Verbose</a></li>
+<li><a href="./fileutils.html#module.20FileUtils.3a.3aNoWrite" title="fileutils.rb (938d)">module FileUtils::NoWrite</a></li>
+</ul></li>
+<li><a href="./final.html" title="final.rb (1129d)">final.rb</a>        <em>该库已经停用(obsolete)</em>(已被纳入系统. 在1.8中,该库已被取消)</li>
+<li><a href="./finalize-rb.html" title="finalize.rb (1129d)">finalize.rb</a>
+<ul>
+<li><a href="./Finalizer.html" title="Finalizer (1129d)">Finalizer</a></li>
+</ul></li>
+<li><a href="./find-rb.html" title="find.rb (1129d)">find.rb</a>         文件搜索模块
+<ul>
+<li><a href="./Find.html" title="Find (521d)">Find</a></li>
+</ul></li>
+<li><a href="./forwardable-rb.html" title="forwardable.rb (521d)">forwardable.rb</a>  向类中定义方法委托的功能(请参考<a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/doc/forwardable.rd.ja?rev=HEAD">[ruby-src:doc/forwardable.rd.ja]</a>)
+<ul>
+<li><a href="./Forwardable.html" title="Forwardable (521d)">Forwardable</a></li>
+<li><a href="./SingleForwardable.html" title="SingleForwardable (521d)">SingleForwardable</a></li>
+</ul></li>
+<li><a href="./ftools.html" title="ftools.rb (214d)" class="modified-year">ftools.rb</a>       文件操作utility(旧)</li>
+<li>ftplib.rb             <em>该库已经停用(obsolete)</em>(请使用<a href="./net/ftp.html" title="net/ftp.rb (6d)" class="modified-month">net/ftp.rb</a>. 在1.8中,该库已被取消)</li>
+<li><a href="./gdbm-so.html" title="gdbm.so (1129d)">gdbm.so</a>         将gdbm (GNU dbm)用作哈希表的库
+<ul>
+<li><a href="./GDBM.html" title="GDBM (187d)" class="modified-year">GDBM</a></li>
+</ul></li>
+<li><a href="./getoptlong.html" title="getoptlong.rb (1129d)">getoptlong.rb</a>   命令行选项的解析  请参考<a href="http://www.sra.co.jp/people/m-kasahr/ruby/getoptlong/">&lt;URL:http://www.sra.co.jp/people/m-kasahr/ruby/getoptlong/&gt;</a></li>
+<li><a href="./getopts.html" title="getopts.rb (373d)">getopts.rb</a>      命令行选项的解析</li>
+<li><a href="./gserver.html" title="gserver.rb (287d)" class="modified-year">gserver.rb</a>      Ruby Generic Server <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./iconv-so.html" title="iconv.so (772d)">iconv.so</a>        字符串编码转换库  <a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/ext/iconv/iconv.c?rev=HEAD">[ruby-src:ext/iconv/iconv.c]</a><font color=blue>ruby 1.7 特性</font>
+<ul>
+<li><a href="./Iconv.html" title="Iconv (165d)" class="modified-year">Iconv</a></li>
+</ul></li>
+<li><a href="./importenv.html" title="importenv.rb (1129d)">importenv.rb</a>    以操作全局变量的方式来处理环境变量</li>
+<li><a href="./io/nonblock.html" title="io/nonblock.rb (388d)">io/nonblock.rb</a> IO 类的扩展(添加与nonblock模式相关的方法)</li>
+<li><a href="./io/wait.html" title="io/wait.so (388d)">io/wait.so</a>     IO 类的扩展(添加负责等待IO输入的方法)</li>
+<li><a href="./ipaddr-rb.html" title="ipaddr.rb (107d)" class="modified-year">ipaddr.rb</a>       IP地址类(IPAddr) <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./irb.html" title="irb.rb (521d)">irb.rb</a>          Interactive Ruby (Ruby 的交互界面)  请参考<a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/doc/irb/irb.rd.ja?rev=HEAD">[ruby-src:doc/irb/irb.rd.ja]</a>, <a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/doc/irb/irb-tools.rd.ja?rev=HEAD">[ruby-src:doc/irb/irb-tools.rd.ja]</a> </li>
+<li><a href="./jcode.html" title="jcode.rb (521d)">jcode.rb</a>        使String类支持日语</li>
+<li><a href="./kconv.html" title="kconv.rb (642d)">kconv.rb</a>        汉字编码转换
+<ul>
+<li><a href="./kconv.html" title="kconv.rb (642d)">Kconv</a></li>
+</ul></li>
+<li><a href="./mailread.html" title="mailread.rb (1129d)">mailread.rb</a>     从mail中获取信息
+<ul>
+<li><a href="./Mail.html" title="Mail (1122d)">Mail</a></li>
+</ul></li>
+<li><a href="./mathn.html" title="mathn.rb (180d)" class="modified-year">mathn.rb</a></li>
+<li><a href="./matrix-rb.html" title="matrix.rb (931d)">matrix.rb</a>       矩阵类
+<ul>
+<li><a href="./Matrix.html" title="Matrix (180d)" class="modified-year">Matrix</a></li>
+<li><a href="./Vector.html" title="Vector (930d)">Vector</a></li>
+</ul></li>
+<li><a href="./md5.html" title="md5.rb (387d)">md5.rb</a>          <em>该库已经停用(obsolete)</em>(请使用<a href="./digest/md5.html" title="digest/md5.so (387d)">digest/md5.so</a>)</li>
+<li><a href="./mkmf.html" title="mkmf.rb (521d)">mkmf.rb</a>         制作扩展库的工具</li>
+<li><a href="./monitor-rb.html" title="monitor.rb (922d)">monitor.rb</a></li>
+<li><a href="./multi-tk.html" title="multi-tk.rb (444d)">multi-tk.rb</a>     支持多个Tcl解释器的Ruby/Tk <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./mutex_m.html" title="mutex_m.rb (1129d)">mutex_m.rb</a></li>
+<li><a href="./net/ftp.html" title="net/ftp.rb (6d)" class="modified-month">net/ftp.rb</a>
+<ul>
+<li><a href="./net/ftp.html">Net::FTP</a></li>
+</ul></li>
+<li><a href="#" title="net/ftptls.rb (-)" class="dangling">net/ftptls.rb</a></li>
+<li><a href="./net/http.html" title="net/http.rb (273d)" class="modified-year">net/http.rb</a>
+<ul>
+<li><a href="./net/http.html#class.20Net.3a.3aHTTP" title="net/http.rb (273d)" class="modified-year">class Net::HTTP</a></li>
+<li><a href="./net/http.html#class.20Net.3a.3aHTTPRequest" title="net/http.rb (273d)" class="modified-year">class Net::HTTPRequest</a></li>
+<li><a href="./net/http.html#class.20Net.3a.3aHTTPResponse" title="net/http.rb (273d)" class="modified-year">class Net::HTTPResponse</a></li>
+</ul></li>
+<li><a href="./net/https.html" title="net/https.rb (305d)" class="modified-year">net/https.rb</a></li>
+<li><a href="./net/imap.html" title="net/imap.rb (155d)" class="modified-year">net/imap.rb</a></li>
+<li><a href="./net/pop.html" title="net/pop.rb (476d)">net/pop.rb</a>
+<ul>
+<li><a href="./net/pop.html#Net.3a.3aPOP3.20class" title="net/pop.rb (476d)">Net::POP3 class</a></li>
+<li><a href="./net/pop.html#Net.3a.3aAPOP" title="net/pop.rb (476d)">Net::APOP</a></li>
+<li><a href="./net/pop.html#Net.3a.3aPOPMail" title="net/pop.rb (476d)">Net::POPMail</a></li>
+</ul></li>
+<li><a href="./net/smtp.html" title="net/smtp.rb (466d)">net/smtp.rb</a>
+<ul>
+<li><a href="./net/smtp.html#class.20Net.3a.3aSMTP" title="net/smtp.rb (466d)">class Net::SMTP</a></li>
+</ul></li>
+<li><a href="./net/telnet.html" title="net/telnet.rb (1129d)">net/telnet.rb</a>
+<ul>
+<li><a href="./Net-Telnet.html" title="Net::Telnet (1126d)">Net::Telnet</a></li>
+</ul></li>
+<li><a href="#" title="net/telnets.rb (-)" class="dangling">net/telnets.rb</a></li>
+<li><a href="./nkf-so.html" title="nkf.so (1129d)">nkf.so</a>          日语字符代码编码转换
+<ul>
+<li><a href="./NKF.html" title="NKF (244d)" class="modified-year">NKF</a></li>
+</ul></li>
+<li><a href="./observer-rb.html" title="observer.rb (1129d)">observer.rb</a>     Ruby中的Observer Pattern
+<ul>
+<li><a href="./Observable.html" title="Observable (160d)" class="modified-year">Observable</a></li>
+</ul></li>
+<li><a href="./open-uri.html" title="open-uri.rb (247d)" class="modified-year">open-uri.rb</a>     open() 的 URI支持扩展 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./open3-rb.html" title="open3.rb (1129d)">open3.rb</a>
+<ul>
+<li><a href="./Open3.html" title="Open3 (35d)" class="modified-year">Open3</a></li>
+</ul></li>
+<li><a href="./openssl.html" title="openssl.rb (24d)" class="modified-month">openssl.rb</a>      Ruby/OpenSSL  <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./optparse.html" title="optparse.rb (86d)" class="modified-year">optparse.rb</a>     命令行选项的解析 <font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./ostruct.html" title="ostruct.rb (1129d)">ostruct.rb</a>      Python 式的“attr on write”Struct
+<ul>
+<li><a href="./OpenStruct.html" title="OpenStruct (1129d)">OpenStruct</a></li>
+</ul></li>
+<li><a href="./parsearg.html" title="parsearg.rb (521d)">parsearg.rb</a>     命令行选项的解析(请参考<a href="./getopts.html" title="getopts.rb (373d)">getopts.rb</a>)</li>
+<li><a href="./parsedate-rb.html" title="parsedate.rb (1030d)">parsedate.rb</a>    日期格式的解析
+<ul>
+<li><a href="./ParseDate.html" title="ParseDate (433d)">ParseDate</a></li>
+</ul></li>
+<li><a href="./pathname.html" title="pathname.rb (372d)">pathname.rb</a>     路径名类 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./ping-rb.html" title="ping.rb (1129d)">ping.rb</a>         验证数据包是否到达主机
+<ul>
+<li><a href="./Ping.html" title="Ping (1102d)">Ping</a></li>
+</ul></li>
+<li><a href="./pp-rb.html" title="pp.rb (780d)">pp.rb</a>           Pretty-printer <font color=blue>ruby 1.7 特性</font>
+<ul>
+<li><a href="./PP.html" title="PP (742d)">PP</a></li>
+</ul></li>
+<li><a href="./prettyprint-rb.html" title="prettyprint.rb (780d)">prettyprint.rb</a>  PrettyPrint <font color=blue>ruby 1.7 特性</font>
+<ul>
+<li><a href="./PrettyPrint.html" title="PrettyPrint (544d)">PrettyPrint</a></li>
+</ul></li>
+<li><a href="./profile.html" title="profile.rb (776d)">profile.rb</a>      PROFILER</li>
+<li><a href="./profiler.html" title="profiler.rb (520d)">profiler.rb</a>     <font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./pstore-rb.html" title="pstore.rb (1129d)">pstore.rb</a>       对象永久化
+<ul>
+<li><a href="./PStore.html" title="PStore (275d)" class="modified-year">PStore</a></li>
+</ul></li>
+<li><a href="./pty-so.html" title="pty.so (1129d)">pty.so</a>          处理伪终端(Pseudo tTY)的模块
+<ul>
+<li><a href="./PTY.html" title="PTY (521d)">PTY</a></li>
+</ul></li>
+<li>racc/parser.rb                <a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Racc">Racc</a> 运行时库</li>
+<li>racc/cparse.so</li>
+<li><a href="./rational-rb.html" title="rational.rb (762d)">rational.rb</a>
+<ul>
+<li><a href="./Rational.html" title="Rational (1073d)">Rational</a></li>
+</ul></li>
+<li><a href="./rbconfig.html" title="rbconfig.rb (1085d)">rbconfig.rb</a>     Ruby 解释器的设置信息
+<ul>
+<li><a href="./Config.html" title="Config (220d)" class="modified-year">Config</a></li>
+</ul></li>
+<li><a href="./readbytes.html" title="readbytes.rb (1112d)">readbytes.rb</a></li>
+<li><a href="./readline-so.html" title="readline.so (1129d)">readline.so</a>     GNU Readline 接口
+<ul>
+<li><a href="./Readline.html" title="Readline (1029d)">Readline</a></li>
+</ul></li>
+<li><a href="./resolv-replace.html" title="resolv-replace.rb (1077d)">resolv-replace.rb</a> 在处理Socket相关类名时使用resolv.rb</li>
+<li><a href="./resolv-rb.html" title="resolv.rb (1129d)">resolv.rb</a>       Ruby版Resolver
+<ul>
+<li><a href="./Resolv.html" title="Resolv (332d)" class="modified-year">Resolv</a></li>
+</ul></li>
+<li><a href="./rexml-rb.html" title="rexml/rexml.rb (443d)">rexml/rexml.rb</a>        XML parser      <font color=blue>ruby 1.8 特性</font>
+<ul>
+<li><a href="./REXML.html">REXML</a></li>
+</ul>
+</li>
+<li><a href="./rubyunit.html" title="rubyunit.rb (534d)">rubyunit.rb</a>     <a href="http://raa.ruby-lang.org/list.rhtml?name=RubyUnit">[RAA:RubyUnit]</a>兼容库 <font color=blue>ruby 1.8 特性</font>
+<ul>
+<li><a href="./RUNIT-Assert.html" title="RUNIT::Assert (443d)">RUNIT::Assert</a></li>
+</ul></li>
+<li><a href="./scanf.html" title="scanf.rb (429d)">scanf.rb</a>        <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./sdbm-so.html" title="sdbm.so (1129d)">sdbm.so</a>
+<ul>
+<li><a href="./SDBM.html" title="SDBM (940d)">SDBM</a></li>
+</ul></li>
+<li><a href="./set-rb.html" title="set.rb (781d)">set.rb</a>          有限集 <font color=blue>ruby 1.7 特性</font>
+<ul>
+<li><a href="./Set.html" title="Set (251d)" class="modified-year">Set</a>           <font color=blue>ruby 1.7 特性</font></li>
+</ul></li>
+<li><a href="./sha1.html" title="sha1.rb (1129d)">sha1.rb</a>         <em>该库已经停用(obsolete)</em>(请使用<a href="./digest/sha1.html" title="digest/sha1.so (387d)">digest/sha1.so</a>)</li>
+<li><a href="./shell.html" title="shell.rb (149d)" class="modified-year">shell.rb</a>              请参考<a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/doc/shell.rd.ja?rev=HEAD">[ruby-src:doc/shell.rd.ja]</a></li>
+<li><a href="./shellwords-rb.html" title="shellwords.rb (1129d)">shellwords.rb</a>
+<ul>
+<li><a href="./Shellwords.html" title="Shellwords (906d)">Shellwords</a></li>
+</ul></li>
+<li><a href="./singleton-rb.html" title="singleton.rb (1129d)">singleton.rb</a>    Ruby中的Singleton Pattern
+<ul>
+<li><a href="./Singleton.html" title="Singleton (260d)" class="modified-year">Singleton</a></li>
+</ul></li>
+<li><a href="./socket-so.html" title="socket.so (567d)">socket.so</a>       socket扩展库
+<ul>
+<li><a href="./BasicSocket.html" title="BasicSocket (567d)">BasicSocket</a>
+<ul>
+<li><a href="./IPSocket.html" title="IPSocket (943d)">IPSocket</a>
+<ul>
+<li><a href="./TCPSocket.html" title="TCPSocket (172d)" class="modified-year">TCPSocket</a>
+<ul>
+<li><a href="./TCPServer.html" title="TCPServer (808d)">TCPServer</a></li>
+<li><a href="./SOCKSSocket.html" title="SOCKSSocket (391d)">SOCKSSocket</a></li>
+</ul></li>
+<li><a href="./UDPSocket.html" title="UDPSocket (567d)">UDPSocket</a></li>
+</ul></li>
+<li><a href="./UNIXSocket.html" title="UNIXSocket (943d)">UNIXSocket</a>
+<ul>
+<li><a href="./UNIXServer.html" title="UNIXServer (808d)">UNIXServer</a></li>
+</ul></li>
+<li><a href="./Socket.html" title="Socket (292d)" class="modified-year">Socket</a></li>
+</ul></li>
+<li><a href="./Socket-Constants.html" title="Socket::Constants (157d)" class="modified-year">Socket::Constants</a></li>
+</ul></li>
+<li><a href="./stringio-so.html" title="stringio.so (773d)">stringio.so</a>     将字符串伪装成IO <font color=blue>ruby 1.7 特性</font>
+<ul>
+<li><a href="./StringIO.html" title="StringIO (54d)" class="modified-year">StringIO</a></li>
+</ul></li>
+<li><a href="./strscan.html" title="strscan.so (304d)" class="modified-year">strscan.so</a>      高速Scanner <font color=blue>ruby 1.7 特性</font>
+<ul>
+<li><a href="./strscan.html#class.20StringScanner" title="strscan.so (304d)" class="modified-year">class StringScanner</a></li>
+</ul></li>
+<li><a href="./sync-rb.html" title="sync.rb (1129d)">sync.rb</a>
+<ul>
+<li><a href="./Sync_m.html" title="Sync_m (960d)">Sync_m</a></li>
+<li><a href="./Synchronizer_m.html" title="Synchronizer_m (1101d)">Synchronizer_m</a></li>
+<li><a href="./Sync.html" title="Sync (1101d)">Sync</a></li>
+<li><a href="./Synchronizer.html" title="Synchronizer (1101d)">Synchronizer</a></li>
+</ul></li>
+<li><a href="./syslog-so.html" title="syslog.so (1043d)">syslog.so</a>
+<ul>
+<li><a href="./Syslog.html" title="Syslog (373d)">Syslog</a></li>
+<li><a href="./Syslog-Constants.html" title="Syslog::Constants (1032d)">Syslog::Constants</a></li>
+</ul></li>
+<li><a href="#" title="tcltk.rb (-)" class="dangling">tcltk.rb</a>        Tcl/Tk 库 (与<a href="./tk.html" title="tk.rb (320d)" class="modified-year">tk.rb</a>不同,它直接调用Tcl/Tk)</li>
+<li>telnet.rb             <em>该库已经停用(obsolete)</em>(请使用<a href="./net/telnet.html" title="net/telnet.rb (1129d)">net/telnet.rb</a>。在1.8中，该库已被删除)</li>
+<li><a href="./tempfile-rb.html" title="tempfile.rb (1129d)">tempfile.rb</a>     生成临时文件
+<ul>
+<li><a href="./Tempfile.html" title="Tempfile (777d)">Tempfile</a></li>
+</ul></li>
+<li><a href="./test-unit-rb.html" title="test/unit.rb (534d)">test/unit.rb</a>  unit测试 <font color=blue>ruby 1.8 特性</font>
+<ul>
+<li><a href="./Test-Unit.html" title="Test::Unit (245d)" class="modified-year">Test::Unit</a></li>
+</ul></li>
+<li><a href="./thread.html" title="thread.rb (521d)">thread.rb</a>       与线程相关的utility
+<ul>
+<li><a href="./thread-ConditionVariable.html" title="ConditionVariable (873d)">ConditionVariable</a></li>
+<li><a href="./thread-Mutex.html" title="Mutex (960d)">Mutex</a></li>
+<li><a href="./thread-Queue.html" title="Queue (963d)">Queue</a>
+<ul>
+<li><a href="./thread-SizedQueue.html" title="SizedQueue (959d)">SizedQueue</a></li>
+</ul></li>
+</ul></li>
+<li><a href="./thwait-rb.html" title="thwait.rb (1129d)">thwait.rb</a>
+<ul>
+<li><a href="./ThreadsWait.html" title="ThreadsWait (1126d)">ThreadsWait</a></li>
+<li><a href="./ThWait.html" title="ThWait (1129d)">ThWait</a></li>
+</ul></li>
+<li><a href="./time.html" title="time.rb (521d)">time.rb</a>         字符串和Time对象的变换</li>
+<li><a href="./timeout.html" title="timeout.rb (1007d)">timeout.rb</a>      处理超时的方法 timeout
+<ul>
+<li><a href="./TimeoutError.html" title="TimeoutError (429d)">TimeoutError</a></li>
+</ul></li>
+<li><a href="./tk.html" title="tk.rb (320d)" class="modified-year">tk.rb</a>           Ruby/Tk 请参考<a href="http://ns103.net/~arai/ruby/rubytk.html.gz">&lt;URL:http://ns103.net/~arai/ruby/rubytk.html.gz&gt;</a> </li>
+<li><a href="./tmpdir.html" title="tmpdir.rb (451d)">tmpdir.rb</a>       返回临时目录 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./tracer-rb.html" title="tracer.rb (521d)">tracer.rb</a>       Ruby 的tracer
+<ul>
+<li><a href="./Tracer.html" title="Tracer (1129d)">Tracer</a></li>
+</ul></li>
+<li><a href="./tsort-rb.html" title="tsort.rb (780d)">tsort.rb</a>        拓扑排序和强连接成分 <font color=blue>ruby 1.7 特性</font>
+<ul>
+<li><a href="./TSort.html" title="TSort (243d)" class="modified-year">TSort</a></li>
+</ul></li>
+<li><a href="./un.html" title="un.rb (430d)">un.rb</a>           类似Unix命令的文件操作utility <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./uri-rb.html" title="uri.rb (757d)">uri.rb</a>          URI 库</li>
+<li><a href="./uri/common.html" title="uri/common.rb (757d)">uri/common.rb</a></li>
+<li><a href="./uri/ftp.html" title="uri/ftp.rb (757d)">uri/ftp.rb</a></li>
+<li><a href="./uri/generic.html" title="uri/generic.rb (757d)">uri/generic.rb</a></li>
+<li><a href="./uri/http.html" title="uri/http.rb (757d)">uri/http.rb</a></li>
+<li><a href="./uri/https.html" title="uri/https.rb (757d)">uri/https.rb</a></li>
+<li><a href="./uri/ldap.html" title="uri/ldap.rb (757d)">uri/ldap.rb</a></li>
+<li><a href="./uri/mailto.html" title="uri/mailto.rb (757d)">uri/mailto.rb</a></li>
+<li><a href="./weakref.html" title="weakref.rb (1129d)">weakref.rb</a>      生成可被GC回收的"弱"reference
+<ul>
+<li><a href="./weakref.html#class.20WeakRef" title="weakref.rb (1129d)">class WeakRef</a></li>
+<li><a href="./weakref.html#class.20WeakRef.3a.3aRefError" title="weakref.rb (1129d)">class WeakRef::RefError</a></li>
+</ul></li>
+<li><a href="./webrick.html" title="webrick.rb (150d)" class="modified-year">webrick.rb</a>      WEB server toolkit</li>
+<li><a href="./Win32API-so.html" title="Win32API.so (1129d)">Win32API.so</a>     调用Win32 API的类 (win32 专用) 以后将用 dl/win32.rb 来取代它
+<ul>
+<li><a href="./Win32API.html" title="Win32API (264d)" class="modified-year">Win32API</a></li>
+</ul></li>
+<li><a href="./win32ole-so.html" title="win32ole.so (521d)">win32ole.so</a>     <a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/ext/win32ole/doc/win32ole.rd?rev=HEAD">[ruby-src:ext/win32ole/doc/win32ole.rd]</a><font color=blue>ruby 1.7 特性</font>
+<ul>
+<li><a href="./WIN32OLE.html" title="WIN32OLE (188d)" class="modified-year">WIN32OLE</a></li>
+</ul></li>
+<li><a href="./win32-registry-rb.html" title="win32/registry.rb (592d)">win32/registry.rb</a>     <font color=blue>ruby 1.7 特性</font>
+<ul>
+<li><a href="./Win32-Registry.html" title="Win32::Registry (593d)">Win32::Registry</a></li>
+</ul></li>
+<li><a href="./xmlrpc/base64.html" title="xmlrpc/base64.rb (145d)" class="modified-year">xmlrpc/base64.rb</a>      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/client.html" title="xmlrpc/client.rb (-)" class="dangling">xmlrpc/client.rb</a>      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/config.html" title="xmlrpc/config.rb (-)" class="dangling">xmlrpc/config.rb</a>      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/create.html" title="xmlrpc/create.rb (-)" class="dangling">xmlrpc/create.rb</a>      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/datetime.html" title="xmlrpc/datetime.rb (-)" class="dangling">xmlrpc/datetime.rb</a>    <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/httpserver.html" title="xmlrpc/httpserver.rb (-)" class="dangling">xmlrpc/httpserver.rb</a>  <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/marshal.html" title="xmlrpc/marshal.rb (-)" class="dangling">xmlrpc/marshal.rb</a>     <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/parser.html" title="xmlrpc/parser.rb (-)" class="dangling">xmlrpc/parser.rb</a>      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/server.html" title="xmlrpc/server.rb (-)" class="dangling">xmlrpc/server.rb</a>      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/utils.html" title="xmlrpc/utils.rb (-)" class="dangling">xmlrpc/utils.rb</a>       <font color=blue>ruby 1.8 特性</font>
+<ul>
+<li><a href="./XMLRPC.html" title="XMLRPC (436d)">XMLRPC</a></li>
+</ul></li>
+<li><a href="./yaml.html" title="yaml.rb (240d)" class="modified-year">yaml.rb</a>         YAML <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./zlib.html" title="zlib.so (521d)">zlib.so</a>         字符串压缩·扩展 <font color=blue>ruby 1.8 特性</font></li>
+</ul>
+<h2><a name="a.a5.ab.a5.c6.a5.b4.a5.ea.ca.cc" id="a.a5.ab.a5.c6.a5.b4.a5.ea.ca.cc">范畴分类</a><!-- RDLabel: "范畴分类" --></h2>
+<h3><a name="a.a5.c6.a5.ad.a5.b9.a5.c8" id="a.a5.c6.a5.ad.a5.b9.a5.c8">文本</a><!-- RDLabel: "文本" --></h3>
+<ul>
+<li><a href="./base64.html" title="base64.rb (1102d)">base64.rb</a>       处理Base64编码的模块</li>
+<li><a href="./csv.html" title="csv.rb (306d)" class="modified-year">csv.rb</a>          CSV(Comma Separated Values)库 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./digest.html" title="digest.so (387d)">digest.so</a>       消息摘要库  请参考<a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/ext/digest/digest.txt.ja?rev=HEAD">[ruby-src:ext/digest/digest.txt.ja]</a></li>
+<li><a href="./digest/md5.html" title="digest/md5.so (387d)">digest/md5.so</a></li>
+<li><a href="./digest/rmd160.html" title="digest/rmd160.so (387d)">digest/rmd160.so</a></li>
+<li><a href="./digest/sha1.html" title="digest/sha1.so (387d)">digest/sha1.so</a></li>
+<li><a href="./digest/sha2.html" title="digest/sha2.so (387d)">digest/sha2.so</a></li>
+<li><a href="./erb-rb.html" title="erb.rb (699d)">erb.rb</a>         嵌入Ruby(ERB) <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./iconv-so.html" title="iconv.so (772d)">iconv.so</a>        字符串编码转换库 <a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/ext/iconv/iconv.c?rev=HEAD">[ruby-src:ext/iconv/iconv.c]</a><font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./mailread.html" title="mailread.rb (1129d)">mailread.rb</a>     从mail中获取信息</li>
+<li><a href="./shellwords-rb.html" title="shellwords.rb (1129d)">shellwords.rb</a></li>
+<li><a href="./stringio-so.html" title="stringio.so (773d)">stringio.so</a>     将字符串伪装成IO <font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./strscan.html" title="strscan.so (304d)" class="modified-year">strscan.so</a>      高速Scanner <font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./yaml.html" title="yaml.rb (240d)" class="modified-year">yaml.rb</a>         YAML <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./zlib.html" title="zlib.so (521d)">zlib.so</a>         字符串压缩·扩展 <font color=blue>ruby 1.8 特性</font></li>
+</ul>
+<h3><a name="a.a5.d5.a5.a1.a5.a4.a5.eb" id="a.a5.d5.a5.a1.a5.a4.a5.eb">文件</a><!-- RDLabel: "文件" --></h3>
+<ul>
+<li><a href="./ftools.html" title="ftools.rb (214d)" class="modified-year">ftools.rb</a>       文件操作utility(旧)</li>
+<li><a href="./fileutils.html" title="fileutils.rb (938d)">fileutils.rb</a>    文件操作utility (ftools.rb 的升级版)       <font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./find-rb.html" title="find.rb (1129d)">find.rb</a>         文件搜索模块</li>
+<li><a href="./io/nonblock.html" title="io/nonblock.rb (388d)">io/nonblock.rb</a> IO 类的扩展(添加与nonblock模式相关的方法)</li>
+<li><a href="./io/wait.html" title="io/wait.so (388d)">io/wait.so</a>     IO 类的扩展(添加负责等待IO输入的方法)</li>
+<li><a href="./pathname.html" title="pathname.rb (372d)">pathname.rb</a>     路径名类 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./tempfile-rb.html" title="tempfile.rb (1129d)">tempfile.rb</a>     生成临时文件</li>
+<li><a href="./tmpdir.html" title="tmpdir.rb (451d)">tmpdir.rb</a>       返回临时目录 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./un.html" title="un.rb (430d)">un.rb</a>           类似Unix命令的文件操作utility <font color=blue>ruby 1.8 特性</font></li>
+</ul>
+<h3><a name="a.a5.cd.a5.c3.a5.c8.a5.ef.a1.bc.a5.af" id="a.a5.cd.a5.c3.a5.c8.a5.ef.a1.bc.a5.af">网络</a><!-- RDLabel: "网络" --></h3>
+<ul>
+<li><a href="./cgi/session.html" title="cgi/session.rb (1129d)">cgi/session.rb</a>  CGI会话管理</li>
+<li><a href="./cgi/session/pstore.html" title="cgi/session/pstore.rb (-)" class="dangling">cgi/session/pstore.rb</a></li>
+<li><a href="./cgi-rb.html" title="cgi.rb (1129d)">cgi.rb</a>          辅助生成CGI</li>
+<li><a href="./drb.html" title="drb.rb (381d)">drb.rb</a>          分布式 Ruby (dRuby) <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./gserver.html" title="gserver.rb (287d)" class="modified-year">gserver.rb</a>      Ruby Generic Server <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./ipaddr-rb.html" title="ipaddr.rb (107d)" class="modified-year">ipaddr.rb</a>       IP地址类(IPAddr) <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./net/ftp.html" title="net/ftp.rb (6d)" class="modified-month">net/ftp.rb</a></li>
+<li><a href="#" title="net/ftptls.rb (-)" class="dangling">net/ftptls.rb</a></li>
+<li><a href="./net/http.html" title="net/http.rb (273d)" class="modified-year">net/http.rb</a></li>
+<li><a href="./net/https.html" title="net/https.rb (305d)" class="modified-year">net/https.rb</a></li>
+<li><a href="./net/imap.html" title="net/imap.rb (155d)" class="modified-year">net/imap.rb</a></li>
+<li><a href="./net/pop.html" title="net/pop.rb (476d)">net/pop.rb</a></li>
+<li><a href="./net/smtp.html" title="net/smtp.rb (466d)">net/smtp.rb</a></li>
+<li><a href="./net/telnet.html" title="net/telnet.rb (1129d)">net/telnet.rb</a></li>
+<li><a href="#" title="net/telnets.rb (-)" class="dangling">net/telnets.rb</a></li>
+<li><a href="./openssl.html" title="openssl.rb (24d)" class="modified-month">openssl.rb</a>      Ruby/OpenSSL  <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./open-uri.html" title="open-uri.rb (247d)" class="modified-year">open-uri.rb</a>     open() 的 URI支持扩展 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./ping-rb.html" title="ping.rb (1129d)">ping.rb</a>         验证数据包是否到达主机</li>
+<li><a href="./resolv-replace.html" title="resolv-replace.rb (1077d)">resolv-replace.rb</a> 在处理Socket相关类名时使用resolv.rb</li>
+<li><a href="./resolv-rb.html" title="resolv.rb (1129d)">resolv.rb</a>       Ruby版Resolver</li>
+<li><a href="./socket-so.html" title="socket.so (567d)">socket.so</a>       socket扩展库</li>
+<li><a href="./webrick.html" title="webrick.rb (150d)" class="modified-year">webrick.rb</a>      WEB server toolkit</li>
+<li><a href="./xmlrpc/base64.html" title="xmlrpc/base64.rb (145d)" class="modified-year">xmlrpc/base64.rb</a>      XML-RPC (remote procedure calls over HTTP using XML) for Ruby <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/client.html" title="xmlrpc/client.rb (-)" class="dangling">xmlrpc/client.rb</a>      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/config.html" title="xmlrpc/config.rb (-)" class="dangling">xmlrpc/config.rb</a>      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/create.html" title="xmlrpc/create.rb (-)" class="dangling">xmlrpc/create.rb</a>      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/datetime.html" title="xmlrpc/datetime.rb (-)" class="dangling">xmlrpc/datetime.rb</a>    <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/httpserver.html" title="xmlrpc/httpserver.rb (-)" class="dangling">xmlrpc/httpserver.rb</a>  <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/marshal.html" title="xmlrpc/marshal.rb (-)" class="dangling">xmlrpc/marshal.rb</a>     <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/parser.html" title="xmlrpc/parser.rb (-)" class="dangling">xmlrpc/parser.rb</a>      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/server.html" title="xmlrpc/server.rb (-)" class="dangling">xmlrpc/server.rb</a>      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./xmlrpc/utils.html" title="xmlrpc/utils.rb (-)" class="dangling">xmlrpc/utils.rb</a>       <font color=blue>ruby 1.8 特性</font></li>
+</ul>
+<h3><a name="a.c6.fe.bd.d0.ce.cf" id="a.c6.fe.bd.d0.ce.cf">输入输出</a><!-- RDLabel: "输入输出" --></h3>
+<ul>
+<li><a href="./open3-rb.html" title="open3.rb (1129d)">open3.rb</a></li>
+<li><a href="./readbytes.html" title="readbytes.rb (1112d)">readbytes.rb</a></li>
+<li><a href="./scanf.html" title="scanf.rb (429d)">scanf.rb</a>        <font color=blue>ruby 1.8 特性</font></li>
+</ul>
+<h3><a name="a.c6.fc.cb.dc.b8.ec" id="a.c6.fc.cb.dc.b8.ec">日语</a><!-- RDLabel: "日语" --></h3>
+<ul>
+<li><a href="./jcode.html" title="jcode.rb (521d)">jcode.rb</a>        使String类支持日语</li>
+<li><a href="./kconv.html" title="kconv.rb (642d)">kconv.rb</a>         汉字编码转换</li>
+<li><a href="./nkf-so.html" title="nkf.so (1129d)">nkf.so</a>          日语字符代码编码转换</li>
+</ul>
+<h3><a name="a.bf.f4.b3.d8" id="a.bf.f4.b3.d8">数学</a><!-- RDLabel: "数学" --></h3>
+<ul>
+<li><a href="./bigdecimal.html" title="bigdecimal.so (520d)">bigdecimal.so</a>   可变长度浮点数运算 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./bigdecimal/jacobian.html" title="bigdecimal/jacobian.rb (-)" class="dangling">bigdecimal/jacobian.rb</a></li>
+<li><a href="./bigdecimal/ludcmp.html" title="bigdecimal/ludcmp.rb (-)" class="dangling">bigdecimal/ludcmp.rb</a></li>
+<li><a href="./bigdecimal/newton.html" title="bigdecimal/newton.rb (-)" class="dangling">bigdecimal/newton.rb</a></li>
+<li><a href="./bigdecimal/nlsolve.html" title="bigdecimal/nlsolve.rb (-)" class="dangling">bigdecimal/nlsolve.rb</a></li>
+<li><a href="./bigdecimal/utils.html" title="bigdecimal/utils.rb (-)" class="dangling">bigdecimal/utils.rb</a></li>
+<li><a href="./complex-rb.html" title="complex.rb (539d)">complex.rb</a>      复数类</li>
+<li><a href="./mathn.html" title="mathn.rb (180d)" class="modified-year">mathn.rb</a></li>
+<li><a href="./matrix-rb.html" title="matrix.rb (931d)">matrix.rb</a>       矩阵类</li>
+<li><a href="./rational-rb.html" title="rational.rb (762d)">rational.rb</a></li>
+<li><a href="./set-rb.html" title="set.rb (781d)">set.rb</a>          有限集 <font color=blue>ruby 1.7 特性</font></li>
+</ul>
+<h3><a name="a.a5.c7.a1.bc.a5.bf.a5.d9.a1.bc.a5.b9" id="a.a5.c7.a1.bc.a5.bf.a5.d9.a1.bc.a5.b9">数据库</a><!-- RDLabel: "数据库" --></h3>
+<ul>
+<li><a href="./dbm-so.html" title="dbm.so (55d)" class="modified-year">dbm.so</a>          可将ndbm用作哈希表的库</li>
+<li><a href="./gdbm-so.html" title="gdbm.so (1129d)">gdbm.so</a>         将gdbm (GNU dbm)用作哈希表的库</li>
+<li><a href="./pstore-rb.html" title="pstore.rb (1129d)">pstore.rb</a>        对象永久化</li>
+<li><a href="./sdbm-so.html" title="sdbm.so (1129d)">sdbm.so</a></li>
+</ul>
+<h3><a name="a.b2.e8.cc.cc.c0.a9.b8.e6.a1.bfCUI" id="a.b2.e8.cc.cc.c0.a9.b8.e6.a1.bfCUI">画面控制/CUI</a><!-- RDLabel: "画面控制/CUI" --></h3>
+<ul>
+<li><a href="./curses.html" title="curses.so (433d)">curses.so</a>       终端操作库 curses 的接口</li>
+<li><a href="./expect.html" title="expect.rb (521d)">expect.rb</a>       在脚本中控制交互程序</li>
+<li><a href="./fcntl-so.html" title="fcntl.so (1129d)">fcntl.so</a>        该模块中囊括了<a href="./manual+page" title="manual page (775d)">fcntl(2)</a>中用到的常数</li>
+<li><a href="./irb.html" title="irb.rb (521d)">irb.rb</a>          Interactive Ruby (Ruby 的交互界面)</li>
+<li><a href="./pty-so.html" title="pty.so (1129d)">pty.so</a>          处理伪终端(Pseudo tTY)的模块</li>
+<li><a href="./readline-so.html" title="readline.so (1129d)">readline.so</a>     GNU Readline 接口</li>
+<li><a href="./shell.html" title="shell.rb (149d)" class="modified-year">shell.rb</a>              请参考<a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/doc/shell.rd.ja?rev=HEAD">[ruby-src:doc/shell.rd.ja]</a> </li>
+</ul>
+<h3><a name="GUI" id="GUI">GUI</a><!-- RDLabel: "GUI" --></h3>
+<ul>
+<li><a href="./multi-tk.html" title="multi-tk.rb (444d)">multi-tk.rb</a>     支持多个Tcl解释器的Ruby/Tk <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./tk.html" title="tk.rb (320d)" class="modified-year">tk.rb</a>           Ruby/Tk <a href="http://ns103.net/~arai/ruby/rubytk.html.gz">&lt;URL:http://ns103.net/~arai/ruby/rubytk.html.gz&gt;</a> </li>
+</ul>
+<h3><a name="a.c6.fc.c9.d5.a1.a6.bb.fe.b4.d6" id="a.c6.fc.c9.d5.a1.a6.bb.fe.b4.d6">日期·时间</a><!-- RDLabel: "日期·时间" --></h3>
+<ul>
+<li><a href="./date-rb.html" title="date.rb (435d)">date.rb</a>         日期类</li>
+<li><a href="./parsedate-rb.html" title="parsedate.rb (1030d)">parsedate.rb</a>    日期格式的解析</li>
+<li><a href="./time.html" title="time.rb (521d)">time.rb</a>         字符串和Time对象的变换</li>
+</ul>
+<h3><a name="a.a5.de.a5.eb.a5.c1.a5.b9.a5.ec.a5.c3.a5.c9.a1.a6.c6.b1.b4.fc" id="a.a5.de.a5.eb.a5.c1.a5.b9.a5.ec.a5.c3.a5.c9.a1.a6.c6.b1.b4.fc">多线程·同步</a><!-- RDLabel: "多线程·同步" --></h3>
+<ul>
+<li><a href="./monitor-rb.html" title="monitor.rb (922d)">monitor.rb</a></li>
+<li><a href="./mutex_m.html" title="mutex_m.rb (1129d)">mutex_m.rb</a></li>
+<li><a href="./sync.html" title="sync.rb (1129d)">sync.rb</a></li>
+<li><a href="./thread.html" title="thread.rb (521d)">thread.rb</a>       与线程相关的utility</li>
+<li><a href="./thwait-rb.html" title="thwait.rb (1129d)">thwait.rb</a></li>
+</ul>
+<h3><a name="Unix" id="Unix">Unix</a><!-- RDLabel: "Unix" --></h3>
+<ul>
+<li><a href="./etc-so.html" title="etc.so (1129d)">etc.so</a>          操作<code>/etc/passwd</code>等的库</li>
+<li><a href="./syslog-so.html" title="syslog.so (1043d)">syslog.so</a>       UNIX syslog 接口</li>
+</ul>
+<h3><a name="MS.20Windows" id="MS.20Windows">MS Windows</a><!-- RDLabel: "MS Windows" --></h3>
+<ul>
+<li><a href="./Win32API-so.html" title="Win32API.so (1129d)">Win32API.so</a>     调用Win32 API的类 (win32 专用) 以后将用 dl/win32.rb 来取代它</li>
+<li><a href="./win32ole-so.html" title="win32ole.so (521d)">win32ole.so</a>     <a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/ext/win32ole/doc/win32ole.rd?rev=HEAD">[ruby-src:ext/win32ole/doc/win32ole.rd]</a><font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./win32-registry-rb.html" title="win32/registry.rb (592d)">win32/registry.rb</a>     <font color=blue>ruby 1.7 特性</font></li>
+</ul>
+<h3><a name="a.c0.b5.b5.ac.c9.bd.b8.bd" id="a.c0.b5.b5.ac.c9.bd.b8.bd">正则表达式</a><!-- RDLabel: "正则表达式" --></h3>
+<ul>
+<li><a href="./eregex.html" title="eregex.rb (1129d)">eregex.rb</a>       可使用`|', `&amp;'操作符将2个正则表达式连接起来</li>
+</ul>
+<h3><a name="GC" id="GC">GC</a><!-- RDLabel: "GC" --></h3>
+<ul>
+<li><a href="./finalize-rb.html" title="finalize.rb (1129d)">finalize.rb</a></li>
+<li><a href="./weakref.html" title="weakref.rb (1129d)">weakref.rb</a>      生成可被GC回收的"弱"reference</li>
+</ul>
+<h3><a name="a.a5.c7.a5.b6.a5.a4.a5.f3.a5.d1.a5.bf.a1.bc.a5.f3" id="a.a5.c7.a5.b6.a5.a4.a5.f3.a5.d1.a5.bf.a1.bc.a5.f3">Design Pattern</a><!-- RDLabel: "Design Pattern" --></h3>
+<ul>
+<li><a href="./delegate.html" title="delegate.rb (393d)">delegate.rb</a>     支持委托的类</li>
+<li><a href="./forwardable-rb.html" title="forwardable.rb (521d)">forwardable.rb</a>  向类中定义方法委托的功能(请参考<a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/doc/forwardable.rd.ja?rev=HEAD">[ruby-src:doc/forwardable.rd.ja]</a>)</li>
+<li><a href="./observer-rb.html" title="observer.rb (1129d)">observer.rb</a>     Ruby中的Observer Pattern</li>
+<li><a href="./singleton-rb.html" title="singleton.rb (1129d)">singleton.rb</a>    Ruby中的Singleton Pattern</li>
+</ul>
+<h3><a name="a.b3.ab.c8.af.a5.c4.a1.bc.a5.eb" id="a.b3.ab.c8.af.a5.c4.a1.bc.a5.eb">开发工具</a><!-- RDLabel: "开发工具" --></h3>
+<ul>
+<li><a href="./benchmark.html" title="benchmark.rb (380d)">benchmark.rb</a>    <font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./debug.html" title="debug.rb (161d)" class="modified-year">debug.rb</a>        Ruby 调试器</li>
+<li><a href="./mkmf.html" title="mkmf.rb (521d)">mkmf.rb</a>         制作扩展库的工具</li>
+<li><a href="./profile.html" title="profile.rb (776d)">profile.rb</a>      PROFILER</li>
+<li><a href="./profiler.html" title="profiler.rb (520d)">profiler.rb</a>     <font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./rbconfig.html" title="rbconfig.rb (1085d)">rbconfig.rb</a>     Ruby 解释器的设置信息</li>
+<li><a href="./rubyunit.html" title="rubyunit.rb (534d)">rubyunit.rb</a>     <a href="http://raa.ruby-lang.org/list.rhtml?name=RubyUnit">[RAA:RubyUnit]</a>兼容库 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./test-unit-rb.html" title="test/unit.rb (534d)">test/unit.rb</a>  unit测试 <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./tracer-rb.html" title="tracer.rb (521d)">tracer.rb</a>       Ruby 的tracer</li>
+</ul>
+<h3><a name="a.a5.b3.a5.de.a5.f3.a5.c9.a5.e9.a5.a4.a5.f3" id="a.a5.b3.a5.de.a5.f3.a5.c9.a5.e9.a5.a4.a5.f3">命令行</a><!-- RDLabel: "命令行" --></h3>
+<ul>
+<li><a href="./getoptlong.html" title="getoptlong.rb (1129d)">getoptlong.rb</a>   命令行选项的解析</li>
+<li><a href="./getopts.html" title="getopts.rb (373d)">getopts.rb</a>      命令行选项的解析</li>
+<li><a href="./parsearg.html" title="parsearg.rb (521d)">parsearg.rb</a>     命令行选项的解析(<a href="./getopts.html" title="getopts.rb (373d)">getopts.rb</a>)</li>
+<li><a href="./optparse.html" title="optparse.rb (86d)" class="modified-year">optparse.rb</a>     命令行选项的解析 <font color=blue>ruby 1.7 特性</font></li>
+</ul>
+<h3><a name="a.a4.bd.a4.ce.c2.be" id="a.a4.bd.a4.ce.c2.be">其他</a><!-- RDLabel: "其他" --></h3>
+<ul>
+<li><a href="./English.html" title="English.rb (521d)">English.rb</a>      给特殊变量 $! 等添加英文别名($ERROR_INFO 等)</li>
+<li><a href="./dl.html" title="dl.so (712d)">dl.so</a>           <a href="http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/ext/dl/doc/dl.txt?rev=HEAD">[ruby-src:ext/dl/doc/dl.txt]</a><font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./dl/import.html" title="dl/import.rb (734d)">dl/import.rb</a>  请参考dl.so 。<font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./dl/struct.html" title="dl/struct.rb (734d)">dl/struct.rb</a>  请参考dl.so 。<font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./dl/types.html" title="dl/types.rb (681d)">dl/types.rb</a>   请参考dl.so 。<font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./dl/win32.html" title="dl/win32.rb (734d)">dl/win32.rb</a>   用来代替Win32API。<font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./e2mmap.html" title="e2mmap.rb (1129d)">e2mmap.rb</a>        异常类和消息的映象</li>
+<li><a href="./enumerator.html" title="enumerator.so (87d)" class="modified-year">enumerator.so</a></li>
+<li><a href="./importenv.html" title="importenv.rb (1129d)">importenv.rb</a>    以操作全局变量的方式来处理环境变量</li>
+<li><a href="./ostruct.html" title="ostruct.rb (1129d)">ostruct.rb</a>       Python 式的“attr on write”Struct</li>
+<li><a href="./pp-rb.html" title="pp.rb (780d)">pp.rb</a>           Pretty-printer <font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./prettyprint-rb.html" title="prettyprint.rb (780d)">prettyprint.rb</a>  PrettyPrint <font color=blue>ruby 1.7 特性</font></li>
+<li>racc/parser.rb                <a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Racc">Racc</a> 运行时库</li>
+<li>racc/cparse.so</li>
+<li><a href="./rexml-rb.html" title="rexml/rexml.rb (443d)">rexml/rexml.rb</a>        XML parser      <font color=blue>ruby 1.8 特性</font></li>
+<li><a href="./timeout.html" title="timeout.rb (1007d)">timeout.rb</a>      处理超时的方法 timeout</li>
+<li><a href="./tsort-rb.html" title="tsort.rb (780d)">tsort.rb</a>    拓扑排序和强连接成分  <font color=blue>ruby 1.7 特性</font></li>
+<li><a href="./uri-rb.html" title="uri.rb (757d)">uri.rb</a>          URI 库</li>
+<li><a href="./uri/common.html" title="uri/common.rb (757d)">uri/common.rb</a></li>
+<li><a href="./uri/ftp.html" title="uri/ftp.rb (757d)">uri/ftp.rb</a></li>
+<li><a href="./uri/generic.html" title="uri/generic.rb (757d)">uri/generic.rb</a></li>
+<li><a href="./uri/http.html" title="uri/http.rb (757d)">uri/http.rb</a></li>
+<li><a href="./uri/https.html" title="uri/https.rb (757d)">uri/https.rb</a></li>
+<li><a href="./uri/ldap.html" title="uri/ldap.rb (757d)">uri/ldap.rb</a></li>
+<li><a href="./uri/mailto.html" title="uri/mailto.rb (757d)">uri/mailto.rb</a></li>
+</ul>
+
+</div>
+<hr />
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

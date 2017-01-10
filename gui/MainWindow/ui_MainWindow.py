@@ -30,6 +30,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.gridLayout = QtGui.QGridLayout(self.centralwidget)
+        self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.tabWidget = QtGui.QTabWidget(self.centralwidget)
         self.tabWidget.setTabPosition(QtGui.QTabWidget.West)

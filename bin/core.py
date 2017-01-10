@@ -33,6 +33,7 @@ class MainForm(QMainWindow, ui_MainWindow.Ui_MainWindow):
         try:
             plugin.form.setParent(tab)
             vertical_layout = QVBoxLayout(tab)
+            vertical_layout.setMargin(0)
             vertical_layout.addWidget(plugin.form)
         except AttributeError:
             print 'ignore this err'

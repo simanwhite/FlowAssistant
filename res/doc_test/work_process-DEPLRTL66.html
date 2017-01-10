@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-DEPLRTL66</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Nov_2016.html" class="wikidpad">calendar_Nov_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-DEPLRTL66</h2>
+<hr class="wikidpad" />
+标题: There isn't compute_array23 in repeater.upf<br class="wikidpad" />
+JIRA地址: <span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DEPLRTL-66" class="wikidpad">http://ontrack-internal.amd.com/browse/DEPLRTL-66</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h216" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" /><br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h329" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+vnc: atlnonveu-0729:9<br class="wikidpad" />
+password: 123456<br class="wikidpad" />
+/proj/plr22-dv7-nobackup/jbzhang/plr22_percu_pg<br class="wikidpad" />
+Polaris22<br class="wikidpad" />
+又是个stdgen的项目, 哭晕...<br class="wikidpad" />
+<pre class="wikidpad">lsf_bsub -q fstsim -P gnl-ver -R "select[(gb128||gb256)&amp;&amp;(type==RHEL5_64)] rusag
+e[mem=30000]" -J Polaris22_soc_gcpg_percu_pg_parba_CL2499780 dj -c -v -e 'run_te
+st "gcpg/all -W \"when=~dgpu_percu\" -v"' -J lsf -m 30 -l logs/Polaris22_soc_gcp
+g_percu_pg_parba_CL2499780_20161017 -DPOWER_GATING -DRUN_GC_SIM -DSKIP_EMU_PG -D
+STATIC_CU_PG_RLC_DV -DDISABLE_ABV -DNO_PSL -DDGPU_PERCU_PG -DUSE_PD_REPEATER -DP
+D_REPEATER_SRC=$STEM/pd/nl/floorplan/pd_repeaters.xml -DDEBUG -DDUMPCTRL=$STEM/d
+ump/dump.f -DCOMP_MAX_ERRORS=99999 -DSIM_MAX_ERRORS=99999 --save_cmd_logs -j sim
+_build
+</pre>
+<pre class="wikidpad">lsf_bsub -q regr_high -P gnl-ver -R "select[(gb128||gb256)&amp;&amp;(type==RHEL5_64)] ru
+sage[mem=30000]" -J Polaris22_soc_percu_pg_regression_case_parba_CL2530775 dj -c
+ -v -e 'run_test "pg/all -W \"when=~dgpu_percu\" -v"' -J lsf -m 20 -l logs/Polar
+is22_soc_percu_pg_regression_case_parba_CL2530775_20161104_1 -DDISABLE_ABV -DNO_
+PSL -DDGPU_PERCU_PG -DUSE_PD_REPEATER -DPD_REPEATER_SRC=$STEM/pd/nl/floorplan/pd
+_repeaters.xml -DDEBUG -DDUMPCTRL=$STEM/dump/dump.f -DCOMP_MAX_ERRORS=99999 -DSI
+M_MAX_ERRORS=99999 --save_cmd_logs -j sim_build
+</pre>
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+There are 4 compute_array in polaris22. But in the generated repeater.upf, there<ul class="wikidpad normalindent">are only compute_array01 but not compute_array23. Could you please check the ch</ul>
+ip.upf.2.0 and repeater.tmpl <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1876" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+<a name=".h1979" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-11-3</h4>
+stdgen -&gt; repeater.tmpl中nigel为gfx加了特殊处理:<br class="wikidpad" />
+<pre class="wikidpad">#Hack for gfx container 
+if ($inst =~ /^compute_array_/ ) {
+    $ele .= " core/compute_array0/$inst";
+    $ele .= " core/compute_array1/$inst";
+} elsif ($inst =~ /^compute_array23_/ ) {
+    $ele .= " compute_array2/$inst";
+    $ele .= " compute_array3/$inst";
+} else {
+$ele .= " core/$inst";
+}
+</pre>
+<br class="wikidpad" />
+<a name=".h2341" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-11-4</h4>
+新生成的upf在vcs_compile的时候会报错误:<br class="wikidpad" />
+<br class="wikidpad" />
+UPF_ONF: Object not found<br class="wikidpad" />
+UPF_MULT_DRV: Multiple driver cannot be added<br class="wikidpad" />
+<br class="wikidpad" />
+Note- UPF_SSNAD: SupplySet not associated to Domain<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h2512" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-11-9</h4>
+polaris22有7个tile:<br class="wikidpad" />
+lsd<br class="wikidpad" />
+sp0<br class="wikidpad" />
+sqc<br class="wikidpad" />
+sp1<br class="wikidpad" />
+sq<br class="wikidpad" />
+tatd<br class="wikidpad" />
+tcp<br class="wikidpad" />
+<br class="wikidpad" />
+change list 2543831<br class="wikidpad" />
+codereview: <span class="wikidpad url-link"><a href="http://codereview/ui#review:id=67366" class="wikidpad">http://codereview/ui#review:id=67366</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+[tags: <br class="wikidpad" />
+    </body>
+</html>

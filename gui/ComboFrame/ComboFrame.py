@@ -6,6 +6,8 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 import ui_ComboFrame
 
+from lib.GuiUtils import attach_one_form_to_another
+
 
 class ComboFrame(QFrame, ui_ComboFrame.Ui_Frame):
     def __init__(self, form_list=None):
@@ -35,30 +37,7 @@ class ComboFrame(QFrame, ui_ComboFrame.Ui_Frame):
 
     def set_current_form(self, title):
         form_to_show = self._form_map[title]
-        self._attach_one_form_to_another(form_to_show, self.frame)
-
-    @staticmethod
-    def _attach_one_form_to_another(one_form, another_form):
-        """
-        This function is made static. It will set one form to the child of
-        another one, and show it as vertical layout in that parent form.
-        :param one_form: the child
-        :param another_form: the parent
-        :return:
-        """
-        one_form.setParent(another_form)
-        if isinstance(another_form.layout(), type(None)):
-            layout = QVBoxLayout(another_form)
-        else:
-            layout = another_form.layout()
-            for index in range(layout.count()):
-                layout_item = layout.itemAt(index)
-                layout.removeItem(layout_item)
-                layout_widget = layout_item.widget()
-                if not isinstance(layout_widget, type(None)):
-                    layout_widget.setShown(False)
-        layout.addWidget(one_form)
-        one_form.setShown(True)
+        attach_one_form_to_another(form_to_show, self.frame)
 
     def combobox_change_slot(self):
         new_text = str(self.comboBox.currentText())

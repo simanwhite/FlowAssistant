@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-JIRA322</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Oct_2016.html" class="wikidpad">calendar_Oct_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span> | <span class="wikidpad parent-node"><a href="运行环境收集.html" class="wikidpad">运行环境收集</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-JIRA322</h2>
+<hr class="wikidpad" />
+标题: <br class="wikidpad" />
+JIRA地址: <span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DMVMTVRF-322" class="wikidpad">http://ontrack-internal.amd.com/browse/DMVMTVRF-322</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h173" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" /><br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h286" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+GFX<br class="wikidpad" />
+dj -v -m -c -DSKIP_EMU_PG -DUSE_VRQ -l gcpg_cgpg_sanity_gfxip.log -e 'run_test "<br class="wikidpad" />
+gcpg/gcpg_cgpg_sanity_gfxip -DPG_ASSERT -DPOWER_GATING -D RUN_GC_SIM"' -DPG_CG_W<br class="wikidpad" />
+2E -DCG_W2E -DUSE_NLP -D PG_MONITOR_DISABLE<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+Zhang Yi: You also need to change to default control port to daughter_sleep <br class="wikidpad" />
+instead of mother_sleep.<br class="wikidpad" />
+<br class="wikidpad" />
+这个问题是针对cgpg block的, 涉及文件cgpg_block.upf2.tmpl<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h755" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+<a name=".h858" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-10-11</h4>
+cgpg_block.upf2.tmpl中<br class="wikidpad" />
+&lt;:  <br class="wikidpad" />
+my @psw_1 = split(/;/, $PG_P1_SW_EN1);<br class="wikidpad" />
+my @psw_2 = split(/;/, $PG_P1_SW_EN2);<br class="wikidpad" />
+for $i (0..$#psw_1) {<ul class="wikidpad normalindent">$PG_P1_SW_EN1 = $psw_1[$i]; <br class="wikidpad" />
+<ul class="wikidpad normalindent">print "create_power_switch SW_VDDGFX_P1_${i} \n";<br class="wikidpad" />
+print " -domain PD_VDDGFX_P1 \n";<br class="wikidpad" />
+print " -input_supply_port {vin $POWER_BLOCK} \n";<br class="wikidpad" />
+print " -output_supply_port {vout VDDGFX_P1} \n";<br class="wikidpad" />
+print " -control_port { $MOTH_PORT $PG_P1_SW_EN1} \n";<br class="wikidpad" />
+print "	-on_state {SW_ON vin {!${en1}$MOTH_PORT}} \n";<br class="wikidpad" />
+print "	-off_state {SW_OFF {${en1}$MOTH_PORT }}n";<br class="wikidpad" />
+print " n";</ul>
+</ul>
+<ul class="wikidpad normalindent">if ($MAP_POWER_SWITCH) { <ul class="wikidpad normalindent">print "map_power_switch SW_VDDGFX_P1_${i} \n";<br class="wikidpad" />
+print " -domain PD_VDDGFX_P1 \n";<br class="wikidpad" />
+print " -lib_cells {$LIBCELL_SW_CTRL1} \n";<br class="wikidpad" />
+print " n";</ul>
+}</ul>
+}<br class="wikidpad" />
+:&gt;//<br class="wikidpad" />
+已经写死了要用SW_EN1<br class="wikidpad" />
+<br class="wikidpad" />
+Zhang Yi: Nigel 已经在38.1.43.rc8里面改好了这个问题. <br class="wikidpad" />
+<br class="wikidpad" />
+atlnonveu-0629:/proj/cv_srdc/qzuo/powerflow_jira322[ 76 ] --&gt; p4 shelve -c 2508496<br class="wikidpad" />
+Shelving files for change 2508496.<br class="wikidpad" />
+edit //tools/internal/powerflow/main/src/template/cgpg_block.upf2.tmpl#32<br class="wikidpad" />
+Change 2508496 files shelved.<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1974" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-10-21</h4>
+Release test: powerflow_pkg/jira314_1019: 加2D array新特性<br class="wikidpad" />
+Release test: powerflow_pkg/for_gfx_1019_debug: JIRA321临时fix, <br class="wikidpad" />
+把SS_GFXVDD_P1去掉了, 但会对SOC情况有影响<br class="wikidpad" />
+<br class="wikidpad" />
+Shelving files for change 2520881.<br class="wikidpad" />
+edit //tools/internal/powerflow/main/src/params/pg_block.params#40<br class="wikidpad" />
+edit //tools/internal/powerflow/main/src/template/cgpg_block.upf2.tmpl#33<br class="wikidpad" />
+edit //tools/internal/powerflow/main/src/template/mon_block.upf2.tmpl#43<br class="wikidpad" />
+Change 2520881 files shelved.<br class="wikidpad" />
+<span class="wikidpad url-link"><a href="http://codereview/ui#review:id=66643" class="wikidpad">http://codereview/ui#review:id=66643</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+[tags: <br class="wikidpad" />
+    </body>
+</html>

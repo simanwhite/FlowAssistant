@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Perl</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_May_2016.html" class="wikidpad">calendar_May_2016</a></span> | <span class="wikidpad parent-node"><a href="ePerl.html" class="wikidpad">ePerl</a></span> | <span class="wikidpad parent-node"><a href="Knowledge.html" class="wikidpad">Knowledge</a></span> | <span class="wikidpad parent-node"><a href="Perl.html" class="wikidpad">Perl</a></span> | <span class="wikidpad parent-node"><a href="work_process-ePerl研究.html" class="wikidpad">work_process-ePerl研究</a></span> | <span class="wikidpad parent-node"><a href="work_process-JIRA238.html" class="wikidpad">work_process-JIRA238</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">Perl</h2>
+<hr class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h90" class="wikidpad"></a><h3 class="wikidpad heading-level3">Reference</h3>
+<hr class="wikidpad" />
+<span class="wikidpad url-link"><a href="files/Learning_Perl(6th%20Edition).pdf" class="wikidpad">rel://files/Learning_Perl(6th Edition).pdf</a></span><br class="wikidpad" />
+<span class="wikidpad url-link"><a href="files/Perl语言参考手册（中文html）.CHM" class="wikidpad">rel://files/Perl语言参考手册（中文html）.CHM</a></span><br class="wikidpad" />
+<span class="wikidpad url-link"><a href="files/Perl%20Best%20Practices.pdf" class="wikidpad">rel://files/Perl Best Practices.pdf</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h306" class="wikidpad"></a><h3 class="wikidpad heading-level3">'' 与 "" 字符串的区别</h3>
+<hr class="wikidpad" />
+2016-5-05<br class="wikidpad" />
+<span class="wikidpad wiki-link"><a href="Perl.html" class="wikidpad">Perl</a></span> learning:<ul class="wikidpad bulletlist">
+<li class="wikidpad" />'' 与 "" 字符串的区别:<br class="wikidpad" />
+<span class="wikidpad wiki-link"><a href="Perl.html" class="wikidpad">Perl</a></span>中单引号更像是python中的r''或者""" """;<br class="wikidpad" />
+双引号更像是python中的正常字符串''.<br class="wikidpad" />
+当用到插入字符串时要用"".
+<li class="wikidpad" />字符串相加: "Hello, " . "world!"<br class="wikidpad" />
+字符串相乘: "A" x 3  //注意, 是'x', 艾克斯
+<li class="wikidpad" /><span class="wikidpad wiki-link"><a href="Perl.html" class="wikidpad">Perl</a></span>中数字类型与字符串类型的转换完全由操作符决定.<br class="wikidpad" />
+&gt;&gt; "5abcdefg4" * 2<br class="wikidpad" />
+10<br class="wikidpad" />
+<br class="wikidpad" />
+</ul>
+<a name=".h663" class="wikidpad"></a><h3 class="wikidpad heading-level3">Perl文件检测选项</h3>
+<hr class="wikidpad" />
+2016-5-26<br class="wikidpad" />
+<b class="wikidpad">Perl检测选项含义</b><br class="wikidpad" />
+Perl中if [-e $file] 判断 <br class="wikidpad" />
+-r 文件或目录对此（有效的）用户（effective user）或组是可读的<br class="wikidpad" />
+-w 文件或目录对此（有效的）用户或组是可写的<br class="wikidpad" />
+-x 文件或目录对此（有效的）用户或组是可执行的<br class="wikidpad" />
+-o 文件或目录由本（有效的）用户所有<br class="wikidpad" />
+-R 文件或目录对此用户(real user)或组是可读的<br class="wikidpad" />
+-W 文件或目录对此用户或组是可写的<br class="wikidpad" />
+-X 文件或目录对此用户或组是可执行的<br class="wikidpad" />
+-O 文件或目录由本用户所有<br class="wikidpad" />
+-e 文件或目录名存在<br class="wikidpad" />
+-z 文件存在，大小为0（目录恒为false）<br class="wikidpad" />
+-s 文件或目录存在，大小大于0（值为文件的大小，单位：字节）<br class="wikidpad" />
+-f 为普通文本<br class="wikidpad" />
+-d 为目录<br class="wikidpad" />
+-l 为符号链接<br class="wikidpad" />
+-S 为socket<br class="wikidpad" />
+-p 为管道(Entry is a named pipe(a“fifo”))<br class="wikidpad" />
+-b 为block-special 文件（如挂载磁盘）<br class="wikidpad" />
+-c 为character-special 文件（如I/O 设备）<br class="wikidpad" />
+-u setuid 的文件或目录<br class="wikidpad" />
+-g setgid 的文件或目录<br class="wikidpad" />
+-k File or directory has the sticky bit set<br class="wikidpad" />
+-t 文件句柄为TTY(系统函数isatty()的返回结果；不能对文件名使用这个测试)<br class="wikidpad" />
+-T 文件有些像“文本”文件<br class="wikidpad" />
+-B 文件有些像“二进制”文件<br class="wikidpad" />
+-M 修改的时间（单位：天）<br class="wikidpad" />
+-A 访问的时间（单位：天）<br class="wikidpad" />
+-C 索引节点修改时间（单位：天）<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1407" class="wikidpad"></a><h3 class="wikidpad heading-level3">Usage</h3>
+<hr class="wikidpad" />
+<pre class="wikidpad">Usage: perl [switches] [--] [programfile] [arguments]
+  -0[octal]       specify record separator (\0, if no argument)
+  -a              autosplit mode with -n or -p (splits $_ into @F)
+  -C[number/list] enables the listed Unicode features
+  -c              check syntax only (runs BEGIN and CHECK blocks)
+  -d[:debugger]   run program under debugger
+  -D[number/list] set debugging flags (argument is a bit mask or alphabets)
+  -e program      one line of program (several -e's allowed, omit programfile)
+  -f              don't do $sitelib/sitecustomize.pl at startup
+  -F/pattern/     split() pattern for -a switch (//'s are optional)
+  -i[extension]   edit &lt;&gt; files in place (makes backup if extension supplied)
+  -Idirectory     specify @INC/#include directory (several -I's allowed)
+  -l[octal]       enable line ending processing, specifies line terminator
+  -[mM][-]module  execute "use/no module..." before executing program
+  -n              assume "while (&lt;&gt;) { ... }" loop around program
+  -p              assume loop like -n but print line also, like sed
+  -P              run program through C preprocessor before compilation
+  -s              enable rudimentary parsing for switches after programfile
+  -S              look for programfile using PATH environment variable
+  -t              enable tainting warnings
+  -T              enable tainting checks
+  -u              dump core after parsing program
+  -U              allow unsafe operations
+  -v              print version, subversion (includes VERY IMPORTANT perl info)
+  -V[:variable]   print configuration summary (or a single Config.pm variable)
+  -w              enable many useful warnings (RECOMMENDED)
+  -W              enable all warnings
+  -x[directory]   strip off text before #!perl line and perhaps cd to directory
+  -X              disable all warnings
+</pre>
+<br class="wikidpad" />
+<a name=".h3347" class="wikidpad"></a><h3 class="wikidpad heading-level3">$$的用处: eval</h3>
+<hr class="wikidpad" />
+2016-7-21<br class="wikidpad" />
+$$var相当于把$var的值给eval了:<br class="wikidpad" />
+<br class="wikidpad" />
+$a = 1;<br class="wikidpad" />
+$var = 'a';<br class="wikidpad" />
+&gt;&gt; $$var<br class="wikidpad" />
+1<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h3510" class="wikidpad"></a><h3 class="wikidpad heading-level3">查看@INC</h3>
+<hr class="wikidpad" />
+perl -V<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h3612" class="wikidpad"></a><h3 class="wikidpad heading-level3">处理Yaml文件</h3>
+<hr class="wikidpad" />
+#!/usr/bin/perl<br class="wikidpad" />
+use strict;<br class="wikidpad" />
+use YAML::Dumper;<br class="wikidpad" />
+my $dumper = YAML::Dumper-&gt;new;<br class="wikidpad" />
+$dumper-&gt;indent_width(4);<br class="wikidpad" />
+print $dumper-&gt;dump({foo =&gt; 'bar'});<br class="wikidpad" />
+<br class="wikidpad" />
+use YAML::Loader;<br class="wikidpad" />
+my $loader = YAML::Loader-&gt;new;<br class="wikidpad" />
+my $hash = $loader-&gt;load(&lt;&lt;'...');<br class="wikidpad" />
+foo: bar<br class="wikidpad" />
+...<br class="wikidpad" />
+<br class="wikidpad" />
+自己写的例子:<br class="wikidpad" />
+<span class="wikidpad url-link"><a href="files/test.pl" class="wikidpad">rel://files/test.pl</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h3979" class="wikidpad"></a><h3 class="wikidpad heading-level3">怎样给subroutine传数组参数</h3>
+<hr class="wikidpad" />
+<span class="wikidpad url-link"><a href="files/create_power_switch.pl" class="wikidpad">rel://files/create_power_switch.pl</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h4122" class="wikidpad"></a><h3 class="wikidpad heading-level3">PBP: Perl Best Practices</h3>
+<span class="wikidpad url-link"><a href="files/Perl%20Best%20Practices.pdf" class="wikidpad">rel://files/Perl Best Practices.pdf</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<hr class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+    </body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-JIRA238</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Augst_2016.html" class="wikidpad">calendar_Augst_2016</a></span> | <span class="wikidpad parent-node"><a href="calendar_July_2016.html" class="wikidpad">calendar_July_2016</a></span> | <span class="wikidpad parent-node"><a href="calendar_Sept_2016.html" class="wikidpad">calendar_Sept_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span> | <span class="wikidpad parent-node"><a href="work_process-JIRA308.html" class="wikidpad">work_process-JIRA308</a></span> | <span class="wikidpad parent-node"><a href="work_process_unittest.html" class="wikidpad">work_process_unittest</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-JIRA238</h2>
+<hr class="wikidpad" />
+标题: UPF generation issue for RV2 tiles<br class="wikidpad" />
+JIRA地址: <span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DMVMTVRF-238" class="wikidpad">http://ontrack-internal.amd.com/browse/DMVMTVRF-238</a></span><br class="wikidpad" />
+联系人: Punia, Babulal<br class="wikidpad" />
+工作目录: <span class="wikidpad url-link"><a href="file:///D:/working/JIRA238" class="wikidpad">file:///D:/working/JIRA238</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h261" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" />upfg卡死已解决. 现在问题是找不到hier.pm
+<li class="wikidpad" />submitted<br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h413" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">运行环境</b>:<br class="wikidpad" />
+powerflow_pkg/38.2<br class="wikidpad" />
+buildflow_pkg/28.2.3<br class="wikidpad" />
+rhea_drop/2.2.rc3<br class="wikidpad" />
+rhea_parser/1.5.1.rc1<br class="wikidpad" />
+rhea_dc/1.3.2.rc1<br class="wikidpad" />
+smsgen/2.1.2<br class="wikidpad" />
+<br class="wikidpad" />
+Work area path /proj/rv2x_rtl_vol1/bpunia/rtl_623092<br class="wikidpad" />
+VNC details cybhen-vdi0011:1/welcome<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h735" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+<a name=".h838" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-20</h4>
+上一次发现问题是powerflow去sms下面找hier.txt, 但是由于smsgen的版本太老了, 生成的<br class="wikidpad" />
+路径与powerflow要找的路径不一致. 所以让Punia去统一版本. <br class="wikidpad" />
+现在版本统一后, upfg还是不过, 报的错误如下:<ul class="wikidpad normalindent">[Tue Jul 19 18:51:24 2016] distmake still waiting for: gen_upf<br class="wikidpad" />
+</ul>
+发现chip.upf.tmpl -o SYS.upf.2.0 根本就跑不通. 先报一个很奇怪的错误, 好像是Perl的:<ul class="wikidpad normalindent">Can't declare scalar dereference in "my" at - line 4117, near "$$i "<br class="wikidpad" />
+(Might be a runaway multi-line "" string starting on line 4414)</ul>
+但是并没有说是哪个文件. 涉及到的chip.upf.tmpl和Xeperl都没有那么多行号.<br class="wikidpad" />
+<br class="wikidpad" />
+SYS.upf.2.0确实已经产生出来了, 但是是大小为0的空文件. 在chip.upf.tmpl最开头加print<br class="wikidpad" />
+打log, 也并没有出现有SYS.upf.2.0里. <br class="wikidpad" />
+<br class="wikidpad" />
+运行时生成了许多temp.21719.params.1.power.params类似的文件.<br class="wikidpad" />
+<br class="wikidpad" />
+xeperl在运行过程中会产生许多temp文件, 比如temp.noneval.params, temp.eval.params等.<br class="wikidpad" />
+这次xeperl在生成了temp.XXXXX.noneval.params之后就卡住了. 虽然生成了temp.XXX.eval.<br class="wikidpad" />
+params, 但是文件是空的.<br class="wikidpad" />
+<br class="wikidpad" />
+在Xeperl中, -x可以debug, -X是heavy debug. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1610" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-21</h4>
+debug的思路是这样的:<br class="wikidpad" />
+首先发现确实是运行xeperl chip.upf.tmpl生成SYS.upf.2.0时会卡死. <br class="wikidpad" />
+[Xeperl]报错, 4114行语法不对. 但是涉及的几个文件都没有4000多行, 报错也没给出是哪个<br class="wikidpad" />
+文件. 只能进[Xeperl]去debug. 关于Xeperl的细节, 请点击[Xeperl]	<br class="wikidpad" />
+发现Xeperlk会生成一些中间文件, temp.$$.什么什么的, 用来解决params之间的竞争等等. <br class="wikidpad" />
+而当$OUT_CMN_pub/src/meta/tools/dfp/params/power.params把$OUT_CMN_pub/src/meta/dfp/<br class="wikidpad" />
+power.params给include了以后, 就多出了以下东西<pre class="wikidpad">	foreach my $$i ($$list)
+	什么什么的
+</pre>
+<span class="wikidpad wiki-link"><a href="Perl.html" class="wikidpad">Perl</a></span>里可以用$$var来做事情, 但是不是这么用的. 详情见<span class="wikidpad wiki-link"><a href="Perl.html" class="wikidpad">Perl</a></span><br class="wikidpad" />
+于是找到源头, 是$OUT_CMN_pub/src/meta/dfp/params/pcs.params中出现了这样的代码. 显然<br class="wikidpad" />
+是不对的. 修改后解决问题. <br class="wikidpad" />
+<br class="wikidpad" />
+但是: pcs.params是怎么来的? Make? publish?<br class="wikidpad" />
+答: Babulal从import文件夹里面找到了. 从raven1x开始就有这个了. 当时没了问题. 不过怎!<br class="wikidpad" />
+么!可!能! 那是语法错误啊.<br class="wikidpad" />
+<br class="wikidpad" />
+现在的状态, 有些tile的upf正常生成了, 但是两个问题:<ol class="wikidpad orderedlist">
+<li class="wikidpad" />有些tile的upf没内容, 这些tile差不多都是gc开头的
+<li class="wikidpad" />还有个得瑟的uvd_uvdw_t, 生成到一半Xeperl挂了, 留下一堆temp.XXX文件.<br class="wikidpad" />
+</ol>
+<a name=".h2359" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-22</h4>
+gc开头的tile为什么upf文件都是空的?<br class="wikidpad" />
+pgfsm信息没有抓取出来. <br class="wikidpad" />
+Babulal说gc的tile都是bpm的, 而不是pgfsm. 怎么区分?<br class="wikidpad" />
+Jianfeng说gfx的东西有些特殊, 要配置的. 怎么配置?<br class="wikidpad" />
+Nigel给了一个建议, 但是怎么感觉语法都不对...<ul class="wikidpad normalindent">Nigel: 看下 MON_BLK 按到 CGPG_BLK 里面有没有 添加正确的内容 指定  类似这个 <br class="wikidpad" />
+gc_vgt 的 tile   生成相应的内容<br class="wikidpad" />
+</ul>
+疑问: 为什么只有gc的tile生成的upf是空的? 其他的已经有内容了. 生成空的upf也没有任何<br class="wikidpad" />
+报错和提示, 怎么找... 以后重构代码的时候, 一定要留下线索! 线索! 不然太难debug了. <br class="wikidpad" />
+<br class="wikidpad" />
+产生gc_vgt_t.upf.prefix1的时候内容就不对了, 产生的命令是:<br class="wikidpad" />
+<br class="wikidpad" />
+env XEPERL=/proj/verif_release_ro/powerflow_pkg/current/src/bin/Xeperl <br class="wikidpad" />
+/proj/rv2x_rtl_vol1/bpunia/rtl_623092/out/linux_2.6.32_64.VCS/common/pub/<br class="wikidpad" />
+src/meta/tools/dfp/template/<b class="wikidpad">power.tmpl</b> <br class="wikidpad" />
+-P -d EPERL=/proj/verif_release_ro/powerflow_pkg/current/src/bin/Xeperl <br class="wikidpad" />
+-d COMPFILE_VF=gc_sct_t.vf -d TOP_MODULE=gc_sct_t -d CHIP_UPF_MODE=pgvi <br class="wikidpad" />
+-o <b class="wikidpad">gc_sct_t.upf.2.0.prefix1</b> -d POWER_FILE_FORMAT=upf -d PG_TOP=gc_sct_t <br class="wikidpad" />
+-p <b class="wikidpad">merge_tile.params</b>  -d DJ_SMS=1 -d DFP_LIB_OPC_VOL='0.9' -d UPF2=1 <br class="wikidpad" />
+-d SIMULATION=1 -d HIER_FILE_BASE=hier<br class="wikidpad" />
+<br class="wikidpad" />
+还是要研究下power.tmpl. 开始画图吧, 图要留下来. <br class="wikidpad" />
+<br class="wikidpad" />
+power.tmpl做的事情:<ol class="wikidpad orderedlist">
+<li class="wikidpad" />一堆sub去生成一些hash
+<li class="wikidpad" />生成${blk}.sram_list.params, 如gc_sct_t.sram_list.params
+<li class="wikidpad" />最后的include很关键</ol>
+关于power.tmpl的一个惊天大秘密:<ul class="wikidpad bulletlist">
+<li class="wikidpad" />power.tmpl下定义的一堆gen_xxx的subroutine其实并不会自己用, 而是给被power.tmpl<br class="wikidpad" />
+include进来的那些tmpl用的. 比如upf.tmpl</ul>
+power.tmpl最后include的一个upf.tmpl当中inculde的一个$<b class="wikidpad">DFP_PROJECT_CORE_UPF</b>看起来<br class="wikidpad" />
+是个关键!<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h3598" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-24</h4>
+总之现在的焦点是, 以power.tmpl为模板, 为啥没有生成有内容的gc_vgt_t.upf.<br class="wikidpad" />
+分别保存了gc_vgt_t产生prefix1为空的Xeperl log以及nbio_nb_t产生成功的log.<br class="wikidpad" />
+这两个log的不同之处在于, gc_vgt_t最后include了一个:=$IP_PST_FILE:之后就没有了, 而<br class="wikidpad" />
+nbio_nb_t在这之后又include了许多common/pub/src下的params甚至upf文件.<br class="wikidpad" />
+<br class="wikidpad" />
+打Xeperl log发现, 不管是gc还是nbio, DFP_CORE_PROJECT_UPF和IP_PST什么的都是空的.<br class="wikidpad" />
+<br class="wikidpad" />
+所以指向了upf.tmpl和nlp.upf.tmpl两个东西!<br class="wikidpad" />
+插播: nlp, 即native low power<br class="wikidpad" />
+<br class="wikidpad" />
+实际上include DFP_CORE_PROJECT_UPF和IP_PST_FILE是每次都会被执行的, 虽然在upf.tmpl<br class="wikidpad" />
+里这两句都被放在了if语句里, 但是这时的if语句并不起作用. <br class="wikidpad" />
+<br class="wikidpad" />
+gct_vgt_t和nbio_nb_t的<b class="wikidpad">CHIP_UPF_MODE都是pgvi</b><br class="wikidpad" />
+<br class="wikidpad" />
+在power.tmpl中, pg_inst这个hash很重要. debug时会用perl的data dumper把这个hash里的<br class="wikidpad" />
+东西打到log里面, 当然, 前提是定义了DEBUG. <br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">data dumper</b>: 见PlayGround<br class="wikidpad" />
+<br class="wikidpad" />
+不出所料, pg_inst中并没有值. 那么看看nbio_nb_t是不是有值.<br class="wikidpad" />
+nbio_nb_t是有值的. 其实如果对代码熟悉的话, 早就应该来看pg_inst的值. <br class="wikidpad" />
+<br class="wikidpad" />
+还记得<span class="wikidpad wiki-link"><a href="work_process-JIRA234.html" class="wikidpad">work_process-JIRA234</a></span>最后的解决方法, src下面的 $PCIE_PG_FSM/OPT的值, <br class="wikidpad" />
+<br class="wikidpad" />
+1. You need to edit the $PCIE_PG_FSM/OPT parameters in pcie.params.dpl file. Lik<br class="wikidpad" />
+e shown in vnc ltipc966:1, change '<i class="wikidpad">ubifpgfsm/option' to $pcie_tile_name . "_pgf<br class="wikidpad" />
+sm/option" The value between '_</i>' should be the pg top instance name.<br class="wikidpad" />
+2. Don't set PG_TOP.<br class="wikidpad" />
+<br class="wikidpad" />
+pg top instance是个什么概念? 自己都不清楚, 怎么给人解bug? <br class="wikidpad" />
+<br class="wikidpad" />
+参考, nbio_nb_t的pg_inst读出来是这样的:<pre class="wikidpad">$VAR1 = {
+    'nbio_nb_t' =&gt; {
+       'nbio_nb_t' =&gt; {
+            'pgfsm' =&gt; 'tb/ig/iohub/iohc_wrap',
+            'pgBlks' =&gt; {
+                 'iommu_l1_PCIE0_wrap' =&gt; 'iommu_l1_PCIE_wrap',
+                 'iohc_wrap' =&gt; 'iohc_wrap'
+                        },
+            'paramFile' =&gt; '/proj/rv2x_rtl_vol1/bpunia/rtl_623092/src/meta/power/dfp/tile_params/variant/raven2x/nbio_nb_t.params'
+                      }
+                   }
+        };
+</pre>
+如果从代码去逆推为什么pg_inst是空的, 将是一个巨大的工程, 有很多支路要看, 而且最后<br class="wikidpad" />
+还是不知道应该从哪个支路走是对的.<br class="wikidpad" />
+要先搞清楚正确的东西是怎么读进来的才行. <br class="wikidpad" />
+<br class="wikidpad" />
+power.tmpl -&gt; sub pg_blk_hash中, 主要需要三个输入: <ul class="wikidpad normalindent">PG_BLK, PG_BLK_TOP, PG_INST_PARAM</ul>
+其中PG_BLK和PG_INST_PARAM都取自于<br class="wikidpad" />
+/tools/dfp/params/variant/raven2x/power.params<br class="wikidpad" />
+而PG_BLK_TOP取自于每个tile自己的params文件. <br class="wikidpad" />
+<br class="wikidpad" />
+每个$blk_param由:号隔开的三个元素组成 <i class="wikidpad">blk名字</i>:<i class="wikidpad">type</i>:<i class="wikidpad">param文件路径</i><br class="wikidpad" />
+而type为gfx的blk有些特殊, 只有这样的blk才会执行cgpg_blk_hash, 所以用gfx_type标记了<br class="wikidpad" />
+一下.<br class="wikidpad" />
+<br class="wikidpad" />
+这里, gc_vgt_t是gfx类型的, cgpg_inst预计应该是有值的.<br class="wikidpad" />
+因为只有当type是gfx时, 才会调用&amp;cgpg_blk_hash<br class="wikidpad" />
+<br class="wikidpad" />
+所以gc_vgt_t的cgpg_inst里面是有值的, 如下:<pre class="wikidpad">qzuo_debug ######## cgpg_inst ##########
+$VAR1 = {
+          'gc_vgt_t' =&gt; {
+                          'gc_vgt_t' =&gt; {
+                                          'paramFile' =&gt; '/proj/rv2x_rtl_vol1/bpunia/rtl_623092/src/meta/power/dfp/tile_params/variant/raven2x/gc_vgt_t.params',
+                                          'cgpgBlks' =&gt; {
+                                                          'bpmh' =&gt; 'bpmh',
+                                                          'bpm_pc' =&gt; 'bpm',
+                                                          'bpm_ia0' =&gt; 'bpm',
+                                                          'vgt' =&gt; 'vgt',
+                                                          'pc' =&gt; 'pc',
+                                                          'bpm' =&gt; 'bpm',
+                                                          'gc_vgt_dbg_steer_wrapper1' =&gt; 'gfx_dbg_steer_wrapper',
+                                                          'wd' =&gt; 'wd',
+                                                          'gc_cmn_1_bpmh' =&gt; 'bpmh',
+                                                          'gc_vgt_dbg_steer_wrapper0' =&gt; 'gfx_dbg_steer_wrapper',
+                                                          'ia0' =&gt; 'ia',
+                                                          'bpm_wd' =&gt; 'bpm'
+                                                        }
+                                        }
+                        }
+        };
+</pre>
+最后的结论是: gc开头的tile, CHIP_UPF_MODE是不可以设成pgvi的, 因为如果设成pgvi, 则<br class="wikidpad" />
+<b class="wikidpad">upf.tmpl</b>中就会调用&amp;gen_blk_power(), 这是用%pg_inst来产生upf的, 而gc开头的tile只有<br class="wikidpad" />
+%cgpg_inst<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h7275" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-25</h4>
+以下针对upf.tmpl<br class="wikidpad" />
+38.1.50_for_rv1<br class="wikidpad" />
+&lt;:<br class="wikidpad" />
+if ($CHIP_UPF_MODE eq "pgpin") {<ul class="wikidpad normalindent">&amp;gen_aon_pgpin_blk_power();</ul>
+#print "gen block pgpin upf:n";<br class="wikidpad" />
+}else {<ul class="wikidpad normalindent">&amp;gen_blk_power();<br class="wikidpad" />
+&amp;gen_cgpg_blk_power();<br class="wikidpad" />
+&amp;gen_mon_blk_power();</ul>
+#print "gen block NON pgpin upf:n";<br class="wikidpad" />
+}<br class="wikidpad" />
+:&gt;<br class="wikidpad" />
+<br class="wikidpad" />
+38.2是这样的:<pre class="wikidpad">if ($CHIP_UPF_MODE eq "pgpin") {
+    &amp;gen_aon_pgpin_blk_power();
+#print "gen block pgpin upf:\n";
+} elsif ($CHIP_UPF_MODE eq "pgvi") {
+   &amp;gen_blk_power();
+}else {
+    &amp;gen_blk_power();
+    &amp;gen_cgpg_blk_power();
+    &amp;gen_mon_blk_power();
+#print "gen block NON pgpin upf:\n";
+</pre>
+<br class="wikidpad" />
+<a name=".h7843" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-26</h4>
+Angela更新, 目前有两个问题:<ol class="wikidpad orderedlist">
+<li class="wikidpad" />nongfx tile issue<br class="wikidpad" />
+</ol>
+you can open one nongfx tile such as uvd_uvdu_t.upf . there is an error report i<br class="wikidpad" />
+n common line 2. We can't find block params uvdu.params. and Then UPF file get w<br class="wikidpad" />
+rong. <br class="wikidpad" />
+<ul class="wikidpad normalindent">#　gfx tile issue <br class="wikidpad" />
+</ul>
+Quan's update is one template fix. you can use this test version to generate upf<ul class="wikidpad normalindent">files. we will work on another solution and submit into powerflow_pkg. <br class="wikidpad" />
+<br class="wikidpad" />
+</ul>
+<a name=".h8248" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-7-28</h4>
+$好消息$:<br class="wikidpad" />
+Babulal回复说已经基本OK了. <br class="wikidpad" />
+另外还有一些后续工作, Angela说应该是<b class="wikidpad">NONGFX</b>这个变量控制, 应该从<b class="wikidpad">upf.tmpl</b>进去的.<br class="wikidpad" />
+现在的方法只是暂时解决. <br class="wikidpad" />
+<br class="wikidpad" />
+还有一些东西要总结: Xeperl结构等<br class="wikidpad" />
+<br class="wikidpad" />
+另, <b class="wikidpad">!!!!!!不可以再release -test到qzuo啦!!!!!!</b><br class="wikidpad" />
+<br class="wikidpad" />
+如果哪天不小心改掉了, 记住你只修改了upf.tmpl, 修改内容见2016-7-25, 版本回退了.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h8479" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-8-4</h4>
+昨天做了一个版本, qzuo_DMVMTVRF-238_sol2, release test<br class="wikidpad" />
+修改了chip.upf.tmpl, genTileSimUpf.csh, upf.tmpl. 试图从chip.upf.tmpl一路把NONGFX<br class="wikidpad" />
+这个变量传到upf.tmpl, 然后用它来做控制.<br class="wikidpad" />
+<br class="wikidpad" />
+$为了兼容$:<br class="wikidpad" />
+cybhen-vdi0010:2/amd123<br class="wikidpad" />
+Work area: /proj/rv2x_rtl_vol1/uthandu/f632953 <br class="wikidpad" />
+bdji -e 'run_test "soc_sanity/ZP_UPFG_SMS"' -m 20 -J lsf -l ZP_UPFG_SMS.log <br class="wikidpad" />
+raven2x/raven2x_main@632953<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h8827" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-8-5</h4>
+Thandu给了新workspace, 跑了上面的DJ命令, 但是并没有过. <br class="wikidpad" />
+<br class="wikidpad" />
+首先应该尝试一下NONGFX这个param能不能传到upf.tmpl里面.<br class="wikidpad" />
+<br class="wikidpad" />
+用slot5, uvd_uvdf_t试一下.<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h8945" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-8-18</h4>
+atlnonveu-0629:/proj/cv_srdc/qzuo/powerflow_jira238_formal[ 174 ] --&gt; p4 submit -c 2448369<br class="wikidpad" />
+Submitting change 2448369.<br class="wikidpad" />
+Locking 2 files ...<br class="wikidpad" />
+edit //tools/internal/powerflow/main/src/template/power.tmpl#31<br class="wikidpad" />
+edit //tools/internal/powerflow/main/src/template/upf.tmpl#14<br class="wikidpad" />
+Change 2448369 renamed change 2459988 and submitted.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<hr class="wikidpad" />
+<span class="wikidpad property attribute">[tags: raven2]</span><span class="wikidpad property attribute">[tags: Xeperl]</span><br class="wikidpad" />
+    </body>
+</html>

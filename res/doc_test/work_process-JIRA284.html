@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-JIRA284</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Augst_2016.html" class="wikidpad">calendar_Augst_2016</a></span> | <span class="wikidpad parent-node"><a href="calendar_Sept_2016.html" class="wikidpad">calendar_Sept_2016</a></span> | <span class="wikidpad parent-node"><a href="calendar_Sept_2016.html" class="wikidpad">calendar_Sept_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-JIRA284</h2>
+<hr class="wikidpad" />
+标题: Memory related policies in s0 tile doesn’t generate<br class="wikidpad" />
+JIRA地址: <span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DMVMTVRF-284" class="wikidpad">http://ontrack-internal.amd.com/browse/DMVMTVRF-284</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h224" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" /><br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h337" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+VNC: cybhen-vdi0015:2 (pwd:123456)<br class="wikidpad" />
+Tree: /proj/nanjing_fe/wyankun/tree/nv3<br class="wikidpad" />
+<br class="wikidpad" />
+Sim dir contains generated upf: /proj/sb_veri6/wyankun/navi10/nlp_s0_t/fch_usb/c<br class="wikidpad" />
+onfig/fch_usb_standalone_arch_usb_hc_0/pub/sim<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+说是usb0_s0_t的upf里面没有生成正确的memory相关的东西. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h689" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+<a name=".h792" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-8-31</h4>
+CHIP_UPF_MODE是pgvi<br class="wikidpad" />
+<br class="wikidpad" />
+I find that in /proj/nanjing_fe/wyankun/trees/nv3/out/liux.../fch_usb/common/pub/src/meta/dfp/params/power.params, there's parameter definition as follows:<br class="wikidpad" />
+PG_BLK = &lt;:<ul class="wikidpad normalindent">if ($ENV{USB31_NLP}=~/_0/)  {<br class="wikidpad" />
+print "$FCH_USB0_PG_BLK";<br class="wikidpad" />
+} else {<br class="wikidpad" />
+print "$FCH_USB1_PG_BLK";<br class="wikidpad" />
+}</ul>
+:&gt;<br class="wikidpad" />
+<br class="wikidpad" />
+PG_INST_PARAM = &lt;:<ul class="wikidpad normalindent">if ($ENV{USB31_NLP}=~/_0/)  {                                                                                                              <br class="wikidpad" />
+print "$FCH_USB0_PG_INST_PARAM";<br class="wikidpad" />
+} else {<br class="wikidpad" />
+print "$FCH_USB1_PG_INST_PARAM";<br class="wikidpad" />
+}</ul>
+:&gt;<br class="wikidpad" />
+VI_BLK_TOP = &lt;:<br class="wikidpad" />
+if ($ENV{USB31_NLP}=~/_0/)  {<ul class="wikidpad normalindent">print "usb0_vdci_t:/proj/nanjing_fe/wyankun/trees/nv3/out/linux_2.6.32_64.VCS/fch_usb/common/pub/src/meta/dfp/tile_params/usb0_vdci_t.param<br class="wikidpad" />
+} else {<br class="wikidpad" />
+print "usb1_vdci_t:/proj/nanjing_fe/wyankun/trees/nv3/out/linux_2.6.32_64.VCS/fch_usb/common/pub/src/meta/dfp/tile_params/usb1_vdci_t.param<br class="wikidpad" />
+}</ul>
+:&gt;<br class="wikidpad" />
+But env variable USB31_NLP is not defined in current envrionment. In that way, PG_BLK / PG_INST_PARAM and VI_BLK_TOP will get parameters from usb1. In this case I think usb0 is required. <br class="wikidpad" />
+Please update this environment variable USB31_NLP and trigger UPFG again.<br class="wikidpad" />
+<br class="wikidpad" />
+又是用户使用问题. 话说power.params里面的这个判断应该加保护啊. 没定义的变量被用到都<br class="wikidpad" />
+不报错.<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h2047" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-1</h4>
+似乎并不是用户定义那么简单的. 给了新环境:<br class="wikidpad" />
+<br class="wikidpad" />
+directory:/proj/sb_veri6/wyankun/navi10/nlp_s0_mem/fch_usb/config/fch_usb_standalone_arch_usb_hc_0/pub/sim/usb0_vdci_t<br class="wikidpad" />
+In file "usb0_vdci_t.params", Line258<br class="wikidpad" />
+VI_BLK_TOP=usb0_vdci_t:/proj/nanjing_fe/wyankun/trees/nv4/out/linux_2.6.32_64.VCS/fch_usb/common/pub/src/meta/dfp/tile_params/usb0_vdci_t.params<br class="wikidpad" />
+<br class="wikidpad" />
+坑爹的是, 环境变量USB31_NLP会决定power.params去使用哪套param做PG_BLK和PG_BLK_TOP,<br class="wikidpad" />
+而USB31_NLP是个环境变量, 是调用mut_upf时用export的方式传进来的, 命令大概像:<ul class="wikidpad normalindent">export USB31_NLP=hc_0 &amp;&amp; mut_upf......<br class="wikidpad" />
+</ul>
+最后在power.tmpl的命令前面加了export USB31_NLP=hc_0才终于调起来. <br class="wikidpad" />
+看来对于每个project来说环境都很不一样啊.<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">一个教训</b>: 尽量不要把加在power.tmpl等脚本里的print debug信息直接打在upf file里, 不可<br class="wikidpad" />
+预期会有什么问题.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h2694" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-2</h4>
+又报了后续问题, 生成top层的upf.2.0文件时, Xeperl又报错了. 不知道是什么错误. <br class="wikidpad" />
+总之是chip.upf.tmpl的时候报的.<br class="wikidpad" />
+<br class="wikidpad" />
+Chip_tile_failed.log里面显示, usb0_vdci_t失败了.<br class="wikidpad" />
+<br class="wikidpad" />
+很奇怪, 在pub/sim下面跑chip.upf.tmpl, 生成usb_t_hc_0.upf.2.0时会报有一个tile失败,<br class="wikidpad" />
+从Chip_tile_failed.log里面显示, usb0_vdci_t失败了. 但是单独跑usb_0_vdci_t的Xeperl<br class="wikidpad" />
+命令时, 并没有失败, 正常生成了文件. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h2983" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-6</h4>
+处理后续问题, 改名为295, 说是usb 的 vdci tile upf没有产生.<br class="wikidpad" />
+新的vnc:<br class="wikidpad" />
+a new VNC: cybhen-vdi0079:1 (pwd:123456)<br class="wikidpad" />
+$STEM= /proj/nanjing_fe/wyankun/tree/nv4<br class="wikidpad" />
+pub/sim为: <br class="wikidpad" />
+/proj/sb_veri6/wyankun/navi10/p4rel/stage_dir/sanity/hc_0_nlp/fch_usb/config/fch<br class="wikidpad" />
+_usb_standalone_arch_usb_hc_0/pub/sim<br class="wikidpad" />
+<br class="wikidpad" />
+一级一级看:<ul class="wikidpad normalindent">genChipUpf.csh -&gt; chip.upf.tmpl -&gt; genVdciTileUpf.csh -&gt; vdci_tile_power.tmpl<br class="wikidpad" />
+</ul>
+首先vdci_tile_power.tmpl一层应该是没问题的, 可以正常生成, 也没有报错. <br class="wikidpad" />
+失败的用的是powerflow/38.2.2.rc2<br class="wikidpad" />
+成功的用的是powerflow/38.2<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h3446" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-7</h4>
+在power.params里面增加了EXIST_UPF_TILES参数, 以提高效率<br class="wikidpad" />
+好吧, 这个参数并不是这么用的, 是写到tile.params里的, 而且还不能把所有tile的upf<br class="wikidpad" />
+全禁掉. <br class="wikidpad" />
+<br class="wikidpad" />
+跑chip.upt.tmpl时出现下面的warning:<br class="wikidpad" />
+<br class="wikidpad" />
+usb0_s0_t<br class="wikidpad" />
+Warning-[SM_NRL] <b class="wikidpad">Not recognized as latch</b><ul class="wikidpad normalindent">':0' : self-dependence for 'barb_i.if_req__write_value__#19_17' not<br class="wikidpad" />
+recognized as a latch. Will generate it as a combinational cycle<br class="wikidpad" />
+</ul>
+所以生成usb0_s0_t.upf命令的dfpUtils退不出来.<br class="wikidpad" />
+<br class="wikidpad" />
+Warning-[TFIPC] Too few instance port connections<br class="wikidpad" />
+/proj/sb_veri6/wyankun/navi10/p4rel/stage_dir/sanity/hc_0_nlp/fch_usb/config/fch_usb_standalone_arch_usb_hc_0/pub/sim/publish/tiles/tile/usb0_s0_t/<br class="wikidpad" />
+"u_fch_sp2c2_DWC_usb31"<ul class="wikidpad normalindent">The above instance has fewer port connections than the module definition.<br class="wikidpad" />
+Please use '+lint=TFIPC-L' to print out detailed information of unconnected <br class="wikidpad" />
+ports.<br class="wikidpad" />
+</ul>
+Warning-[DB_LOCATE] Cannot locate library file.<ul class="wikidpad normalindent">Cannot locate library file <br class="wikidpad" />
+'tech/synopsys/ts07nxpllogl08hdl057f.tt0p8v100c.db' in any of the specified <br class="wikidpad" />
+search paths<br class="wikidpad" />
+</ul>
+与对比路径相比, 生成usb0_s0_t.upf时都有这些warning,<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h4421" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-8</h4>
+很奇怪的是, chip.upf.tmpl很难debug<br class="wikidpad" />
+UPF mode: pgvi<br class="wikidpad" />
+<br class="wikidpad" />
+top_upf.params也是从chip.upf.tmpl生成的...<br class="wikidpad" />
+<br class="wikidpad" />
+修改了config_navi10.dj<br class="wikidpad" />
+加了self.sim_build_args &lt;&lt; " -build_opts ' -param upf_param_flow.upf_exist=#{ENV['STEM']}/src/meta/power/upf_exist.params'"<br class="wikidpad" />
+参见<span class="wikidpad url-link"><a href="http://twiki.amd.com/twiki/bin/view/DesignCAD/DFPFlowQA#how_to_enable_mixed_mode_some_ti" class="wikidpad">http://twiki.amd.com/twiki/bin/view/DesignCAD/DFPFlowQA#how_to_enable_mixed_mode_some_ti</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+其实所有的纠结都是对top层的upf是怎么生成的还不了解. <br class="wikidpad" />
+找不对支路. <br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h4791" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-9-9</h4>
+正确的支路是: chip.upf.tmpl中可能又调用了chip.upf.tmpl<br class="wikidpad" />
+<img src="files/Mindmaps/chip.upf.tmpl-USE_TOP_UPF_TMPL.png" class="wikidpad" /><br class="wikidpad" />
+<br class="wikidpad" />
+问题: 从逻辑上来看, genTileSimUpf.csh是可以过掉的, 只要no_upf_gen=1, 但是<br class="wikidpad" />
+genVdciTileUpf.csh是一定会执行的.<br class="wikidpad" />
+<br class="wikidpad" />
+vdci tile过不掉的话, 可以把upf mode 从pgvi变成pg, 这样就不会调vdci的东西了.<br class="wikidpad" />
+<br class="wikidpad" />
+现在来看一下为什么顶层upf会有ports为空:<br class="wikidpad" />
+chip.upf.tmpl在# connect tile's supply port下面, 如果USE_CHIP_UPF_TMPL为1, 则会<br class="wikidpad" />
+判断连接7个supply net:<ul class="wikidpad normalindent">$sn_VDDNB<br class="wikidpad" />
+$sn_VDDGFX<br class="wikidpad" />
+$sn_VDDACP<br class="wikidpad" />
+$sn_VDDCPU<br class="wikidpad" />
+$sn_VDDDDR<br class="wikidpad" />
+$sn_VDDFCH<br class="wikidpad" />
+$sn_VSS</ul>
+顶层upf.2.0里面得到的有三个net:<ul class="wikidpad normalindent">VDDCR_SOCnet<br class="wikidpad" />
+net  # net?!! 居然就叫net, 好霸气!<br class="wikidpad" />
+VSSnet</ul>
+top_upf.params中有定义:<ul class="wikidpad normalindent">./top_upf.params:PD_DDR_VDD_NAME=VDDDDR<br class="wikidpad" />
+./top_upf.params:PD_VB_VDD_NAME=VDDNB<br class="wikidpad" />
+./top_upf.params:PD_ACP_VDD_NAME=VDDACP<br class="wikidpad" />
+./top_upf.params:PD_FCH_VDD_NAME=VDDCR_SOC_S5<br class="wikidpad" />
+./top_upf.params:PD_VD_VDD_NAME=VDDGFX<br class="wikidpad" />
+<b class="wikidpad">./top_upf.params:PD_NB_VDD_NAME=VDDCR_SOC</b><br class="wikidpad" />
+./top_upf.params:PD_CPU_VDD_NAME=VDDCPU<br class="wikidpad" />
+./top_upf.params:PD_NB_VDD_NAME = VDDCR_SOC<br class="wikidpad" />
+./top_upf.params:PD_GFX_VDD_NAME = <br class="wikidpad" />
+./top_upf.params:PD_ACP_VDD_NAME = VDDACP<br class="wikidpad" />
+./top_upf.params:PD_FCH_VDD_NAME = VDDCR_SOC_S5<br class="wikidpad" />
+POWER_VSS = VSS</ul>
+这里可以看出, sn_VDDNB是不为空的, 值应为VDDCR_SOCnet, 但是它的ports值却是空, <br class="wikidpad" />
+ports如下方式得来:<br class="wikidpad" />
+<br class="wikidpad" />
+&lt;: if ($sn_VDDNB ne "") { :&gt;<br class="wikidpad" />
+connect_supply_net &lt;:=$sn_VDDNB:&gt;  <br class="wikidpad" />
+-ports { <br class="wikidpad" />
+&lt;:=$PD_VDDNB_INST_VDD_PORT:&gt;  <br class="wikidpad" />
+&lt;:=$PD_VDCI_INST_VDDNB_PORT:&gt; <br class="wikidpad" />
+&lt;:$PD_PGPIN_INST_VDDNB_PORT:&gt;}<br class="wikidpad" />
+&lt;:}:&gt;<br class="wikidpad" />
+<br class="wikidpad" />
+而PD_VDDNB_INST_VDD_PORT等值是从top_new.params.tmpl中获得到top_upf.params里去的.<br class="wikidpad" />
+PD_VDDNB_INST_VDD_PORT = &lt;:<ul class="wikidpad normalindent">foreach my $tile (keys %<b class="wikidpad">pg_inst</b>) {<ul class="wikidpad normalindent">if (exists($vddnb_tiles{$tile})) {<ul class="wikidpad normalindent">foreach my $inst (keys %{$pg_inst{$tile}}) {<br class="wikidpad" />
+my $newinst = $inst;<br class="wikidpad" />
+$newinst =~ s/.///;<ul class="wikidpad normalindent">print " $TILE_SCOPE$newinst/" . $pg_inst{$tile}{$inst}{VDD};</ul>
+}</ul>
+}</ul>
+}</ul>
+:&gt;<br class="wikidpad" />
+<br class="wikidpad" />
+所以转了一圈, 还是因为pg_inst是空的, 所以出的问题. <br class="wikidpad" />
+<br class="wikidpad" />
+pub/sim被Yankun不小心清掉了, 现在换成<br class="wikidpad" />
+/proj/sb_veri6/wyankun/navi10/nlp_vdci_t/fch_usb/config/fch_usb_standalone_arch_<br class="wikidpad" />
+usb_hc_0/pub/sim/<br class="wikidpad" />
+<br class="wikidpad" />
+等了一个多小时, 终于结束了, <br class="wikidpad" />
+Waiting for dispatch ...<br class="wikidpad" />
+Waiting for dispatch ...<br class="wikidpad" />
+Starting on cybjord0275<br class="wikidpad" />
+Starting on cybjord0283<br class="wikidpad" />
+grep: usb0_s0_t/mvreports/mvrc.upf2.log: No such file or directory<br class="wikidpad" />
+grep: usb0_s0_t/mvreports/mvrc.upf2.log: No such file or directory<br class="wikidpad" />
+cat: usb0_s0_t/usb0_s0_t.protection_critique.rpt: No such file or directory<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h6985" class="wikidpad"></a><h3 class="wikidpad heading-level3">2016-9-12</h3>
+拖慢速度的warnings<br class="wikidpad" />
+Warning-SM_NRL Not recognized as latch<br class="wikidpad" />
+<br class="wikidpad" />
+要求给synopsys提case, 看能不能把这个warning wavier掉<br class="wikidpad" />
+<br class="wikidpad" />
+注掉了config_navi10.dj里面的uniq_top_tmpl=1这条配置. 因为它会使chip.upf.tmpl走到<br class="wikidpad" />
+USE_TOP_UPF_TMPL这一路. Angela说前面这三个支路是要淘汰的. 应该使chip.upf.tmpl解<br class="wikidpad" />
+决所有问题. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h7229" class="wikidpad"></a><h3 class="wikidpad heading-level3">2016-9-13</h3>
+说upf里少了set snps_tool的分支<br class="wikidpad" />
+这是38.2.2.rc2的新修改. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<hr class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<hr class="wikidpad" />
+<hr class="wikidpad" />
+<span class="wikidpad property attribute">[tags: fch]</span><span class="wikidpad property attribute">[tags: usb]</span><span class="wikidpad property attribute">[tags: sram]</span><br class="wikidpad" />
+<span class="wikidpad property attribute">[alias: work_process-JIRA295]</span><br class="wikidpad" />
+    </body>
+</html>

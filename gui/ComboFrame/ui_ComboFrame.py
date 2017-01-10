@@ -29,6 +29,7 @@ class Ui_Frame(object):
         Frame.setFrameShape(QtGui.QFrame.StyledPanel)
         Frame.setFrameShadow(QtGui.QFrame.Raised)
         self.verticalLayout = QtGui.QVBoxLayout(Frame)
+        self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.comboBox = QtGui.QComboBox(Frame)
         self.comboBox.setObjectName(_fromUtf8("comboBox"))

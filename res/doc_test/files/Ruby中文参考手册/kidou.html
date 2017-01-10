@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<title>Ruby参考手册 - Ruby的启动</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+
+<div class="body"><h1><a name="Ruby.a4.ce.b5.af.c6.b0" id="Ruby.a4.ce.b5.af.c6.b0">Ruby的启动</a></h1>
+<ul>
+<li><a href="#a.a5.b3.a5.de.a5.f3.a5.c9.a5.e9.a5.a4.a5.f3.a5.aa.a5.d7.a5.b7.a5.e7.a5.f3" title="Ruby的启动 (284d)" class="modified-year">命令行选项</a></li>
+<li><a href="#a.a5.a4.a5.f3.a5.bf.a5.d7.a5.ea.a5.bf.b9.d4.a4.ce.b2.f2.bc.e1" title="Ruby的启动 (284d)" class="modified-year">关于解释器行</a></li>
+</ul>
+<p>请使用如下命令行启动Ruby解释器.</p>
+<pre>
+ruby [ option ...] [ -- ] [ programfile ] [ argument ...]
+</pre>
+
+<p>这里的"option"指下文将要提到的<a href="#a.a5.b3.a5.de.a5.f3.a5.c9.a5.e9.a5.a4.a5.f3.a5.aa.a5.d7.a5.b7.a5.e7.a5.f3" title="Ruby的启动 (284d)" class="modified-year">命令行选项</a>中的一个。"--"则显式地表明选项字符串到此结束。"programfile"是装载Ruby脚本的文件。若省略不写或者写成"-"时,Ruby会把标准输入当做Ruby脚本进行处理。</p>
+<p>programfile若以“#!”开始，则进行特殊的处理。详细情况请参考下文的<a href="#a.a5.a4.a5.f3.a5.bf.a5.d7.a5.ea.a5.bf.b9.d4.a4.ce.b2.f2.bc.e1" title="Rubyの弹瓢 (284d)" class="modified-year">关于解释器行</a>。</p>
+<p>argument中的字符串将变成内部常数<a href="./stdlib_constant.html#ARGV">ARGV</a>的初始值。在有的环境中(<font color=blue>Win32</font>)，标准shell不会展开通配符，这时Ruby解释器将自行展开通配符然后赋值给<a href="./stdlib_constant.html#ARGV">ARGV</a>。此时，可使用的通配符有“*”、“?”、“[]”和“**/”(与<a href="./built-in-class/class_object_dir.html#Dir.2eglob">Dir.glob</a>不同，这里不能使用“{..}”)。在Win32环境中，若不想展开通配符的话，请使用单引号(')将参数括起来。</p>
+<h2><a name="a.a5.b3.a5.de.a5.f3.a5.c9.a5.e9.a5.a4.a5.f3.a5.aa.a5.d7.a5.b7.a5.e7.a5.f3" id="a.a5.b3.a5.de.a5.f3.a5.c9.a5.e9.a5.a4.a5.f3.a5.aa.a5.d7.a5.b7.a5.e7.a5.f3">命令行选项</a></h2>
+<p>Ruby解释器可接受下列命令行选项。基本上与Perl的类似。</p>
+<dl>
+<dt><a name="a-0.bf.f4.bb.fa" id="a-0.bf.f4.bb.fa">-0<var>数字</var></a></dt>
+<dd>
+<p>以8进制数指定输入记录分隔符('<a href="./stdlib_variable.html#a.24.2f">$/</a>')。</p>
+<p>若不指定数字的话，分隔符是空字符(等同于$/="\0")。数字后面可以有其他的开关(switch)。</p>
+<p>-00代表段落模式(等同于$/="")，-0777(因为这个代码不代表任何文字)表示将文件的全部内容一次性读入(相当于$/=nil)。</p>
+</dd>
+<dt><a name="a-a" id="a-a">-a</a></dt>
+<dd>
+<p>与'-n'或'-p'一起使用时，可以打开自动拆分模式(auto split mode)。自动拆分模式将在各个循环前执行以下动作。</p>
+<pre>
+$F = $_.split
+</pre>
+
+<p>若没有同时指定'-n'或'-p'选项的话将不起作用。</p>
+</dd>
+<dt><a name="a-C.20directory" id="a-C.20directory">-C <var>directory</var></a></dt>
+<dd>
+<p>执行脚本之前，先移动到指定目录。</p>
+</dd>
+<dt><a name="a-c" id="a-c">-c</a></dt>
+<dd>
+<p>只对脚本进行编译，而并不执行。编译后若没发现语法错误，则显示“Syntax OK”。</p>
+</dd>
+<dt><a name="a.26shy.3b.26shy.3bcopyright" id="a.26shy.3b.26shy.3bcopyright">--copyright</a></dt>
+<dd>
+<p>显示版权信息。</p>
+</dd>
+<dt><a name="a-Kc" id="a-Kc">-K<var>c</var></a><!-- RDLabel: "-Kc" --></dt>
+<dd>
+<p>指定Ruby要处理的汉字编码。若是'E'或'e'，则Ruby认定字符串或访问文件中的汉字编码为EUC。同样，若是'S'或's'的话则认定为SJIS。若是'U'或'u'则当作UTF-8处理。'N'表示不对汉字进行处理。该选项的默认值就是N(NONE)。</p>
+<p>将来有可能会改变文字编码处理方式，届时该选项的内容也会有所变化。</p>
+</dd>
+<dt><a name="a-d" id="a-d"><code>-d</code></a><!-- RDLabel: "-d" --></dt>
+<dt><a name="a.26shy.3b.26shy.3bdebug" id="a.26shy.3b.26shy.3bdebug"><code>--debug</code></a><!-- RDLabel: "&shy;&shy;debug" --></dt>
+<dd>
+<p>以调试模式执行脚本。将<a href="./stdlib_variable.html#a.24DEBUG">$DEBUG</a>设置成true。</p>
+</dd>
+<dt><a name="a-e.20script" id="a-e.20script"><code>-e <var>script</var></code></a><!-- RDLabel: "-e script" --></dt>
+<dd>
+<p>在命令行中指定脚本。添加-e选项后，就不会从参数中抽取脚本文件名了。</p>
+<p>若多次使用-e选项时，系统会按照以下方式处理。</p>
+<pre>
+下列各表达式的意义相同。
+ruby -e "5.times do |i|" -e "puts i" -e "end"
+
+ruby -e "5.times do |i|
+  puts i
+end"
+
+ruby -e "5.times do |i|; puts i; end"
+</pre>
+</dd>
+<dt><a name="a-Fregexp" id="a-Fregexp"><code>-F<var>regexp</var></code></a><!-- RDLabel: "-Fregexp" --></dt>
+<dd>
+<p>将<var>regexp</var>指定给输入域分隔符(field separator)。</p>
+</dd>
+<dt><a name="a-h" id="a-h"><code>-h</code></a><!-- RDLabel: "-h" --></dt>
+<dt><a name="a.26shy.3b.26shy.3bhelp" id="a.26shy.3b.26shy.3bhelp"><code>--help</code></a><!-- RDLabel: "&shy;&shy;help" --></dt>
+<dd>
+<p>显示命令行选项的简介。</p>
+</dd>
+<dt><a name="a-i.5bextension.5d" id="a-i.5bextension.5d"><code>-i[<var>extension</var>]</code></a><!-- RDLabel: "-i[extension]" --></dt>
+<dd>
+<p>对参数中指定的文件内容进行替换(in-place edit)。原始文件将被加上扩展名并保存下来。若没有扩展名的话，将不会进行备份，而且只有替换后的文件会被保留下来。</p>
+<p>例:</p>
+<pre>
+% echo matz &gt; /tmp/junk
+% cat /tmp/junk
+matz
+% ruby -p -i.bak -e '$_.upcase!' /tmp/junk
+% cat /tmp/junk
+MATZ
+% cat /tmp/junk.bak
+matz
+</pre>
+</dd>
+<dt><a name="a-I.20directory" id="a-I.20directory"><code>-I <var>directory</var></code></a><!-- RDLabel: "-I directory" --></dt>
+<dd>
+<p>指定(追加)加载文件的路径。指定的目录将被追加到Ruby的数组变量(<font color=blue>$:</font>)中。</p>
+</dd>
+<dt><a name="a-l" id="a-l"><code>-l</code></a><!-- RDLabel: "-l" --></dt>
+<dd>
+<p>进行行尾自动处理。首先，将<font color=blue>$\</font>改为<a href="./stdlib_variable.html#a.24.2f">$/</a>的值，在print输出时添加换行。若使用了-n标志或-p标志的话，将对gets读入的各行末尾进行String#chop!处理。</p>
+</dd>
+<dt><a name="a-n" id="a-n"><code>-n</code></a><!-- RDLabel: "-n" --></dt>
+<dd>
+<p>若使用了该标志，则整个程序会像sed -n或awk一样，被</p>
+<pre>
+while gets
+ ...
+end
+</pre>
+
+<p>括起来运行。</p>
+</dd>
+<dt><a name="a-p" id="a-p"><code>-p</code></a><!-- RDLabel: "-p" --></dt>
+<dd>
+<p>与-n标志相仿，在各循环后输出变量<font color=blue>$_</font>的值。</p>
+<p>例:</p>
+<pre>
+% echo matz | ruby -p -e '$_.tr! "a-z", "A-Z"'
+MATZ
+</pre>
+</dd>
+<dt><a name="a-r.20feature" id="a-r.20feature"><code>-r <var>feature</var></code></a><!-- RDLabel: "-r feature" --></dt>
+<dd>
+<p>执行脚本前，先对<var>feature</var>指定的库执行<font color=blue>require</font>操作。与'-n'选项、'-p'选项一起使用时特别奏效。</p>
+</dd>
+<dt><a name="a-s" id="a-s"><code>-s</code></a><!-- RDLabel: "-s" --></dt>
+<dd>
+<p>对跟在脚本名后并且以'-'开头的参数进行解释，并将其值赋值给同名的全局变量。遇到以'--'开头的参数就停止解释，并将该参数从<a href="./stdlib_constant.html#ARGV">ARGV</a>中删除。</p>
+<p>例:</p>
+<pre>
+#! /usr/local/bin/ruby -s
+# prints "true" if invoked with `-xyz' switch.
+print "true\n" if $xyz
+</pre>
+</dd>
+<dt><a name="a-S" id="a-S"><code>-S</code></a><!-- RDLabel: "-S" --></dt>
+<dd>
+<p>该选项表明，当脚本名不是以'/'开头的时候，要使用环境变量PATH的值搜索脚本。若您的机器不支持#!的话，可以使用下列方法模拟#!的运行：</p>
+<pre>
+#!/bin/sh
+exec ruby -S -x $0 "$@"
+#! ruby
+</pre>
+
+<p>因为第1行的关系，系统把脚本交给/bin/sh。/bin/sh执行第2行后启动Ruby解释器。在-x选项的作用下，Ruby解释器把从'#!'到包含'ruby'的行的内容全部读入。</p>
+<p>根据系统的不同，<font color=blue>$0</font>未必包含完整路径，因此有必要使用'-S'选项来告诉Ruby在必要时搜索脚本。</p>
+</dd>
+<dt><a name="a-T.5blevel.5d" id="a-T.5blevel.5d"><code>-T[<var>level</var>]</code></a><!-- RDLabel: "-T[level]" --></dt>
+<dd>
+<p>执行不纯度测试。若给<var>level</var>指定了一个值之后，安全等级也会使用这个值。省略<var>level</var>时，其值为1。对于CGI程序来说，将其指定为-T1比较合适。<font color=blue>$SAFE</font>的等级也将被设定。</p>
+</dd>
+<dt><a name="a-v" id="a-v"><code>-v</code></a><!-- RDLabel: "-v" --></dt>
+<dt><a name="a.26shy.3b.26shy.3bverbose" id="a.26shy.3b.26shy.3bverbose"><code>--verbose</code></a><!-- RDLabel: "&shy;&shy;verbose" --></dt>
+<dd>
+<p>冗长模式。启动时显示版本信息，然后将内部变量<font color=blue>$VERBOSE</font>设为true。当此变量为true时，众多的方法在运行时会显示冗长的信息。若只设定'-v'选项，而没有其他参数时，启动后会先显示版本信息，然后就结束运行(不会等待来自标准输入的脚本)。</p>
+</dd>
+<dt><a name="a.26shy.3b.26shy.3bversion" id="a.26shy.3b.26shy.3bversion"><code>--version</code></a><!-- RDLabel: "&shy;&shy;version" --></dt>
+<dd>
+<p>显示Ruby的版本信息。</p>
+</dd>
+<dt><a name="a-w" id="a-w"><code>-w</code></a><!-- RDLabel: "-w" --></dt>
+<dd>
+<p>不显示版本信息的冗长模式。</p>
+</dd>
+<dt><a name="a-W.5blevel.5d" id="a-W.5blevel.5d"><code>-W[<var>level</var>]</code></a><!-- RDLabel: "-W[level]" --></dt>
+<dd>
+<p><font color=blue>ruby 1.8 特性</font></p>
+<p>可以指定3种级别的冗长模式，如下所示。</p>
+<ul>
+<li>-W0: 不显示警告</li>
+<li>-W1: 只显示重要警告(默认)</li>
+<li>-W2 or -W: 显示所有警告</li>
+</ul>
+<p>内部变量<font color=blue>$VERBOSE</font>被分别设置为nil,false,true。</p>
+</dd>
+<dt><a name="a-x.5bdirectory.5d" id="a-x.5bdirectory.5d"><code>-x[<var>directory</var>]</code></a><!-- RDLabel: "-x[directory]" --></dt>
+<dd>
+<p>从message中取出脚本并执行。读入脚本的范围是从'#!'开始，直到包含'ruby'的行为止。用EOF(文件结束)，^D(controlD)，^Z(controlZ)或保留字_END_来指定脚本结束。</p>
+<p>若指定了目录名的话，则在执行脚本前移动到该指定目录。</p>
+</dd>
+<dt><a name="a-y" id="a-y"><code>-y</code></a><!-- RDLabel: "-y" --></dt>
+<dt><a name="a.26shy.3b.26shy.3byydebug" id="a.26shy.3b.26shy.3byydebug"><code>--yydebug</code></a><!-- RDLabel: "&shy;&shy;yydebug" --></dt>
+<dd>
+<p>编译器调试模式。编译脚本时显示语法分析的过程。该显示过程会很漫长，可能只对那些想调试编译器的人有用。</p>
+</dd>
+</dl>
+<h2><a name="a.a5.a4.a5.f3.a5.bf.a5.d7.a5.ea.a5.bf.b9.d4.a4.ce.b2.f2.bc.e1" id="a.a5.a4.a5.f3.a5.bf.a5.d7.a5.ea.a5.bf.b9.d4.a4.ce.b2.f2.bc.e1">关于解释器行</a><!-- RDLabel: "インタプリタ乖の豺坚" --></h2>
+<p>命令行指定的脚本是以'#!'开头的文件，当该行中<i><b>不包含</b></i>'ruby'时，将替代<i><b>OS</b></i>把'#!'后面的字符串看成命令行，然后启动解释器。</p>
+<p>例如，用Ruby运行下面的shell脚本时将启动sh。</p>
+<pre>
+#!/bin/sh -vx
+echo "$@"
+</pre>
+
+<p>若此行中<i><b>包含</b></i>'ruby'的话，则'ruby'左侧的部分将被忽略，右侧以'-'开头的部分被视为选项。</p>
+<p>这里指定的选项将被追加到以命令行方式指定的选项之中。这主要是为了嵌入那些本该在脚本中指定的选项。例如，下面脚本的作用等价于使用命令行方式指定-Ke选项。</p>
+<pre>
+#! ruby -Ke
+</pre>
+<hr />
+
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

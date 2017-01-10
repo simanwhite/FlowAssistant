@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>vsi</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_July_2016.html" class="wikidpad">calendar_July_2016</a></span> | <span class="wikidpad parent-node"><a href="plan_nlp及vsi介绍.html" class="wikidpad">plan_nlp及vsi介绍</a></span> | <span class="wikidpad parent-node"><a href="work_process-SCBU_UPFG_training.html" class="wikidpad">work_process-SCBU_UPFG_training</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">vsi</h2>
+<hr class="wikidpad" />
+VSI是SYNOPSYS开发的<span class="wikidpad wiki-link"><a href="静态时序分析与动态仿真.html" class="wikidpad">静态验证</a></span>工具<br class="wikidpad" />
+<b class="wikidpad">V</b>erdi <b class="wikidpad">SI</b>gnoff platform<ul class="wikidpad bulletlist">
+<li class="wikidpad" />VSI-FV:	Formal property checks
+<li class="wikidpad" />VSI-LP:	Low power checks
+<li class="wikidpad" />VSI-CDC:	Clock domain checks</ul>
+这里我们主要讨论的是VSI-LP<br class="wikidpad" />
+静态验证工具还有mvsim, vclp.<br class="wikidpad" />
+<br class="wikidpad" />
+VSI is a Synopsys tool.<br class="wikidpad" />
+<br class="wikidpad" />
+Verdi Signoff-LP is a <b class="wikidpad">multi-voltage, static low power rule checker</b> that allows e<br class="wikidpad" />
+ngineers to rapidly verify designs that use voltage control based techniques for<ul class="wikidpad normalindent">power management. This document describes how Full chip and IP level VSI check </ul>
+works. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h552" class="wikidpad"></a><h3 class="wikidpad heading-level3">VSI -LP 功能特性</h3>
+<hr class="wikidpad" />
+<ul class="wikidpad bulletlist">
+<li class="wikidpad" />Integrated - different signoff tools in one shell (vsi_shell) ## 集成灵活
+<li class="wikidpad" />Standard TCL based interface  ## 标准接口
+<li class="wikidpad" />Separate, de-coupled <b class="wikidpad">Build, Check, Report</b> steps  ## 拢共三步
+<li class="wikidpad" />DB checkpoint/save and future restore  ## DB可恢复(这也太基本了吧)<ul class="wikidpad bulletlist">
+<li class="wikidpad" />Enables incremental checking and reporting without re-building DB</ul>
+
+<li class="wikidpad" />Violation checks – commands to skip and configure checks  ## 可配置
+<li class="wikidpad" />Report generation - reduce similar violations to a single representative</ul>
+violation, filter/waive violations to report, by tag/family/severity/regexp<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1178" class="wikidpad"></a><h3 class="wikidpad heading-level3">how to enable</h3>
+<hr class="wikidpad" />
+<span class="wikidpad url-link"><a href="http://twiki.amd.com/twiki/bin/view/DesignCAD/XoverCheckFlow" class="wikidpad">http://twiki.amd.com/twiki/bin/view/DesignCAD/XoverCheckFlow</a></span><br class="wikidpad" />
+<span class="wikidpad url-link"><a href="http://twiki.amd.com/twiki/bin/view/DesignCAD/DFPFlowQA#how_to_enable_vsi_flow" class="wikidpad">http://twiki.amd.com/twiki/bin/view/DesignCAD/DFPFlowQA#how_to_enable_vsi_flow</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1419" class="wikidpad"></a><h3 class="wikidpad heading-level3">VSI wavie 相关</h3>
+<hr class="wikidpad" />
+<span class="wikidpad url-link"><a href="http://twiki.amd.com/twiki/bin/view/DesignCAD/HowToEnableVSIWaiveSystem" class="wikidpad">http://twiki.amd.com/twiki/bin/view/DesignCAD/HowToEnableVSIWaiveSystem</a></span><br class="wikidpad" />
+<span class="wikidpad url-link"><a href="files/mvsim_native.pdf" class="wikidpad">rel://files/mvsim_native.pdf</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1622" class="wikidpad"></a><h3 class="wikidpad heading-level3">SYNOPSYS及AMD CAD的VSI相关培训</h3>
+<hr class="wikidpad" />
+<span class="wikidpad url-link"><a href="http://twiki.amd.com/twiki/bin/viewauth/SOCDM/FcCheckVSI" class="wikidpad">http://twiki.amd.com/twiki/bin/viewauth/SOCDM/FcCheckVSI</a></span><br class="wikidpad" />
+这个twikipage中有丰富的ppt讲解. <br class="wikidpad" />
+<span class="wikidpad url-link"><a href="files/Fccheck_VsiLp_Training_Sept_2014.pdf" class="wikidpad">rel://files/Fccheck_VsiLp_Training_Sept_2014.pdf</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1866" class="wikidpad"></a><h3 class="wikidpad heading-level3">powerflow相关代码</h3>
+<hr class="wikidpad" />
+跟vsi相关的powerflow中的脚本有:<ul class="wikidpad normalindent">mvrc/parser_vsi_rpt.pl<br class="wikidpad" />
+scripts/mut_vsi.pl<br class="wikidpad" />
+scripts/gen_vsi_cmd.csh<br class="wikidpad" />
+scripts/isoPolicyPortMapping_vsi.tcl<br class="wikidpad" />
+scripts/pre_process_4_vsi_upfg_new.pl<br class="wikidpad" />
+</ul>
+上面是stdgen中涉及的代码, 如果是正常的powerflow的话还要再多几个脚本<ul class="wikidpad normalindent">mvrc/waive_vsi<br class="wikidpad" />
+bin/mut_vsi_rhea.pl<br class="wikidpad" />
+bin/mut_vsi_xover.pl<br class="wikidpad" />
+bin/blk_top_group_vsi.csh<br class="wikidpad" />
+template/dump_info_4_vsi.tmpl<br class="wikidpad" />
+bin/genConstCrossoverParams_vsi.csh</ul>
+    </body>
+</html>

@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+
+<title>Ruby参考手册 - 操作符表达式</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+
+<div class="body"><h1><a name="a.b1.e9.bb.bb.bb.d2.bc.b0" id="a.b1.e9.bb.bb.bb.d2.bc.b0">操作符表达式</a><!-- RDLabel: "操作符表达式" --></h1>
+<ul>
+<li><a href="#a.c2.e5.c6.fe" title="操作符表达式 (211d)" class="modified-year">赋值</a>
+<ul>
+<li><a href="#a.bc.ab.b8.ca.c2.e5.c6.fe" title="操作符表达式 (211d)" class="modified-year">计算赋值</a></li>
+<li><a href="#a.c2.bf.bd.c5.c2.e5.c6.fe" title="操作符表达式 (211d)" class="modified-year">多重赋值</a></li>
+</ul></li>
+<li><a href="#a.c8.cf.b0.cf.bc.b0" title="操作符表达式 (211d)" class="modified-year">范围表达式</a></li>
+<li><a href="#and" title="操作符表达式 (211d)" class="modified-year">and</a></li>
+<li><a href="#or" title="操作符表达式 (211d)" class="modified-year">or</a></li>
+<li><a href="#not" title="操作符表达式 (211d)" class="modified-year">not</a></li>
+<li><a href="#a.be.f2.b7.ef.b1.e9.bb.bb.bb.d2" title="操作符表达式 (211d)" class="modified-year">条件操作符</a></li>
+</ul>
+<p>例:</p>
+<pre>
+1+2*3/4
+</pre>
+
+<p>为了便于编程，有些方法调用和控制结构是以操作符的形式出现的。Ruby语言中有下列操作符。</p>
+<pre>
+高     ::
+       []
+       +(单项)  !  ~
+       **
+       -(单项)
+       *  /  %
+       +  -
+       &lt;&lt; &gt;&gt;
+       &amp;
+       |  ^
+       &gt; &gt;=  &lt; &lt;=
+       &lt;=&gt; ==  === !=  =~  !~
+       &amp;&amp;
+       ||
+       ..  ...
+       ?:(条件操作符)
+       =(+=, -= ... )
+       not
+低     and or
+</pre>
+
+<p>左侧的“高”和“低”表示操作符的优先度。例如“&&”的优先度要高于“||”，所以</p>
+<pre>
+a &amp;&amp; b || c   #=&gt; (a &amp;&amp; b) || c
+a || b &amp;&amp; c   #=&gt;  a || (b &amp;&amp; c)
+</pre>
+
+<p>大部分操作符都是些特殊形式的方法调用，但有的操作符被嵌入语言之中，无法进行再定义。</p>
+<ul>
+<li><p>可再定义的操作符(方法):</p>
+<p><code>+@</code>, <code>-@</code>表示单项操作符<code>+</code>, <code>-</code>，在方法定义等场合中可以使用这种表示法。</p>
+<pre>
+|  ^  &amp;  &lt;=&gt;  ==  ===  =~  &gt;   &gt;=  &lt;   &lt;=   &lt;&lt;  &gt;&gt;
++  -  *  /    %   **   ~   +@  -@  []  []=  `
+</pre></li>
+<li><p>不可再定义的操作符(控制结构):</p>
+<p>由多个操作符组合而成的计算赋值操作符、“!=”以及“!~”是不能再定义的。</p>
+<pre>
+=  ?:  ..  ...  !  not  &amp;&amp;  and  ||  or  ::
+</pre></li>
+</ul>
+<h2><a name="a.c2.e5.c6.fe" id="a.c2.e5.c6.fe">赋值</a><!-- RDLabel: "赋值" --></h2>
+<p>例:</p>
+<pre>
+foo = bar
+foo[0] = bar
+foo.bar = baz
+</pre>
+
+<p>语法:</p>
+<pre>
+变量 '=' 表达式
+常数 '=' 表达式
+表达式`['expr..`]' '=' 表达式
+表达式`.'标识符 '=' 表达式
+</pre>
+
+<p>我们使用赋值表达式向变量等对象进行赋值。赋值也可以用作局部变量和常数的声明。赋值表达式的左边必须是下列之一。</p>
+<ul>
+<li><p>变量</p>
+<pre>
+变量 `=' 表达式
+</pre>
+
+<p>若左边是变量的话，就将表达式的计算值代入其中。</p></li>
+<li><p>数组调用</p>
+<pre>
+表达式1`[' 表达式2 ... `]' `=' 表达式n
+</pre>
+
+<p>先计算表达式1得到一个对象，再把从表达式2到表达式n之间的这些表达式作为参数，来调用该对象的"[]="方法。</p>
+<p>例:</p>
+<pre>
+class C
+  def initialize
+    @ary = [0,1,2,3,4,5,6,7]
+  end
+  def [](i)
+    @ary[i * 2]
+  end
+  def []=( i, v )
+    @ary[i * 2] = v
+  end
+end
+c = C.new
+p c[3]      # 变成 c.[]( 3 )， 结果为6
+p c[3] = 1  # 变成 c.[]=(3,1)，结果为1
+</pre></li>
+<li><p>属性调用</p>
+<pre>
+表达式1 `.' 标识符 `=' 表达式2
+</pre>
+
+<p>计算表达式1得到一个对象，再以表达式2为参数来调用该对象的"标识符="方法。</p>
+<p>例:</p>
+<pre>
+class C
+  def foo
+    @foo
+  end
+  def foo=( v )
+    @foo = v
+  end
+end
+c = C.new
+c.foo = 5   # 变成 c.foo=( 5 )
+p c.foo     # =&gt; 5
+</pre>
+
+<p>还可以使用 <font color=blue><b>attr</b></font> 来定义属性。</p>
+<p>例:</p>
+<pre>
+class C
+  attr :foo, true
+end
+c = C.new
+c.foo = 5   # 变成 c.foo=( 5 )
+p c.foo     # =&gt; 5
+</pre></li>
+</ul>
+<h3><a name="a.bc.ab.b8.ca.c2.e5.c6.fe" id="a.bc.ab.b8.ca.c2.e5.c6.fe">计算赋值</a><!-- RDLabel: "计算赋值" --></h3>
+<p>例:</p>
+<pre>
+foo += 12       # foo = foo + 12
+a ||= 1         # 若a为伪或者a尚未定义，就把1赋值给a。初始化时的一种习惯写法。
+</pre>
+
+<p>语法:</p>
+<pre>
+表达式1 op= 表达式2     # 表达式1等同于普通赋值表达式左边的部分
+</pre>
+
+<p>op就是下列中的某一个。操作符与<code>=</code>之间不留间隔。</p>
+<pre>
++, -, *, /, %, **, &amp;, |, ^, &lt;&lt;, &gt;&gt;, &amp;&amp;, ||
+</pre>
+
+<p>这种赋值形式等同于</p>
+<pre>
+表达式1 = 表达式1 op 表达式2
+</pre>
+
+<p>但是，当<code>op</code>是“&&”或“||”时就会变成</p>
+<pre>
+表达式1 op (表达式1 = 表达式2)
+</pre>
+
+<p>这个样子。例如在属性调用时</p>
+<pre>
+obj.foo ||= true
+</pre>
+
+<p>就不能解释成</p>
+<pre>
+obj.foo = obj.foo || true
+</pre>
+
+<p>而应该是</p>
+<pre>
+obj.foo || (obj.foo = true)
+</pre>
+
+<p>这样才对。(根据obj.foo结果的不同，有时就不能调用obj.foo=)</p>
+<h3><a name="a.c2.bf.bd.c5.c2.e5.c6.fe" id="a.c2.bf.bd.c5.c2.e5.c6.fe">多重赋值</a><!-- RDLabel: "多重赋值" --></h3>
+<p>例:</p>
+<pre>
+foo, bar, baz = 1, 2, 3
+foo, = list()
+foo, *rest = list2()
+</pre>
+
+<p>语法:</p>
+<pre>
+表达式 [`,' [表达式 `,' ... ] [`*' [表达式]]] = 表达式 [, 表达式 ... ][`*' 表达式]
+`*' [表达式] = 表达式 [, 表达式 ... ][`*' 表达式]
+</pre>
+
+<p>多重赋值是指，在多个表达式以及数组中同时进行的赋值。左边的各个表达式必须是可以被赋值的。若右边只有一个表达式时，则将该表达式的计算值转为数组后，再把数组中的各个元素依次赋值给左边。若右边数组元素的数量超过左边的话，将忽略多余的数组元素。若右边数组元素个数不足的话，将向左边多余的元素中代入nil。</p>
+<p>若左边最后一个表达式前带*的话，则将右边多余的元素以数组的形式代入这个带*的表达式中。若右边没有多余元素的话，就把空数组代入其中。</p>
+<p>例:</p>
+<pre>
+foo, bar = [1, 2]       # foo = 1; bar = 2
+foo, bar = 1, 2         # foo = 1; bar = 2
+foo, bar = 1            # foo = 1; bar = nil
+
+foo, bar, baz = 1, 2    # foo = 1; bar = 2; baz = nil
+foo, bar = 1, 2, 3      # foo = 1; bar = 2
+foo      = 1, 2, 3      # foo = [1, 2, 3]
+*foo     = 1, 2, 3      # foo = [1, 2, 3]
+foo,*bar = 1, 2, 3      # foo = 1; bar = [2, 3]
+</pre>
+
+<p>在多重赋值过程中，若使用括号的话，就可以把数组内含的元素取出来进行赋值。</p>
+<pre>
+(foo, bar), baz = [1, 2], 3       # foo = 1; bar = 2; baz = 3
+</pre>
+
+<p>还可以把特殊形式的赋值表达式转化为多重代入。</p>
+<pre>
+class C
+  def foo=( v )
+    @foo = v
+  end
+  def []=(i,v)
+    @bar = ["a", "b", "c"]
+    @bar[i] = v
+  end
+end
+
+obj = C.new
+obj.foo, obj[2] = 1, 2     # @foo = 1; @bar = ["a", "b", 2]
+</pre>
+
+<p>若左边以","结尾或"*"后面没有表达式时，将忽略右边多余的元素。</p>
+<p>例:</p>
+<pre>
+foo,*    = 1, 2, 3      # foo = 1
+foo,     = 1, 2, 3      # foo = 1
+*        = 1, 2, 3
+</pre>
+
+<p>当您想忽略方法调用中的所有参数时，就可以使用这个"*"(<font color=blue>方法调用</font>中的参数在进行交接时，大体遵循多重代入的规则)。</p>
+<p>例:</p>
+<pre>
+def foo(*)
+end
+foo(1,2,3)
+</pre>
+
+<p>多重赋值的值变换为右边的数组。</p>
+<h2><a name="a.c8.cf.b0.cf.bc.b0" id="a.c8.cf.b0.cf.bc.b0">范围表达式</a><!-- RDLabel: "范围表达式" --></h2>
+<p>例:</p>
+<pre>
+1 .. 20
+/first/  ...  /second/
+</pre>
+
+<p>语法:</p>
+<pre>
+表达式1 `..' 表达式2
+表达式1 ` ... ' 表达式2
+</pre>
+
+<p>如果不是出现在条件表达式中的话，它将返回从表达式1到表达式2的范围对象。范围对象是 <font color=blue><b>Range</b></font> 类的实例。使用"..."生成的范围对象将不包括终点。</p>
+<p>若它出现在条件表达式中时，在表达式1变成真之前，它将一直返回伪。接下来，在表达式2返回真之前，它将一直返回真。一旦表达式2变为真，它将重新返回伪。使用".."时，一旦表达式1返回真，马上就会对表达式2进行计算(就象awk)。而使用"..."时，在进行下个计算之前，一直都不会对表达式2进行计算(就象sed)。</p>
+<h2><a name="and" id="and">and</a><!-- RDLabel: "and" --></h2>
+<p>例:</p>
+<pre>
+test &amp;&amp; set
+test and set
+</pre>
+
+<p>语法:</p>
+<pre>
+表达式 `&amp;&amp;' 表达式
+表达式 `and' 表达式
+</pre>
+
+<p>首先计算左边，若结果为真就接着计算右边。"and"操作符的作用相同但优先度更低。</p>
+<p>将包含<code>and</code>的表达式传递给某方法的参数时，必须使用双层括号。</p>
+<pre>
+p(true &amp;&amp; false)    #=&gt; false
+p((true and false)) #=&gt; false
+</pre>
+
+<h2><a name="or" id="or">or</a><!-- RDLabel: "or" --></h2>
+<p>例:</p>
+<pre>
+demo || die
+demo or die
+</pre>
+
+<p>语法:</p>
+<pre>
+表达式 `||' 表达式
+表达式 or 表达式
+</pre>
+
+<p>首先计算左边，若结果为伪就接着计算右边。"or"操作符的作用相同但优先度更低。</p>
+<p>将包含<code>or</code>的表达式传递给某方法的参数时，必须使用双层括号。</p>
+<pre>
+p(false || true)    #=&gt; true
+p((false or true)) #=&gt; true
+</pre>
+
+<h2><a name="not" id="not">not</a><!-- RDLabel: "not" --></h2>
+<p>例:</p>
+<pre>
+! me
+not me
+i != you
+</pre>
+
+<p>语法:</p>
+<pre>
+`!' 表达式
+not 表达式
+</pre>
+
+<p>若表达式值为真就返回伪，若表达式值为伪则返回真。</p>
+<pre>
+表达式 `!=' 表达式
+</pre>
+
+<p>等同于<code>!(表达式 == 表达式)</code>。</p>
+<pre>
+表达式 `!~' 表达式
+</pre>
+
+<p>等同于<code>!(表达式 =~ 表达式)</code>。</p>
+<p>将包含<code>not</code>的表达式传递给某方法的参数时，必须使用双层括号。</p>
+<pre>
+p(! false)      #=&gt; true
+p((not false))  #=&gt; true
+</pre>
+
+<h2><a name="a.be.f2.b7.ef.b1.e9.bb.bb.bb.d2" id="a.be.f2.b7.ef.b1.e9.bb.bb.bb.d2">条件操作符</a><!-- RDLabel: "条件操作符" --></h2>
+<p>例:</p>
+<pre>
+obj == 1 ? foo : bar
+</pre>
+
+<p>语法:</p>
+<pre>
+表达式1 ? 表达式2 : 表达式3
+</pre>
+
+<p>根据表达式1的结果，选择返回表达式2或表达式3。它与</p>
+<pre>
+if 表达式1 then 表达式2 else 表达式3 end
+</pre>
+
+<p>完全相同。</p>
+
+<hr>
+</div>
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

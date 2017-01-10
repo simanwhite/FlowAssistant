@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-DEPLRTL24</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Augst_2016.html" class="wikidpad">calendar_Augst_2016</a></span> | <span class="wikidpad parent-node"><a href="calendar_July_2016.html" class="wikidpad">calendar_July_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-DEPLRTL24</h2>
+<hr class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">问题描述及环境</b>:<br class="wikidpad" />
+<span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DEPLRTL-24" class="wikidpad">http://ontrack-internal.amd.com/browse/DEPLRTL-24</a></span><br class="wikidpad" />
+VNC: atlnonveu-0461:7 (amd123)<br class="wikidpad" />
+VNC:atlnonveu-0182:2 (123456)<br class="wikidpad" />
+/proj/vega10_socpv2/jbzhang/baco_flow/out/amd64rh3.0.VCS/polaris22/config/chip_b<br class="wikidpad" />
+aco/pub/sim <br class="wikidpad" />
+/proj/vega10_scopv2/jbzhang/baco_flow<br class="wikidpad" />
+邮件往来: <span class="wikidpad url-link"><a href="files/RE%20%20%20Polaris22%20%20UPF%20generation%20flow%20issue_UOV6QJXHV2.msg" class="wikidpad">rel://files/RE   Polaris22  UPF generation flow issue_UOV6QJXHV2.msg</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+2016-7-15<br class="wikidpad" />
+在genChipUpf.csh上做了修改. <span class="wikidpad url-link"><a href="http://codereview/ui#review:id=63208" class="wikidpad">http://codereview/ui#review:id=63208</a></span><br class="wikidpad" />
+已经可以生成正确的chip.upf.2.0了. <hr class="wikidpad" />
+Hi Jiubin <br class="wikidpad" />
+<br class="wikidpad" />
+I think it is ok just <b class="wikidpad">update chip.upf.tmpl</b> under control by NLP_UPF define.<br class="wikidpad" />
+<br class="wikidpad" />
+And please specify tile only staff in tile prams file. Baco_tile.params is treat as top level. <br class="wikidpad" />
+<br class="wikidpad" />
+Thanks <br class="wikidpad" />
+Angela <br class="wikidpad" />
+<br class="wikidpad" />
+From: Zhang, Jiubin <br class="wikidpad" />
+Sent: Tuesday, July 05, 2016 11:30 AM<br class="wikidpad" />
+To: Huang, Angela &lt;Angela.Huang@amd.com&gt;; Zuo, Quan &lt;Quan.Zuo@amd.com&gt;<br class="wikidpad" />
+Subject: RE: [Polaris22] UPF generation flow issue<hr class="wikidpad" />
+<br class="wikidpad" />
+Hi Angela,<br class="wikidpad" />
+<br class="wikidpad" />
+I think the bf_t.upf still needs baco_tile.param now. In my local, I hack the ge<br class="wikidpad" />
+nBacoTileUpf.csh to bypass the error. Now it will fetch a new parameter file wit<br class="wikidpad" />
+hout the include path. Could you please update the genBacoTileUpf.csh either? Th<br class="wikidpad" />
+anks.<br class="wikidpad" />
+<br class="wikidpad" />
+Best Regards<br class="wikidpad" />
+Jiubin<br class="wikidpad" />
+==== //tools/internal/packages/design/stdgen/stdgen-2/2.0/release/racerx/src/tools/dfp/scripts/genBacoTileUpf.csh#5 - /proj/plr22-dv1-nobackup/jbzhang/polaris22_soc/import/stdgen/src/tools/dfp/scripts/genBacoTileUpf.csh ====<br class="wikidpad" />
+161,162c161,162<br class="wikidpad" />
+&lt;   echo "env XEPERL=$eperl $OUT_CMN_pub/src/meta/tools/dfp/template/baco_tile.upf.tmpl -P -o $upfOut -p $STEM/src/meta/power/dfp/tile_params/variant/$PROJECT/baco_tile.params -d INPORT_LIST=$WD/inport_list.txt -d OUTPORT_LIST=$WD/outport_list.txt -d PORT_LIST=$WD/port_list.txt -d NLP_UPF=1"<br class="wikidpad" />
+&lt;   eval "env XEPERL=$eperl $OUT_CMN_pub/src/meta/tools/dfp/template/baco_tile.upf.tmpl -P -o $upfOut -p $STEM/src/meta/power/dfp/tile_params/variant/$PROJECT/baco_tile.params -d INPORT_LIST=$WD/inport_list.txt -d OUTPORT_LIST=$WD/outport_list.txt -d PORT_LIST=$WD/port_list.txt -d NLP_UPF=1"<br class="wikidpad" />
+---<br class="wikidpad" />
+&gt;   echo "env XEPERL=$eperl $OUT_CMN_pub/src/meta/tools/dfp/template/baco_tile.upf.tmpl -P -o $upfOut -p $STEM/src/meta/power/dfp/tile_params/variant/$PROJECT/baco_tile_nlp.params -d INPORT_LIST=$WD/inport_list.txt -d OUTPORT_LIST=$WD/outport_list.txt -d PORT_LIST=$WD/port_list.txt -d NLP_UPF=1"<br class="wikidpad" />
+&gt;   eval "env XEPERL=$eperl $OUT_CMN_pub/src/meta/tools/dfp/template/baco_tile.upf.tmpl -P -o $upfOut -p $STEM/src/meta/power/dfp/tile_params/variant/$PROJECT/baco_tile_nlp.params -d INPORT_LIST=$WD/inport_list.txt -d OUTPORT_LIST=$WD/outport_list.txt -d PORT_LIST=$WD/port_list.txt -d NLP_UPF=1"<hr class="wikidpad" />
+<br class="wikidpad" />
+From: Huang, Angela <br class="wikidpad" />
+Sent: Monday, July 04, 2016 10:52 PM<br class="wikidpad" />
+To: Zhang, Jiubin; Zuo, Quan<br class="wikidpad" />
+Cc: Rong, DanLu; Li, Richard2; cv.power.support; Li, Sarah(Peipei); Huang, Vincent1; Pu, Alan<br class="wikidpad" />
+Subject: RE: [Polaris22] UPF generation flow issue<br class="wikidpad" />
+<br class="wikidpad" />
+There once have requirement to ask baco support include exist upf. Tile owner sp<br class="wikidpad" />
+ecify this include path in baco_tile.params that caused all tiles issues. since <br class="wikidpad" />
+baco_tile.params will used for whole chip call and right now the project team (s<br class="wikidpad" />
+pecial feint team ) call pgvi+baco mode. We review it seems bf_t.params needn’t <br class="wikidpad" />
+baco_tile.param anymore but missed chip level review. We can add baco into genCh<br class="wikidpad" />
+ipupf.csh but you must take care please don’t specify bf_t tile only staff in th<br class="wikidpad" />
+is baco_tile.params file. <br class="wikidpad" />
+<br class="wikidpad" />
+Thanks <br class="wikidpad" />
+Angela <hr class="wikidpad" />
+<br class="wikidpad" />
+From: Zhang, Jiubin <br class="wikidpad" />
+Sent: Monday, July 04, 2016 5:31 PM<br class="wikidpad" />
+To: Zuo, Quan &lt;Quan.Zuo@amd.com&gt;<br class="wikidpad" />
+Cc: Rong, DanLu &lt;DanLu.Rong@amd.com&gt;; Li, Richard2 &lt;Richard2.Li@amd.com&gt;; cv.power.support &lt;cv.power.support@amd.com&gt;; Li, Sarah(Peipei) &lt;Peipei.Li@amd.com&gt;; Huang, Vincent1 &lt;Vincent1.Huang@amd.com&gt;; Huang, Angela &lt;Angela.Huang@amd.com&gt;; Pu, Alan &lt;Alan.Pu@amd.com&gt;<br class="wikidpad" />
+Subject: RE: [Polaris22] UPF generation flow issue<br class="wikidpad" />
+<br class="wikidpad" />
+Hi Quan,<br class="wikidpad" />
+<br class="wikidpad" />
+Please check the issue in the following VNC. Thanks.<br class="wikidpad" />
+VNC: atlnonveu-0461:7<br class="wikidpad" />
+<br class="wikidpad" />
+Best Regards<br class="wikidpad" />
+Jiubin<hr class="wikidpad" />
+<br class="wikidpad" />
+From: Zhang, Jiubin <br class="wikidpad" />
+Sent: Tuesday, June 28, 2016 9:03 PM<br class="wikidpad" />
+To: Huang, Angela<br class="wikidpad" />
+Cc: Rong, DanLu; Li, Richard2<br class="wikidpad" />
+Subject: RE: [Polaris22] UPF generation flow issue<br class="wikidpad" />
+<br class="wikidpad" />
+Hi Angela,<br class="wikidpad" />
+<br class="wikidpad" />
+In //tools/internal/packages/design/stdgen/stdgen-2/2.0/release/racerx/src/tools/dfp/scripts/genChipUpf.csh#6, I see you delete the baco_tile.params. But it will fail to generate the chip upf and report the following errors. Could you please help me fix the issue? Thanks.<br class="wikidpad" />
+<br class="wikidpad" />
+==== //tools/internal/packages/design/stdgen/stdgen-2/2.0/release/racerx/src/tools/dfp/scripts/genChipUpf.csh#5 (xtext) - //tools/internal/packages/design/stdgen/stdgen-2/2.0/release/racerx/src/tools/dfp/scripts/genChipUpf.csh#6 (xtext) ==== content<br class="wikidpad" />
+474c474<br class="wikidpad" />
+&lt;       set opts = "$opts -p baco_aon.params -p $STEM/src/meta/power/dfp/tile_params/variant/$PROJECT/baco_tile.params  -p $exist_upf -d IS_BACO=1"<br class="wikidpad" />
+---<br class="wikidpad" />
+&gt;       set opts = "$opts -p baco_aon.params -p $exist_upf -d IS_BACO=1"<br class="wikidpad" />
+478c478<br class="wikidpad" />
+&lt;               set opts = "$opts -p baco_aon.params -p $STEM/src/meta/power/dfp/tile_params/variant/$PROJECT/baco_tile.params -d IS_BACO=1"<br class="wikidpad" />
+---<br class="wikidpad" />
+&gt;               set opts = "$opts -p baco_aon.params -d IS_BACO=1"<br class="wikidpad" />
+<br class="wikidpad" />
+Best Regards<br class="wikidpad" />
+Jiubin<br class="wikidpad" />
+From: Zhang, Jiubin <br class="wikidpad" />
+Sent: Tuesday, June 28, 2016 4:26 PM<br class="wikidpad" />
+To: Huang, Angela<br class="wikidpad" />
+Cc: Rong, DanLu; Li, Richard2<br class="wikidpad" />
+Subject: [Polaris22] UPF generation flow issue<br class="wikidpad" />
+<br class="wikidpad" />
+Hi Angela,<br class="wikidpad" />
+<br class="wikidpad" />
+@ATL<br class="wikidpad" />
+/proj/plr22-dv1-nobackup/jbzhang/polaris22_soc/out_old/amd64rh3.0.VCS/polaris22/config/chip_baco/pub/sim @2395465<br class="wikidpad" />
+When I run the baco case with upf, there are some error in the chip.upf.2.0 which is generated by upfg flow.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+And I found in //tools/internal/packages/design/stdgen/stdgen-2/2.0/release/racerx/src/tools/dfp/template/chip.upf.tmpl#4,<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+Maybe some parameters haven't been fetched by this file. Please help me fix the issue. Thanks.<br class="wikidpad" />
+<br class="wikidpad" />
+Best Regards<br class="wikidpad" />
+Jiubin<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h6130" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-8-1</h4>
+新情况:<br class="wikidpad" />
+Jiubin说, 生成bf_t时<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h6168" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-8-3</h4>
+atlnonveu-0629:/proj/cv_srdc/qzuo/stdgen_jira24[ 87 ] --&gt; p4 submit -c 2426377<br class="wikidpad" />
+Submitting change 2426377.<br class="wikidpad" />
+Locking 1 files ...<br class="wikidpad" />
+edit //tools/internal/packages/design/stdgen/stdgen-2/2.0/release/racerx/src/tools/dfp/scripts/genChipUpf.csh#7<br class="wikidpad" />
+Change 2426377 renamed change <b class="wikidpad">2444628</b> and submitted.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<hr class="wikidpad" />
+<br class="wikidpad" />
+    </body>
+</html>

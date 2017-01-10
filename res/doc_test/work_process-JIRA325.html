@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-JIRA325</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Nov_2016.html" class="wikidpad">calendar_Nov_2016</a></span> | <span class="wikidpad parent-node"><a href="calendar_Oct_2016.html" class="wikidpad">calendar_Oct_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-JIRA325</h2>
+<hr class="wikidpad" />
+标题: [SSP] nbif block param files are overriden<br class="wikidpad" />
+JIRA地址: <span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DMVMTVRF-325" class="wikidpad">http://ontrack-internal.amd.com/browse/DMVMTVRF-325</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h216" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" /><br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h329" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+For nbif IP, there are 3 variants being used for ssp (generic_a, generic_b, ntb) and DFP params for all 3 are being published to a common location. Further, nbif.params (present in all 3 variants) gets overwritten by the last variant that gets published. We expect to publish separate file for 3 variants. Do you know how to fix it?<br class="wikidpad" />
+SSP soc tree:<br class="wikidpad" />
+(ATL)/proj/ssp_iod_dfp1/sdevula/LSA/ws9<br class="wikidpad" />
+nbif block param files:<br class="wikidpad" />
+$STEM/import/nbio/import/nbif2_0_ssp/src/meta/dfp/variant<br class="wikidpad" />
+ssp_generic_a<br class="wikidpad" />
+ssp_generic_b<br class="wikidpad" />
+ssp_ntb<br class="wikidpad" />
+Thanks &amp; Regards<br class="wikidpad" />
+Lisa<br class="wikidpad" />
+<br class="wikidpad" />
+说是soc报的问题, 当有多个variant时候, publish出来的parameter文件会相互覆盖. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1023" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+<a name=".h1126" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-10-31</h4>
+下面是jira上给lisa的回复:<br class="wikidpad" />
+<pre class="wikidpad">Some observation: 
+Variants under /proj/ssp_iod_dfp1/sdevula/LSA/ws9/import/nbio/import/nbif2_0_ssp/src/meta/dfp/variant/ includes:
+
+1. ssp_generic_a
+2. ssp_generic_b
+3. ssp_ntb
+
+and each of them got its own block_params, for example: nbif_shub_ssp_a.params.e
+rb for ssp_generic_a. After these block_params are published into out folder, th
+e problem happens:
+
+1. All three variants' params are published under /proj/ssp_iod_dfp1/sdevula/LSA
+/ws9/out/linux_2.6.32_64.VCS/design_iod/library/nbif-ssp_generic_a-starship/pub/
+src/meta/dfp/variant
+
+2. But for .../library/nbif-ssp_generic_b-starship and .../library/nbif-ssp_ntb-
+starship, there's not even dfp folder under its pub/src/meta directory.
+
+I guess there must be some configuration issue for the usage of publish flow. As
+signing this to Joe for help.
+
+Thanks.
+</pre>
+应该是publish flow的使用问题. assign给joe了. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h2028" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-11-1</h4>
+分析: <ul class="wikidpad normalindent">认定是DJ的问题, 与automgr什么的有关系. <br class="wikidpad" />
+</ul>
+问题现象:<ul class="wikidpad normalindent">跑DJ命令后, nbif不同variant参数交叠<br class="wikidpad" />
+<br class="wikidpad" />
+来源: /proj/ssp_iod_dfp1/sdevula/LSA/ws9/import/nbio/import/nbif2_0_ssp/src/meta/dfp/variant/<br class="wikidpad" />
+输出: /proj/ssp_iod_dfp1/sdevula/LSA/ws9/out/linux_2.6.32_64.VCS/design_iod/library/nbif-ssp_generic_a-starship/pub/src/meta/dfp/variant<br class="wikidpad" />
+<br class="wikidpad" />
+</ul>
+infra相关, PROJECT变量还是VARIANT变量, 还是并存, 还是怎么着, 反正不对...<br class="wikidpad" />
+<br class="wikidpad" />
+搞不出来啊囧, 毕竟不是infra team<br class="wikidpad" />
+<br class="wikidpad" />
+Lisa Liu2自己找人搞定了...<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+[tags: <br class="wikidpad" />
+    </body>
+</html>

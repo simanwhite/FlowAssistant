@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<title>Ruby参考手册 - 卷首语</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+
+<div class="body"><h1><a name="a.a4.cf.a4.b8.a4.e1.a4.cb" id="a.a4.cf.a4.b8.a4.e1.a4.cb">卷首语</a></h1>
+<p>Ruby是一种简便快捷的面向对象编程的脚本语言.Ruby可以(像Perl一样)进行文本处理及系统管理,其功能十分丰富.同时,Ruby简单易懂,便于扩充.</p>
+<p>若您正在寻找一种简单的面向对象语言,或者觉得Perl不够简便,又或者虽然喜欢Lisp的思想却讨厌到处都是括号的话,Ruby正是您不二的选择.</p>
+<p>Ruby有下列优点.</p>
+<dl>
+<dt><a name="a.a5.a4.a5.f3.a5.bf.a5.d7.a5.ea.a5.bf" id="a.a5.a4.a5.f3.a5.bf.a5.d7.a5.ea.a5.bf">解释器</a></dt>
+<dd>
+<p>Ruby是解释型语言,因此执行程序时无需编译.</p>
+</dd>
+<dt><a name="a.ca.d1.bf.f4.a4.cb.b7.bf.a4.ac.cc.b5.a4.a4.20.28.c6.b0.c5.aa.b7.bf.c9.d5.a4.b1.29" id="a.ca.d1.bf.f4.a4.cb.b7.bf.a4.ac.cc.b5.a4.a4.20.28.c6.b0.c5.aa.b7.bf.c9.d5.a4.b1.29">变量无类型(动态地确定类型)</a></dt>
+<dd>
+<p>Ruby的变量可以接收各种类型的数据,因此没有必要担心变量类型的问题.另一方面,这弱化了编译检查的功能.</p>
+</dd>
+<dt><a name="a.ca.d1.bf.f4.c0.eb.b8.c0.a4.ac.c9.d4.cd.d7" id="a.ca.d1.bf.f4.c0.eb.b8.c0.a4.ac.c9.d4.cd.d7">无需声明变量</a></dt>
+<dd>
+<p>Ruby中无需声明变量即可使用.可以根据变量名分辨变量的种类(局部变量,全局变量,实例变量等).</p>
+</dd>
+<dt><a name="a.c3.b1.bd.e3.a4.ca.ca.b8.cb.a1" id="a.c3.b1.bd.e3.a4.ca.ca.b8.cb.a1">语法简单</a></dt>
+<dd>
+<p>受Eiffel影响,Ruby的语法十分简单.</p>
+</dd>
+<dt><a name="a.a5.e6.a1.bc.a5.b6.a4.cb.a4.e8.a4.eb.a5.e1.a5.e2.a5.ea.b4.c9.cd.fd.a4.ac.c9.d4.cd.d7" id="a.a5.e6.a1.bc.a5.b6.a4.cb.a4.e8.a4.eb.a5.e1.a5.e2.a5.ea.b4.c9.cd.fd.a4.ac.c9.d4.cd.d7">内存管理无需用户干预</a></dt>
+<dd>
+<p>Ruby自动进行内存管理.解释器内置的垃圾回收器会自动回收不再使用的对象.</p>
+</dd>
+<dt><a name="a.c1.b4.a4.c6.a4.ac.a5.aa.a5.d6.a5.b8.a5.a7.a5.af.a5.c8" id="a.c1.b4.a4.c6.a4.ac.a5.aa.a5.d6.a5.b8.a5.a7.a5.af.a5.c8">一切都是对象</a></dt>
+<dd>
+<p>从一开始Ruby就被设计成为纯粹的面向对象语言.包括整数这种基本的数据类型在内所有数据都被看是对象,进而得到统一的处理.</p>
+</dd>
+<dt><a name="a.a5.af.a5.e9.a5.b9.a1.a2.b7.d1.be.b5.a1.a2.a5.e1.a5.bd.a5.c3.a5.c9" id="a.a5.af.a5.e9.a5.b9.a1.a2.b7.d1.be.b5.a1.a2.a5.e1.a5.bd.a5.c3.a5.c9">类，继承，方法</a></dt>
+<dd>
+<p>Ruby当然具有面向对象语言的基本功能,包括类，继承和方法等.</p>
+</dd>
+<dt><a name="a.c6.c3.b0.db.a5.e1.a5.bd.a5.c3.a5.c9" id="a.c6.c3.b0.db.a5.e1.a5.bd.a5.c3.a5.c9">特殊方法</a></dt>
+<dd>
+<p>可向某对象添加方法.例如，可以把GUI按钮被按下时的动作作为方法记述下来，还可以用它来进行原型库（prototypebase）的面向对象编程（只要您想这样的话）.</p>
+</dd>
+<dt><a name="a.a5.e2.a5.b8.a5.e5.a1.bc.a5.eb.a4.cb.a4.e8.a4.ebMix-in" id="a.a5.e2.a5.b8.a5.e5.a1.bc.a5.eb.a4.cb.a4.e8.a4.ebMix-in">使用模块进行糅合（Mix-in）</a></dt>
+<dd>
+<p>Ruby认为多重继承会导致问题复杂化,因此故意舍弃了多重继承,但可以使用模块超越类的界限来共享数据和方法等.这就是"Mix-in"糅合功能</p>
+</dd>
+<dt><a name="a.a5.d6.a5.ed.a5.c3.a5.af.c9.d5.a4.ad.a5.e1.a5.bd.a5.c3.a5.c9.b8.c6.a4.d3.bd.d0.a4.b7.28.a5.a4.a5.c6.a5.ec.a1.bc.a5.bf.29" id="a.a5.d6.a5.ed.a5.c3.a5.af.c9.d5.a4.ad.a5.e1.a5.bd.a5.c3.a5.c9.b8.c6.a4.d3.bd.d0.a4.b7.28.a5.a4.a5.c6.a5.ec.a1.bc.a5.bf.29">迭代器</a></dt>
+<dd>
+<p>迭代器功能可以将流程控制结构抽象化.</p>
+</dd>
+<dt><a name="a.a5.af.a5.ed.a1.bc.a5.b8.a5.e3" id="a.a5.af.a5.ed.a1.bc.a5.b8.a5.e3">闭包</a></dt>
+<dd>
+<p>可以将某过程片段对象化,对象化后的该过程片段就称作闭包.</p>
+</dd>
+<dt><a name="a.b6.af.ce.cf.a4.ca.ca.b8.bb.fa.ce.f3.c1.e0.ba.ee.2f.c0.b5.b5.ac.c9.bd.b8.bd" id="a.b6.af.ce.cf.a4.ca.ca.b8.bb.fa.ce.f3.c1.e0.ba.ee.2f.c0.b5.b5.ac.c9.bd.b8.bd">功能强大的字符串操作／正则表达式</a></dt>
+<dd>
+<p>以Perl为样板创造出了功能强大的字符串操作和正则表达式检索功能.</p>
+</dd>
+<dt><a name="a.c2.bf.c7.dc.c4.b9.c0.b0.bf.f4" id="a.c2.bf.c7.dc.c4.b9.c0.b0.bf.f4">超长整数</a></dt>
+<dd>
+<p>内置了处理超长整数的功能,所以只要内存允许就可以计算非常大的整数.例如计算400的阶乘等也轻而易举.</p>
+</dd>
+<dt><a name="a.ce.e3.b3.b0.bd.e8.cd.fd.b5.a1.c7.bd" id="a.ce.e3.b3.b0.bd.e8.cd.fd.b5.a1.c7.bd">异常处理功能</a></dt>
+<dd>
+<p>异常处理功能可以使您编写代码处理异常情况.</p>
+</dd>
+<dt><a name="OS.a4.d8.a4.ce.c4.be.c0.dc.a5.a2.a5.af.a5.bb.a5.b9" id="OS.a4.d8.a4.ce.c4.be.c0.dc.a5.a2.a5.af.a5.bb.a5.b9">可以直接访问OS</a></dt>
+<dd>
+<p>Ruby可以使用（UNIX的）绝大部分的系统调用.即使单独使用Ruby也可以进行系统编程.</p>
+</dd>
+<dt><a name="a.a5.c0.a5.a4.a5.ca.a5.df.a5.c3.a5.af.a5.ed.a1.bc.a5.c7.a5.a3.a5.f3.a5.b0" id="a.a5.c0.a5.a4.a5.ca.a5.df.a5.c3.a5.af.a5.ed.a1.bc.a5.c7.a5.a3.a5.f3.a5.b0">动态加载</a></dt>
+<dd>
+<p>若OS支持的话,可以在运行时读入对象文件.</p>
+</dd>
+</dl>
+</div>
+<hr />
+
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

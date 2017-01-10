@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-DJ学习</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_May_2016.html" class="wikidpad">calendar_May_2016</a></span> | <span class="wikidpad parent-node"><a href="work_process-入职培训.html" class="wikidpad">work_process-入职培训</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-DJ学习</h2>
+<hr class="wikidpad" />
+目标: 自建component<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h119" class="wikidpad"></a><h3 class="wikidpad heading-level3">CM getting started: reading note</h3>
+<hr class="wikidpad" />
+<ul class="wikidpad bulletlist">
+<li class="wikidpad" />重要概念: <b class="wikidpad">component</b>, is a name scoped package, of 4 kinds of things:<br class="wikidpad" />
+1. set of IP<br class="wikidpad" />
+2. set of SoC<br class="wikidpad" />
+3. shared toolset<br class="wikidpad" />
+4. library of elements
+<li class="wikidpad" />重要概念: <b class="wikidpad">DJ</b>, Distribute Job. 用<span class="wikidpad wiki-link"><a href="Ruby.html" class="wikidpad">Ruby</a></span>写的flow工具, 用于evaluate and run flow.
+<li class="wikidpad" />帮助理解: Component Based WorkArea, 即cbwa, 基于组件的工作区, 大概是一种便于并<br class="wikidpad" />
+行开发的框架. 其最终实现有赖于DJ.
+<li class="wikidpad" />基本的目录结构: 工作目录, 即$STEM下有以下基本目录,<br class="wikidpad" />
+1. 
+<li class="wikidpad" />album.dj:
+<li class="wikidpad" />关于<span class="wikidpad wiki-link"><a href="Makefile.html" class="wikidpad">Makefile</a></span>:<br class="wikidpad" />
+</ul>
+<span class="wikidpad url-link"><a href="files/CM%20-%20Getting%20Started.docx" class="wikidpad">rel://files/CM - Getting Started.docx</a></span><br class="wikidpad" />
+<span class="wikidpad url-link"><a href="files/Component%20Management%20-%20Details.pptx" class="wikidpad">rel://files/Component Management - Details.pptx</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h696" class="wikidpad"></a><h3 class="wikidpad heading-level3">Example: nbif (IP) component</h3>
+<hr class="wikidpad" />
+<ul class="wikidpad bulletlist">
+<li class="wikidpad" />nbif tree src: <span class="wikidpad url-link"><a href="file:///D:/working/nbif2_0" class="wikidpad">file:///D:/working/nbif2_0</a></span>
+<li class="wikidpad" />tree build guide:<br class="wikidpad" />
+•	build-tree<br class="wikidpad" />
+source /proj/verif_release_ro/cbwa_initscript/current/cbwa_init.csh<br class="wikidpad" />
+p4_mkwa -codeline nbif2_0<br class="wikidpad" />
+bootenv -v nbif_vg11_gpu 或者有可能是 nbif_nv10_gpu<br class="wikidpad" />
+p4w sync_all<br class="wikidpad" />
+<br class="wikidpad" />
+•	run a pg-case:<br class="wikidpad" />
+bootenv -v nbif_vg11_gpu<br class="wikidpad" />
+<br class="wikidpad" />
+rm out -rf ; mdj_hds pg_nbif_generic_hst_sdp_more_apers_short_0 88888888<br class="wikidpad" />
+<br class="wikidpad" />
+For NV10 last good CL, pls use 2362458
+<li class="wikidpad" />nbif结构图:<br class="wikidpad" />
+<img src="files/nbif结构图.png" class="wikidpad" /><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+</ul>
+<span class="wikidpad property attribute">[alias: nbif]</span><br class="wikidpad" />
+    </body>
+</html>

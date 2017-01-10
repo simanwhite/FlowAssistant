@@ -1,0 +1,840 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<title>Ruby参考手册 - 内部函数</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+<div class="body"><h1><a name="a.c1.c8.a4.df.b9.fe.a4.df.b4.d8.bf.f4" id="a.c1.c8.a4.df.b9.fe.a4.df.b4.d8.bf.f4">内部函数</a><!-- RDLabel: "内部函数" --></h1>
+<p>严格说来,Ruby中没有函数.但<font color=blue>Kernel</font>模块中定义的方法(可以在任何地方用做函数,因此)可被其他语言当做函数来调用.若您对这些方法进行再定义时,就必需考虑到对其他方面的影响.</p>
+<dl>
+<dt><a name="a.60.20str" id="a.60.20str"><code>` <var>str</var></code></a><!-- RDLabel: "` str" --></dt>
+<dd>
+<p>把字符串<var>str</var>当做外部命令来运行,并以字符串方式返回命令的输出.使用<code>`str`</code>形式来调用该方法(还可以使用<font color=blue>%x(...)</font>表示法进行调用.请参考<font color=blue>命令输出</font>).</p>
+<p>可以使用<font color=blue>$?</font>来了解命令的结束状态.</p>
+<p>若您只想执行命令,而不需要得到命令输出时,可以使用<font color=blue>system</font>.如果是那些终端控制命令的话,<code>`command`</code>可能会运行失败.</p>
+     </dd>
+<dt><a name="Array" id="Array"><code>Array(<var>arg</var>)</code></a><!-- RDLabel: "Array" --></dt>
+<dd>
+<p>调用 <var>arg</var>.to_ary 或 <var>arg</var>.to_a 将参数转为数组并返回结果.若变换后没有得到数组就会引发<font color=blue>TypeError</font>异常.</p>
+<p>若<var>arg</var>中没有to_ary或to_a方法的话,就返回只包含一个元素的数组[<var>arg</var>].</p></dd>
+<dt><a name="Float" id="Float"><code>Float(<var>arg</var>)</code></a><!-- RDLabel: "Float" --></dt>
+<dd>
+<p>将参数变为浮点数(<font color=blue>Float</font>)并返回结果.</p>
+<p>若将不能转为整数或浮点数的字符串传递给参数的话,会引发<font color=blue>ArgumentError</font>异常.</p>
+<p>请参考<font color=blue>String#to_f</font>.</p>
+<pre>
+p Float("10")    # =&gt; 10.0
+p Float("10e2")  # =&gt; 1000.0
+p Float("1e-2")  # =&gt; 0.01
+p Float(".1")    # =&gt; 0.1
+
+p Float("nan")   # =&gt; NaN         (ruby 1.7 特性: =&gt; invalid value (ArgumentError))
+p Float("INF")   # =&gt; Infinity    (ruby 1.7 特性: =&gt; invalid value (ArgumentError))
+p Float("-Inf")  # =&gt; -Infinity   (ruby 1.7 特性: =&gt; invalid value (ArgumentError))
+p Float(("10" * 1000).to_f) # =&gt; Infinity
+
+p Float("0xa.a") # =&gt; 10.625    # (ruby 1.7 特性: =&gt; invalid value (ArgumentError))
+p Float(" \n10") # =&gt; 10.0      # 前面的空白被忽略
+p Float("1_0_0") # =&gt; 100.0     # `_' 也被看做是数值要素
+p Float("")      # =&gt; invalid value (ArgumentError)
+p Float(nil)     # =&gt; 0.0       # ruby1.7特性: cannot convert nil into Float (TypeError)
+
+p Float(Object.new) # =&gt; cannot convert Object into Float (TypeError)
+</pre>
+</dd>
+<dt><a name="Integer" id="Integer"><code>Integer(<var>arg</var>)</code></a><!-- RDLabel: "Integer" --></dt>
+<dd>
+<p>将参数变为整数(<font color=blue>Fixnum</font>,<font color=blue>Bignum</font>)并返回结果.对数值,字符串以外的对象使用to_i方法(<font color=blue>Ruby 1.7 特性</font>:在1.7中是to_int).若变换结果不是整数(<font color=blue>Integer</font>的子类)就会引发<font color=blue>TypeError</font>异常.</p>
+<p>若参数是字符串的话,将按其前缀,如0x,0b,0等分别决定要按照16进制,2进制或是8进制的标准来处理该字符串.</p>
+<p>若把不能变为整数的字符串传递给参数时,将引发<font color=blue>ArgumentError</font>异常.</p>
+<pre>
+p Integer(10.1)       # =&gt; 10
+p Integer(10.8)       # =&gt; 10
+p Integer("10")       # =&gt; 10
+p Integer("10_0_0")   # =&gt; 1000
+p Integer("10__0")    # =&gt; 100
+                      # =&gt; invalid value for Integer: "10__0" (ArgumentError) (ruby 1.7 特性)
+p Integer("_10")      # =&gt; invalid value for Integer: "_10" (ArgumentError)
+p Integer("10_")      # =&gt; invalid value for Integer: "10_" (ArgumentError)
+p Integer("0d10")     # =&gt; invalid value for Integer: "0d10" (ArgumentError)
+                      # =&gt; 10 (ruby 1.7 特性)
+p Integer("010")      # =&gt; 8
+p Integer("0o10")     # =&gt; invalid value for Integer: "0o10" (ArgumentError) (ruby 1.7 特性)
+                      # =&gt; 8
+p Integer("0x10")     # =&gt; 16
+p Integer("0b10")     # =&gt; 2
+p Integer(" \n10\t ") # =&gt; 10
+p Integer("")         # =&gt; `Integer': invalid value for Integer: "" (ArgumentError)
+p Integer(nil)        # =&gt; 0
+
+p Integer(Object.new) # =&gt; cannot convert Object into Integer (TypeError)
+</pre>
+
+<p>请参考<font color=blue>String#hex</font>,<font color=blue>String#oct</font>,<font color=blue>String#to_i</font>.</p></dd>
+<dt><a name="String" id="String"><code>String(<var>arg</var>)</code></a><!-- RDLabel: "String" --></dt>
+<dd>
+<p>调用<var>arg</var>.<code>to_s</code>将参数变为字符串并返回结果。若变换后的结果并非字符串的话，会引发<font color=blue>TypeError</font>异常。若<var>arg</var>已经是字符串的话，则不作任何处理直接返回<var>arg</var>。</p></dd>
+<dt><a name="abort" id="abort"><code>abort</code></a><!-- RDLabel: "abort" --></dt>
+<dt><a name="abort_2" id="abort_2"><code>abort(<var>message</var>)      ((&lt;<var>ruby 1.7 特性</var>&gt;))</code></a><!-- RDLabel: "abort" --></dt>
+<dd>
+<p>以非正常方式结束Ruby程序的运行。它与<font color=blue>Exit</font>的区别在于，调用时若<font color=blue>$!</font>不为nil的话，就将异常消息输出到标准错误输出当中；另外，程序的结束status始终都是EXIT_FAILURE(在绝大多数环境中都是1)。</p>
+<p><font color=blue>ruby 1.7 特性</font>:若指定了<var>message</var>参数的话，就将<var>message</var>赋值给<font color=blue>SystemExit#message</font>后输出到标准错误输出中。</p></dd>
+<dt><a name="at_exit" id="at_exit"><code>at_exit { .... }</code></a><!-- RDLabel: "at_exit" --></dt>
+<dd>
+<p>在解释器结束工作之前执行指定的块。除去<code>at_exit</code>是个方法这点差异之外，它与<font color=blue>END</font>块所进行工作基本相同。一旦注册了要进行的处理内容之后就不能取消。请参考<a href="./lanstyle_exit.html">结束时的相关处理</a>。</p>
+<p><font color=blue>Proc</font>对象返回注册的处理内容。</p></dd>
+<dt><a name="autoload" id="autoload"><code>autoload(<var>const_name</var>, <var>feature</var>)</code></a><!-- RDLabel: "autoload" --></dt>
+<dt><a name="autoload.3f" id="autoload.3f"><code>autoload?(<var>const_name</var>)            ((&lt;<var>ruby</var> <var>1</var>.<var>8</var> <var>feature</var>&gt;))</code></a><!-- RDLabel: "autoload?" --></dt>
+<dd>
+<p>在首次调用常数<var>const_name</var>时会<a href="#require" title="内部函数 (30d)" class="modified-month">require</a> <var>feature</var>。<var>const_name</var>可以是字符串或<font color=blue>Symbol</font>。而且<var>const_name</var>中不能包含"::"操作符(即只能指定顶层的常数)。</p>
+<p>返回<code>nil</code>。</p>
+<p><font color=blue>ruby 1.8 特性</font>：可以autoload任何类／模块的常数。<var>const_name</var>中还是不能有"::"操作符，可以像下面这样定义。(实际上是调用了<font color=blue>Module#autoload</font>)</p>
+<pre>
+------- /tmp/foo.rb ---------
+class Foo
+  class Bar
+  end
+end
+----- end of /tmp/foo.rb ----
+
+class Foo
+  autoload :Bar, '/tmp/foo.rb'
+end
+p Foo::Bar
+</pre>
+
+<p>另外，还可以下面这样定义。</p>
+<pre>
+class Foo
+end
+Foo.autoload :Bar, '/tmp/foo.rb'
+p Foo::Bar
+</pre>
+
+<p><code>autoload?</code>的功能是，若autoload常数尚未定义(没被load)时，返回其路径名。另外，若已经load的话就返回nil。</p>
+<pre>
+------- /tmp/foo.rb ---------
+class Foo
+  class Bar
+  end
+end
+----- end of /tmp/foo.rb ----
+
+class Foo
+end
+Foo.autoload :Bar, '/tmp/foo.rb'
+p Foo.autoload?(:Bar)         # =&gt; "/tmp/foo.rb"
+p Foo::Bar                    # =&gt; Foo::Bar
+p Foo.autoload?(:Bar)         # =&gt; nil
+</pre>
+
+<p>请注意下例。在autoload的库中，嵌套内的常数还没有被定义。乍看起来好像会正常运行，实则不然(出现了警告消息)。</p>
+<pre>
+------- /tmp/bar.rb ---------
+class Bar
+end
+----- end of /tmp/bar.rb ----
+
+class Foo
+  autoload :Bar, '/tmp/bar.rb'
+end
+p Foo::Bar
+p Foo.autoload?(:Bar)
+
+# =&gt; -:4: warning: toplevel constant Bar referenced by Foo::Bar
+     Bar
+     nil
+</pre>
+
+<p>若不使用嵌套的话，可以把上例简写为</p>
+<pre>
+class Foo
+end
+class Bar
+end
+p Foo::Bar
+
+# =&gt; -:5: warning: toplevel constant Bar referenced by Foo::Bar
+     Bar
+</pre>
+</dd>
+<dt><a name="binding" id="binding"><code>binding</code></a><!-- RDLabel: "binding" --></dt>
+<dd>
+<p>生成并返回<font color=blue>Binding</font>对象。该对象包含变量、方法等的环境信息，它通常用作<font color=blue>Eval</font>的第二参数。</p></dd>
+<dt><a name="caller" id="caller"><code>caller([<var>level</var>])</code></a><!-- RDLabel: "caller" --></dt>
+<dd>
+<p>以<font color=blue>$@</font>的back trace(字符串数组)形式返回<var>level</var>层上(省略参数时为1)的调用者的信息。若是顶层的话就返回空数组。将caller的返回值代入$@就可以设定异常的发生位置。</p>
+<pre>
+def foo
+  p caller(0)
+  p caller(1)
+  p caller(2)
+  p caller(3)
+end
+
+def bar
+  foo
+end
+
+bar
+
+=&gt; ["-:2:in `foo'", "-:9:in `bar'", "-:12"]
+   ["-:9:in `bar'", "-:12"]
+   ["-:12"]
+   []
+</pre>
+
+<p>下列函数可以从caller的要素中抽取并返回[文件名、行号、方法名]。</p>
+<pre>
+def parse_caller(at)
+  if /^(.+?):(\d+)(?::in `(.*)')?/ =~ at
+    file = $1
+    line = $2.to_i
+    method = $3
+    [file, line, method]
+  end
+end
+
+def foo
+  p parse_caller(caller.first)
+end
+
+def bar
+  foo
+  p parse_caller(caller.first)
+end
+
+bar
+p parse_caller(caller.first)
+
+=&gt; ["-", 15, "bar"]
+   ["-", 19, nil]
+   nil
+</pre>
+
+<p>当<font color=blue>$DEBUG</font>为真时，debug函数非常有用。以下是该函数例程。</p>
+<pre>
+def debug(*args)
+  p [caller.first, *args] if $DEBUG
+end
+
+debug "debug information"
+
+=&gt; ["-:5", "debug information"]
+</pre>
+</dd>
+<dt><a name="callcc" id="callcc"><code>callcc {|<var>cont</var>| .... }</code></a><!-- RDLabel: "callcc" --></dt>
+<dd>
+<p>请参考<font color=blue>Continuation</font>。</p></dd>
+<dt><a name="catch" id="catch"><code>catch(<var>tag</var>) {|<var>tag</var>| .... }</code></a><!-- RDLabel: "catch" --></dt>
+<dd>
+<p>运行块并返回它的值。若在块的运行过程中，遇到与<var>tag</var>同名的<font color=blue>throw</font>的话，将把throw的第二参数的值作为返回值。</p>
+<p>例如下例代码在运行过程中不会调用<var>some_process</var>，同时catch的值是25，而并非10。</p>
+<pre>
+ret = catch(:exit) {
+   throw :exit, 25
+   some_process()
+   10
+}
+p ret   #=&gt; 25
+</pre>
+
+<p>嵌套的循环不会因为遇到<font color=blue>break</font>就一下子跳出。这时可使用catch或<font color=blue>异常</font>。</p>
+<pre>
+catch(:loop1) {
+  for i in 1..2
+    for j in 1..2
+      throw :loop1, j
+    end
+  end
+}
+</pre>
+</dd>
+<dt><a name="chop" id="chop"><code>chop</code></a><!-- RDLabel: "chop" --></dt>
+<dt><a name="chop.21" id="chop.21"><code>chop!</code></a><!-- RDLabel: "chop!" --></dt>
+<dd>
+<p>将内部变量<font color=blue>$_</font>末尾的字符去掉(若末尾是"\r\n"则去掉2个字符)。chop!将改变字符串本身并返回结果。若没有可以去掉的字符则返回nil。</p>
+<p>请参考<font color=blue>String#chop</font>了解详情。chop函数与$_.chop之间存在以下区别。</p>
+<ul>
+<li>chop先拷贝$_的值，然后对拷贝进行修改，最后把这个拷贝的值<var>重新赋值</var>给$_。</li>
+</ul></dd>
+<dt><a name="chomp" id="chomp"><code>chomp([<var>rs</var>])</code></a><!-- RDLabel: "chomp" --></dt>
+<dt><a name="chomp.21" id="chomp.21"><code>chomp!([<var>rs</var>])</code></a><!-- RDLabel: "chomp!" --></dt>
+<dd>
+<p>去掉位于内部变量<font color=blue>$_</font>末尾且由<var>rs</var>指定的字符。chomp!将改变字符串本身并返回结果。若没有可被去掉的字符串则返回nil。<var>rs</var>的默认值为<font color=blue>$/</font></p>
+<p>请参考<font color=blue>String#chomp</font>了解详情。chomp函数与$_.chomp之间存在以下区别。</p>
+<ul>
+<li>chomp先拷贝$_的值，然后对拷贝进行修改，最后把这个拷贝的值<var>重新赋值</var>给$_。</li>
+</ul></dd>
+<dt><a name="eval" id="eval"><code>eval(<var>expr</var>[, <var>binding</var>[, <var>fname</var>[, <var>lineno</var>=<var>1</var>]]])</code></a><!-- RDLabel: "eval" --></dt>
+<dd>
+<p>把字符串<var>expr</var>当作Ruby程序来运行并返回其结果。若给第二参数传递<font color=blue>Proc</font>对象或<font color=blue>Binding</font>对象的话，将在生成该对象的环境中对字符串进行计算。请参考<font color=blue>binding</font>。</p>
+<pre>
+def foo
+  a = 1
+  binding
+end
+
+eval("p a", foo)  # =&gt; 1
+</pre>
+
+<p>若指定了<var>fname</var> 和 <var>lineno</var>的话，将假定字符串位于<var>fname</var>文件<var>lineno</var>行，并且进行编译。这时可以显示栈跟踪(stack trace)等信息。</p></dd>
+<dt><a name="exec" id="exec"><code>exec(<var>command</var>)</code></a><!-- RDLabel: "exec" --></dt>
+<dt><a name="exec_2" id="exec_2"><code>exec(<var>program</var>[, <var>arg1</var>[, <var>arg2</var>[, ...]]])</code></a><!-- RDLabel: "exec" --></dt>
+<dd>
+<p>执行由<var>command</var>指定的命令.该命令(或shell,详见下文)将变成进程执行的代码,所以一旦启动成功,就不会再从该函数中返回.若启动失败,控制权重新回归ruby解释器,然后会引发<font color=blue>Errno::EXXX</font>异常.</p>
+<p>在第一种语句中,若<var>command</var>中包含shell的元字符(* ? {} [] <> () ~ & | \ $ ; ' ` " \n)的话,则经由shell执行命令.除此之外,将由解释器直接执行.</p>
+<p>使用第二种语句时,通常不经过shell就执行命令.此时,将把空字符或shell的元字符等原般不动地传递给<var>program</var>的参数.若首个参数是包含两个元素的数组时,第一个元素的字符串将成为启动程序时的路径,而第二个元素将成为程序名的"别名".</p>
+<p><font color=blue>ruby 1.8 特性</font>:即使第一个元素不是完整路径,也会自动从环境变量PATH中开始搜索.</p></dd>
+<dt><a name="exit" id="exit"><code>exit([<var>status</var>])</code></a><!-- RDLabel: "exit" --></dt>
+<dd>
+<p>终止Ruby程序的运行.若向<var>status</var>传递了一个整数的话,该整数就将成为Ruby命令的结束状态值.默认的结束状态值是0.</p>
+<p><code>exit</code>通过引发<font color=blue>SystemExit</font>异常来结束程序的运行.若有必要的话,可以使用<font color=blue>rescue</font>部分来捕捉到它.</p>
+<p><font color=blue>ruby 1.8 特性</font>:若<var>status</var>为<code>true</code>的话,就以<code>EXIT_SUCCESS</code>作为结束状态值.若<var>status</var>为<code>false</code>的话,就以<code>EXIT_FAILURE</code>作为结束状态值.默认的结束状态值已被改为<code>EXIT_SUCCESS</code>.</p></dd>
+<dt><a name="exit.21" id="exit.21"><code>exit!([<var>status</var>])</code></a><!-- RDLabel: "exit!" --></dt>
+<dd>
+<p>以整数<var>status</var>为结束状态值来终止Ruby程序的运行.默认的结束状态值为-1.</p>
+<p><code>exit!</code>与<code>exit</code>不同,它不会进行异常处理.在<a href="#fork" title="内部函数 (30d)" class="modified-month">fork</a>之后,若想终止子进程时可以使用该语句.</p>
+<p><font color=blue>ruby 1.8 特性</font>:若<var>status</var>为<code>true</code>的话,就以<code>EXIT_SUCCESS</code>作为结束状态值.若<var>status</var>为<code>false</code>的话,就以<code>EXIT_FAILURE</code>作为结束状态值.默认的结束状态值已被改为<code>EXIT_FAILURE</code>.</p></dd>
+<dt><a name="fork" id="fork"><code>fork</code></a><!-- RDLabel: "fork" --></dt>
+<dt><a name="fork_2" id="fork_2"><code>fork { ... }</code></a><!-- RDLabel: "fork" --></dt>
+<dd>
+<p>使用<font color=blue>fork(2)</font>系统调用来制作进程的拷贝.若在父进程中将返回子进程的进程ID,若在子进程中则返回nil.若指定一个块之后再进行调用,则会在生成的子进程中对该块进行计算.</p></dd>
+<dt><a name="gets" id="gets"><code>gets([<var>rs</var>])</code></a><!-- RDLabel: "gets" --></dt>
+<dt><a name="readline" id="readline"><code>readline([<var>rs</var>])</code></a><!-- RDLabel: "readline" --></dt>
+<dd>
+<p>Ruby解释器在运行时,会把从参数那里得到的文件(若没有的话,就利用标准输入)假设成一个虚拟文件(可以使用内部变量<font color=blue>$<</font>或<font color=blue>ARGF</font>访问该虚拟文件),然后从该虚拟文件中读入一行,并返回字符串.若到达文件尾部时返回nil.</p>
+<p>使用<var>rs</var>指定的字符串作为行的切分符号.<var>rs</var>的默认值取自内部变量<font color=blue>$/</font>.读入的字符串也被存入内部变量<font color=blue>$_</font>中.</p>
+<p>若将<var>rs</var>设为nil的话,则意味着读入文件的全部内容而忽略行的切分.若设为空字符串""的话,会把连续的换行当做行的切分符(段落模式).</p>
+<p><code>readline</code>的功能与<code>gets</code>相同,但是当它遇到文件结尾时会引发<font color=blue>EOFError</font>异常.</p>
+<dt><a name="global_variables" id="global_variables"><code>global_variables</code></a><!-- RDLabel: "global_variables" --></dt>
+<dd>
+<p>返回程序中已定义的全局变量(以'$'开头的变量)名的数组.</p>
+<p>另外请参考<a href="#local_variables" title="内部函数 (30d)" class="modified-month">local_variables</a>,
+<font color=blue>Object#instance_variables</font>,
+<font color=blue>Module.constants</font>,
+<font color=blue>Module#constants</font>,
+<font color=blue>Module#class_variables</font>.</p></dd>
+<dt><a name="gsub" id="gsub"><code>gsub(<var>pattern</var>[, <var>replace</var>])</code></a><!-- RDLabel: "gsub" --></dt>
+<dt><a name="gsub.21" id="gsub.21"><code>gsub!(<var>pattern</var>[, <var>replace</var>])</code></a><!-- RDLabel: "gsub!" --></dt>
+<dt><a name="gsub_2" id="gsub_2"><code>gsub(<var>pattern</var>) {|<var>matched</var>| ... }</code></a><!-- RDLabel: "gsub" --></dt>
+<dt><a name="gsub.21_2" id="gsub.21_2"><code>gsub!(<var>pattern</var>) {|<var>matched</var>| ... }</code></a><!-- RDLabel: "gsub!" --></dt>
+<dd>
+<p>在内部变量<font color=blue>$_</font>所包含的字符串中,将符合<var>pattern</var>的部分替换为<var>replace</var>,然后返回结果.若省略参数<var>replace</var>时,该方法将演变为迭代器,以块的计算值进行替换操作.将匹配的字符串以参数的形式传递给块.</p>
+<pre>
+$_ = "foobar"
+p gsub(/o+/) {|m|
+  m.upcase
+}
+# =&gt; "fOObar"
+</pre>
+
+<p>gsub!将改写$_所包含的字符串本身.请参考<font color=blue>String#gsub</font>来获得更多资讯.String#gsub和gsub之间存在以下差异.</p>
+<ul>
+<li>gsub方法会拷贝$_的值,然后对拷贝进行更新,最后<var>再赋值</var>给$_.</li>
+</ul></dd>
+<dt><a name="iterator.3f" id="iterator.3f"><code>iterator?           ((&lt;<var>obsolete</var>&gt;))</code></a><!-- RDLabel: "iterator?" --></dt>
+<dt><a name="block_given.3f" id="block_given.3f"><code>block_given?</code></a><!-- RDLabel: "block_given?" --></dt>
+<dd>
+<p>若某方法带块则返回真,否则返回伪.</p></dd>
+<dt><a name="load" id="load"><code>load(<var>file</var>[, <var>priv</var>])</code></a><!-- RDLabel: "load" --></dt>
+<dd>
+<p>加载Ruby程序<var>file</var>并予以执行.若<var>file</var>是绝对路径,则从<var>file</var>开始加载.若<var>file</var>是相对路径,则依次搜索内部变量<font color=blue>$:</font>所指定的路径,并加载第一个搜索到的文件.此时,若$:中的元素是以"~"(tilde)开头的话,就把它扩展为环境变量HOME的值.</p>
+<p>若可选参数<var>priv</var>的值为真,则在内部生成一个无名模块作为顶层来进行加载和运行,这便不会污染全局名字空间了.</p>
+<p>若加载成功则返回true,若失败则引发<font color=blue>LoadError</font>异常.</p>
+<p>[require与load之间的区别]</p>
+<p>require对于相同的文件只会加载一次,而load则是无条件的加载.另外,require会自动补全扩展名,如.rb或.so等.而load则没有该功能.一般的典型用法是,使用require加载库,而使用load加载配置文件等.</p>
+<pre>
+# 用例
+load "#{ENV['HOME']}/.myapprc"
+load "/etc/myapprc"
+</pre>
+
+<p>另外,如果想在特定目录中加载文件的话,写成 load 'filename' 就不恰当了.这时请务必使用绝对路径.</p></dd>
+<dt><a name="local_variables" id="local_variables"><code>local_variables</code></a><!-- RDLabel: "local_variables" --></dt>
+<dd>
+<p>返回当前作用域中已定义的局部变量名的数组.</p>
+<p>另外,请参考<a href="#global_variables" title="内部函数 (30d)" class="modified-month">global_variables</a>,
+<font color=blue>Object#instance_variables</font>,
+<font color=blue>Module.constants</font>,
+<font color=blue>Module#constants</font>,
+<font color=blue>Module#class_variables</font>.</p></dd>
+<dt><a name="loop" id="loop"><code>loop { ... }</code></a><!-- RDLabel: "loop" --></dt>
+<dd>
+<p>(只要不被中断就)反复对块进行计算.</p></dd>
+<dt><a name="open" id="open"><code>open(<var>file</var>[, <var>mode</var>[, <var>perm</var>]])</code></a><!-- RDLabel: "open" --></dt>
+<dt><a name="open_2" id="open_2"><code>open(<var>file</var>[, <var>mode</var>[, <var>perm</var>]]) {|<var>io</var>| ... }</code></a><!-- RDLabel: "open" --></dt>
+<dd>
+<p>打开<var>file</var>并返回<font color=blue>File</font>对象.<var>mode</var>可以是下列字符串或者整数(<font color=blue>File::Constants</font>模块的常数的逻辑和).省略时默认为"r".</p>
+<ul>
+<li>"r", RDONLY: 以读取模式打开文件.</li>
+<li>"w", WRONLY|CREAT|TRUNC: 以写入模式打开文件.打开文件时,若文件已存在就清空文件内容.</li>
+<li>"a", WRONLY|CREAT|APPEND: 以写入模式打开文件.<var>通常</var>把写入内容添加到文件结尾.</li>
+</ul>
+<p>若有"+"的话,就以读写两用模式(RDWR)打开文件.</p>
+<ul>
+<li>"r+": 将文件的读写位置设在开头.</li>
+<li>"w+": 与"r+"一样.打开文件时,若文件已存在就清空其内容.</li>
+<li>"a+": 与"r+"一样.打开文件时,若文件已存在,就把读写位置设在文件结尾.</li>
+</ul>
+<p>可在上述任意一项后面添加"b"(如"r+b")标志(如果是整数就是File::BINARY).此时,将以二进制方式打开文件(只限于以文本/二进制方式来区分文件的系统).</p>
+<p>第三参数<var>perm</var>与<font color=blue>open(2)</font>的第三参数是一样的，它以整数的形式说明了文件在CREAT时的访问权限。若第二参数不是数值形式的话，该参数将被忽略。它的默认值是0666。</p>
+<p>若文件名以`<code>|</code>'开头时，其后的字符串会被当作命令来执行。另外，将生成管线(pipeline)来应对命令的标准输入输出。</p>
+<p>若文件名为<code>"|-"</code>的话，<code>open</code>将生成Ruby的子进程，并返回与子进程之间的管道(pipe)(<font color=blue>IO</font>对象)。(此时的运作与<font color=blue>IO.popen</font>相同。<font color=blue>File.open</font>没有生成管线的功能)。</p>
+<p><em>注意</em>: 与Perl不同的是，命令通常是以`<code>|</code>'开头的。</p>
+<p>当<code>open</code>与块同时被调用时，<code>open</code>将打开文件并执行块，当块的运行终止后就关闭文件。此时返回块的计算结果。请看下例。</p>
+<pre>
+open(path, mode) do |f|
+   ...
+end
+
+# 等效代码
+f = open(path, mode)
+begin
+   ...
+ensure
+  f.close
+end
+</pre>
+</dd>
+<dt><a name="p" id="p"><code>p(<var>obj</var>, [<var>obj2</var>, ...])</code></a><!-- RDLabel: "p" --></dt>
+<dd>
+<p>以通俗易懂的方式输出<var>obj</var>。等同于以下代码。(请参考<font color=blue>Object#inspect</font>)</p>
+<pre>
+print obj.inspect, "\n", obj2.inspect, "\n", ...
+</pre>
+
+<p>返回<code>nil</code>。</p></dd>
+<dt><a name="print" id="print"><code>print([<var>arg1</var>[, <var>arg2</var>, ...]])</code></a><!-- RDLabel: "print" --></dt>
+<dd>
+<p>依次输出参数。若没有得到参数则输出变量<font color=blue>$_</font>的值。若把非字符串对象传给参数的话，将对该对象使用to_s方法将其变为字符串后输出。若是nil的话则输出字符串"nil"。</p>
+<p>若给变量<font color=blue>$;</font>(输出字段分隔符)指定了一个非nil的值的话，将在各个参数之间输出该分隔符。若给变量<font color=blue>$\</font>(输出记录分隔符)指定了一个非nil的值的话，将在最后输出它。</p>
+<p>返回<code>nil</code>。</p></dd>
+<dt><a name="printf" id="printf"><code>printf([<var>port</var>, ]<var>format</var>[, <var>arg</var>[, ...]])</code></a><!-- RDLabel: "printf" --></dt>
+<dd>
+<p>类似于C语言的printf，它将按照<var>format</var>将参数格式化为字符串，然后输出到<font color=blue>$></font>。当第一参数是<font color=blue>IO</font>的子类的实例时，将对该对象进行输出。若没有任何参数时，将不作反应。</p>
+<p>请参考<font color=blue>sprintf格式</font>来了解Ruby中format字符串的扩展问题。</p>
+<p>返回<code>nil</code>。</p></dd>
+<dt><a name="proc" id="proc"><code>proc { ... }</code></a><!-- RDLabel: "proc" --></dt>
+<dt><a name="lambda" id="lambda"><code>lambda { ... }</code></a><!-- RDLabel: "lambda" --></dt>
+<dt><a name="proc_2" id="proc_2"><code>proc</code></a><!-- RDLabel: "proc" --></dt>
+<dt><a name="lambda_2" id="lambda_2"><code>lambda</code></a><!-- RDLabel: "lambda" --></dt>
+<dd>
+<p>在给出的块中生成过程对象(<font color=blue>Proc</font>的实例)并返回它(等同于<font color=blue>Proc.new</font>)。</p>
+<p>若没有给出块的话，将返回主调(caller)方法所指的块。若主调方法没有块时，将引发<font color=blue>ArgumentError</font>异常。</p></dd>
+<dt><a name="putc" id="putc"><code>putc(<var>ch</var>)</code></a><!-- RDLabel: "putc" --></dt>
+<dd>
+<p>将字符<var>ch</var>输出到<font color=blue>$></font>。若<var>ch</var>是数字的话，将输出对应于0～255的字符。若<var>ch</var>是字符串的话，将输出字符串中的第一个字符。</p>
+<p>返回<var>ch</var>。</p>
+<pre>
+putc("ch")
+putc(?c)
+putc(99)
+# =&gt; ccc
+</pre>
+</dd>
+<dt><a name="puts" id="puts"><code>puts([<var>obj</var>[, <var>obj2</var>[, ....]]] )</code></a><!-- RDLabel: "puts" --></dt>
+<dd>
+<p>依次将<var>obj</var>和换行符输出到<font color=blue>$></font>。若没有参数的话则只会输出换行符。</p>
+<p>若参数是数组，则依次输出数组元素和换行符。若将既非数组又非字符串的对象传递给参数时，将尝试使用to_ary方法将其化为数组，再使用to_s方法将其化为字符串。若是nil则输出字符串"nil"。</p>
+<p>若参数是以换行符结尾时，puts将不再输出换行符。</p>
+<pre>
+puts "foo", "bar\n", "baz"
+puts ""    # 只输出换行
+puts       # 只输出换行
+puts "foo"
+=&gt; foo
+   bar
+   baz
+
+
+   foo
+</pre>
+
+<p>返回<code>nil</code>。</p>
+<p>另外，请参考<a href="#print" title="内部函数 (30d)" class="modified-month">print</a>, <a href="#warn" title="内部函数 (30d)" class="modified-month">warn</a>。</p></dd>
+<dt><a name="raise" id="raise"><code>raise</code></a><!-- RDLabel: "raise" --></dt>
+<dt><a name="raise_2" id="raise_2"><code>raise(<var>exception</var>)</code></a><!-- RDLabel: "raise" --></dt>
+<dt><a name="raise_3" id="raise_3"><code>raise(<var>message</var>)</code></a><!-- RDLabel: "raise" --></dt>
+<dt><a name="raise_4" id="raise_4"><code>raise(<var>error_type</var>, <var>message</var> [, <var>backtrace</var>])</code></a><!-- RDLabel: "raise" --></dt>
+<dt><a name="fail" id="fail"><code>fail(<var>error_type</var>, <var>message</var> [, <var>backtrace</var>])</code></a><!-- RDLabel: "fail" --></dt>
+<dd>
+<p>引发异常。</p>
+<p>若没有参数时，将再次引发本线程本块内最后被rescue的异常对象(<font color=blue>$!</font>)。若没有这样的异常时，将引发<font color=blue>RuntimeError</font>异常。</p>
+<pre>
+begin
+  open("nonexist")
+rescue
+  raise   # =&gt; `open': No such file or directory - "nonexist" (Errno::ENOENT)
+end
+</pre>
+
+<p>若只有一个参数，且该参数为字符串时，将以该字符串为message来引发RuntimeError异常。若该参数为异常类或异常对象时，将引发该异常。</p>
+<pre>
+raise "error message"    # =&gt; -:1: error message (RuntimeError)
+
+raise ArgumentError      # =&gt; -:1: ArgumentError (ArgumentError)
+
+raise ArgumentError.new  # =&gt; -:1: ArgumentError (ArgumentError)
+</pre>
+
+<p>若有2或3个参数时，将以第二参数为message来引发第一参数所指的异常。此时是以异常类或异常对象来指定异常的。而第三参数则是发生异常时的栈跟踪(track trace)，它的形式必须与<font color=blue>caller</font>的返回值一致。</p>
+<pre>
+raise ArgumentError, "error message"
+# =&gt; -:1: error message (ArgumentError)
+
+raise ArgumentError, "error message", ["file1:99",
+                                       "file2:999:in `method'"]
+
+# =&gt; file1:99: error message (ArgumentError)
+              from file2:999:in `method'
+</pre>
+
+<p>若将非异常的类或对象赋予第一参数时，实际上发生的异常正是该对象的exception方法的返回值。</p>
+<pre>
+class MyException
+  def exception
+    ArgumentError.new
+  end
+end
+
+raise MyException.new
+
+# =&gt; -:7: ArgumentError (ArgumentError)
+</pre>
+
+<p>若采用第二种形式来指定参数时，该参数将被赋予<code>exception</code>方法。</p>
+<pre>
+class MyException
+  def exception(mesg)
+    ArgumentError.new(mesg)
+  end
+end
+
+raise MyException.new, "error message"
+
+# =&gt; -:7: error message (ArgumentError)
+</pre>
+
+<p><code>exception</code>方法必定返回异常对象。否则将引发<font color=blue>TypeError</font>。</p>
+<p>发生的异常会被存入变量<font color=blue>$!</font>中。而发生异常时的栈跟踪信息将被存入变量<font color=blue>$@</font>中。</p></dd>
+<dt><a name="rand" id="rand"><code>rand([<var>max</var>=<var>0</var>])</code></a><!-- RDLabel: "rand" --></dt>
+<dd>
+<p>产生一个0至<var>max</var>(不含)之间的随机数。若未调用<a href="#srand" class="modified-year">srand</a>的话，就自动调用它。</p>
+<p>若将<var>max</var>设为<code>nil</code>或0的话，将返回一个0至1(不含)的实数型<font color=blue>Float</font>随机数。</p></dd>
+<dt><a name="readlines" id="readlines"><code>readlines([<var>rs</var>])</code></a><!-- RDLabel: "readlines" --></dt>
+<dd>
+<p>把从命令行参数那里得到的文件(若没有的话,就利用标准输入)假设成一个虚拟文件(<font color=blue>ARGF</font>)，再读入该文件的所有内容，然后以行为单位将这些内容转换为数组，最后返回该数组。</p>
+<p>以<var>rs</var>所指的字符串为行的切分符。<var>rs</var>的默认值取自内部变量<font color=blue>$/</font>。</p>
+<p>若将<var>rs</var>设为<code>nil</code>则意味着没有行切分符。若设定为空字符串""，则把连续换行当作行切分符(段落模式)。</p></dd>
+<dt><a name="require" id="require"><code>require(<var>feature</var>)</code></a><!-- RDLabel: "require" --></dt>
+<dd>
+<p>从加载路径<font color=blue>$:</font>开始搜索Ruby库<var>feature</var>，若该库尚未被加载就立即加载。</p>
+<p>Ruby库就是指Ruby脚本(<code>*.rb</code>)或扩展库(<code>*.so</code>)，若<var>feature</var>的扩展名被省略时，则会同时搜索这两种文件(欲知具体的搜索顺序，请参考<font color=blue>$:</font>)。若给出扩展名时，则只会搜索这种文件。另外，扩展库的扩展名不仅限于常用的那些，还常常使用.so。</p>
+<p>加载库后返回true。若该库已被加载则不会重复加载，此时返回false。若加载失败则引发<font color=blue>LoadError</font>异常。<var>feature</var>被加载后，它的名字(包括扩展名)会被追加到变量<font color=blue>$"</font>中。</p></dd>
+<dt><a name="scan" id="scan"><code>scan(<var>re</var>)</code></a><!-- RDLabel: "scan" --></dt>
+<dt><a name="scan_2" id="scan_2"><code>scan(<var>re</var>) {|<var>matched</var>| ... }</code></a><!-- RDLabel: "scan" --></dt>
+<dd>
+<p>与<font color=blue>$_.scan</font>一样。</p></dd>
+<dt><a name="select" id="select"><code>select(<var>reads</var>[, <var>writes</var>[, <var>excepts</var>[, <var>timeout</var>]]])</code></a><!-- RDLabel: "select" --></dt>
+<dd>
+<p>与<font color=blue>IO.select</font>一样。</p></dd>
+<dt><a name="set_trace_func" id="set_trace_func"><code>set_trace_func(<var>trace_proc</var>)</code></a><!-- RDLabel: "set_trace_func" --></dt>
+<dd>
+<p>在Ruby解释器执行程序的过程中，每当发生方法调用或对表达式进行计算等事件时都将执行<var>trace_proc</var>过程对象。<font color=blue></font>、<font color=blue></font>以及<font color=blue></font>等标准附件就是使用该内部函数来实现的。</p>
+<p>例:</p>
+<pre>
+set_trace_func lambda {|event, file, line, id, binding, klass|
+    # ....
+}
+</pre>
+
+<p>块参数的意义如下。</p>
+<dl>
+<dt><a name="event" id="event">event</a><!-- RDLabel: "event" --></dt>
+<dd>
+<p>表示发生事件的类别。详细内容如下。</p>
+<ul>
+<li>"line" ... 表达式的计算。</li>
+<li>"call" ... 方法调用。</li>
+<li>"return" ... 从方法调用中返回。</li>
+<li>"c-call" ... C(语言)方法的调用。</li>
+<li>"c-return" ... 从C(语言)方法调用中返回。</li>
+<li>"class" ... 进入类定义、特殊类定义或模块定义中。</li>
+<li>"end" ... 类定义、特殊类定义或模块定义的结束。</li>
+<li>"raise" ... 发生异常。</li>
+</ul>
+</dd>
+<dt><a name="file" id="file">file</a><!-- RDLabel: "file" --></dt>
+<dd>
+<p>运行中的程序的源文件名(字符串)。</p>
+</dd>
+<dt><a name="line" id="line">line</a><!-- RDLabel: "line" --></dt>
+<dd>
+<p>运行中的程序的源文件行号(整数)。</p>
+</dd>
+<dt><a name="id" id="id">id</a><!-- RDLabel: "id" --></dt>
+<dd>
+<p>根据<var>event</var>的不同，将使用下列之一。与第六个块参数<var>klass</var>相对应。</p>
+<dl>
+<dt><a name="line_2" id="line_2">line</a><!-- RDLabel: "line" --></dt>
+<dd>
+<p><font color=blue>Symbol</font>对象，它表示最后被调用的方法。在顶层中则为<code>nil</code>。</p>
+</dd>
+<dt><a name="call.2freturn.2fc-call.2fc-return" id="call.2freturn.2fc-call.2fc-return">call/return/c-call/c-return</a><!-- RDLabel: "call/return/c-call/c-return" --></dt>
+<dd>
+<p><font color=blue>Symbol</font>对象，它表示被调用／return的方法。</p>
+</dd>
+<dt><a name="class.2fend" id="class.2fend">class/end</a><!-- RDLabel: "class/end" --></dt>
+<dd>
+<p><code>nil</code>。</p>
+</dd>
+<dt><a name="raise_5" id="raise_5">raise</a><!-- RDLabel: "raise" --></dt>
+<dd>
+<p><font color=blue>Symbol</font>对象，它表示最后被调用的方法。在顶层中则为<code>nil</code>。</p>
+</dd>
+</dl>
+</dd>
+<dt><a name="binding_2" id="binding_2">binding</a><!-- RDLabel: "binding" --></dt>
+<dd>
+<p><font color=blue>Binding</font>对象，它表示运行中的程序的状况(context)。</p>
+</dd>
+<dt><a name="klass" id="klass">klass</a><!-- RDLabel: "klass" --></dt>
+<dd>
+<p>根据<var>event</var>的不同，将使用下列之一。与第四个块参数<var>id</var>相对应。</p>
+<dl>
+<dt><a name="line_3" id="line_3">line</a><!-- RDLabel: "line" --></dt>
+<dd>
+<p><font color=blue>Class</font>对象，它表示最后被调用的方法的所属类。在顶层中则为false。</p>
+</dd>
+<dt><a name="call.2freturn.2fc-call.2fc-return_2" id="call.2freturn.2fc-call.2fc-return_2">call/return/c-call/c-return</a><!-- RDLabel: "call/return/c-call/c-return" --></dt>
+<dd>
+<p><font color=blue>Class</font>对象，它表示被调用／return的方法的所属类。</p>
+</dd>
+<dt><a name="class.2fend_2" id="class.2fend_2">class/end</a><!-- RDLabel: "class/end" --></dt>
+<dd>
+<p><code>false</code>。</p>
+</dd>
+<dt><a name="raise_6" id="raise_6">raise</a><!-- RDLabel: "raise" --></dt>
+<dd>
+<p><font color=blue>Class</font>对象，它表示最后被调用的方法的所属类。在顶层中则为false。</p>
+</dd>
+</dl>
+</dd>
+</dl></dd>
+<dt><a name="sleep" id="sleep"><code>sleep([<var>sec</var>])</code></a><!-- RDLabel: "sleep" --></dt>
+<dd>
+<p>使程序暂停<var>sec</var>秒。也可以将<var>sec</var>设为浮点数。省略<var>sec</var>时，若没有显式地(SIGALRM或其他线程发出的<font color=blue>Thread#run</font>)终止睡眠的话，将一直sleep下去。返回值是实际睡眠的秒数(整数)。</p></dd>
+<dt><a name="spawn" id="spawn"><code>spawn(<var>cmd</var>, [<var>arg</var>, ...])      ((&lt;<var>ruby</var> <var>1</var>.<var>9</var> <var>特性</var>&gt;))</code></a><!-- RDLabel: "spawn" --></dt>
+<dd>
+<p>基本上等同于<a href="#system" title="内部函数 (30d)" class="modified-month">system</a>，但它不会等待子进程的结束。返回生成的子进程的进程ID。</p></dd>
+<dt><a name="split" id="split"><code>split([<var>sep</var>[, <var>limit</var>]])</code></a><!-- RDLabel: "split" --></dt>
+<dd>
+<p>使用<var>sep</var>模型将<var>$_</var>中的字符串分割成<var>limit</var>个部分后转化为数组，然后返回该数组。请参考<font color=blue>String#split</font>以获得更多的资讯。</p></dd>
+<dt><a name="sprintf" id="sprintf"><code>sprintf(<var>format</var> ... )</code></a><!-- RDLabel: "sprintf" --></dt>
+<dt><a name="format" id="format"><code>format(<var>format</var> ... )</code></a><!-- RDLabel: "format" --></dt>
+<dd>
+<p>采用同C语言sprintf一样的方法对<var>format</var>字符串进行解释，格式化参数后返回结果。使用<var>format</var>时，就好像使用C语言sprintf一样。</p>
+<p>Ruby对整数的大小没有上限，因此把负数指定给<code>%b, %o, %x</code>时(可看作左边有无数个1)，就会显示成..f。若想以“符号加绝对值”的形式进行输出的话，就得写成<code>%+x</code>、<code>% x</code>这样。</p>
+<p>请参考<font color=blue>sprintf格式化</font>来获取更多资讯。</p></dd>
+<dt><a name="srand" id="srand"><code>srand([<var>seed</var>])</code></a><!-- RDLabel: "srand" --></dt>
+<dd>
+<p>设定<a href="#rand" title="内部函数 (30d)" class="modified-month">rand</a>的随机数的种子，返回旧的初始值(第一次返回0)。若省略初始值时，则以当前时刻、进程ID或srand的调用次数为基础生成一个种子。</p></dd>
+<dt><a name="sub" id="sub"><code>sub(<var>pattern</var>[, <var>replace</var>])</code></a><!-- RDLabel: "sub" --></dt>
+<dt><a name="sub.21" id="sub.21"><code>sub!(<var>pattern</var>[, <var>replace</var>])</code></a><!-- RDLabel: "sub!" --></dt>
+<dt><a name="sub_2" id="sub_2"><code>sub(<var>pattern</var>) {|<var>matched</var>| ... }</code></a><!-- RDLabel: "sub" --></dt>
+<dt><a name="sub.21_2" id="sub.21_2"><code>sub!(<var>pattern</var>) {|<var>matched</var>| ... }</code></a><!-- RDLabel: "sub!" --></dt>
+<dd>
+<p>在内部变量<font color=blue>$_</font>所指的字符串中,将首个匹配<var>pattern</var>的部分替换为<var>replace</var>,然后返回结果.若省略参数<var>replace</var>时,该方法将变为迭代器,以块的计算值进行替换操作.将匹配的字符串以参数的形式传递给块.</p>
+
+<p>sub!将改写$_所包含的字符串本身.请参考<font color=blue>String#sub</font>来获得更多资讯.String#sub和sub之间存在以下差异.</p>
+<ul>
+<li>sub方法会拷贝$_的值,然后对拷贝进行更新,最后<var>再赋值</var>给$_.</li>
+</ul>
+</dd>
+<dt><a name="syscall" id="syscall"><code>syscall(<var>num</var>, <var>arg</var> ... )</code></a><!-- RDLabel: "syscall" --></dt>
+<dd>
+<p>执行<var>num</var>号码所对应的系统调用。将第二参数以后的部分传给系统调用作为其参数。参数必须是字符串或整数。</p>
+<p>请参考<font color=blue>syscall(2)</font>或 /usr/include/sys/syscall.h 以了解数值与系统调用的对应关系。</p>
+<p>Ruby遵从系统调用的习惯，若<font color=blue>syscall(2)</font>返回-1时，引发<font color=blue>Errno::EXXX</font>异常。若返回其他值则不作变动。</p></dd>
+<dt><a name="system" id="system"><code>system(<var>command</var>)</code></a><!-- RDLabel: "system" --></dt>
+<dt><a name="system_2" id="system_2"><code>system(<var>program</var>[, <var>arg1</var>[, <var>arg2</var>[, ...]]])</code></a><!-- RDLabel: "system" --></dt>
+<dd>
+<p>执行<var>command</var>，成功(子进程以 status 0 的状态结束时)则返回真，失败(包括不能执行命令)则返回伪。可参照变量<font color=blue>$?</font>来获取结束状态值(status)。</p>
+<p>当不能执行命令时，大多数的shell会返回状态值127。(所以$?的值为0x7f00)若没有使用shell时，Ruby子进程以状态值127结束。通常，查看$?的值即可区分是不能执行命令还是命令失败。</p>
+<p><font color=blue>ruby 1.9 特性</font>:不能执行命令时会引发<font color=blue>Errno::EXXX</font>异常。若使用了shell，则同上所述。</p>
+<p>请参考<a href="#exec" title="内部函数 (30d)" class="modified-month">exec</a>以获取更多资讯。</p>
+<p>另外，请参考<font color=blue>`command`</font>,<a href="#open" title="内部函数 (30d)" class="modified-month">open</a>。</p></dd>
+<dt><a name="test" id="test"><code>test(<var>cmd</var>, <var>file1</var> [, <var>file2</var>])</code></a><!-- RDLabel: "test" --></dt>
+<dd>
+<p>进行文件测试。<var>cmd</var>可以是下列<font color=blue>数值字面值</font>或字符串(只把字符串的首字符当成命令)。</p>
+<ul>
+<li>带一个参数时
+<ul>
+<li><p><code>?r</code></p>
+<p>可以使用有效 uid 读取文件</p></li>
+<li><p><code>?w</code></p>
+<p>可以使用有效 uid 写入文件</p></li>
+<li><p><code>?x</code></p>
+<p>可以使用有效 uid 执行文件</p></li>
+<li><p><code>?o</code></p>
+<p>文件的所有者是有效 uid </p></li>
+<li><p><code>?G</code></p>
+<p>文件的所有者group是有效 gid </p></li>
+<li><p><code>?R</code></p>
+<p>可以使用实 uid 读取文件</p></li>
+<li><p><code>?W</code></p>
+<p>可以使用实 uid 写入文件</p></li>
+<li><p><code>?X</code></p>
+<p>可以使用实 uid 执行文件</p></li>
+<li><p><code>?O</code></p>
+<p>文件的所有者是实 uid </p></li>
+<li><p><code>?e</code></p>
+<p>文件存在</p></li>
+<li><p><code>?z</code></p>
+<p>文件大小为 0 </p></li>
+<li><p><code>?s</code></p>
+<p>文件大小非 0 (返回文件大小)</p></li>
+<li><p><code>?f</code></p>
+<p>文件是无格式(plain)文件</p></li>
+<li><p><code>?d</code></p>
+<p>文件是目录</p></li>
+<li><p><code>?l</code></p>
+<p>文件是符号连接</p></li>
+<li><p><code>?p</code></p>
+<p>文件是带名的管道(FIFO)</p></li>
+<li><p><code>?S</code></p>
+<p>文件是socket</p></li>
+<li><p><code>?b</code></p>
+<p>文件是特殊块文件</p></li>
+<li><p><code>?c</code></p>
+<p>文件是特殊字符文件</p></li>
+<li><p><code>?u</code></p>
+<p>文件中有 setuid bit</p></li>
+<li><p><code>?g</code></p>
+<p>文件中有 setgid bit</p></li>
+<li><p><code>?k</code></p>
+<p>文件中有 sticky bit</p></li>
+<li><p><code>?M</code></p>
+<p>返回最近更新文件时刻</p></li>
+<li><p><code>?A</code></p>
+<p>返回最近访问文件时刻</p></li>
+<li><p><code>?C</code></p>
+<p>返回文件的 inode 变更时刻</p></li>
+</ul></li>
+<li>带两个参数时
+<ul>
+<li><p><code>?=</code></p>
+<p>文件1和文件2的最近更新时刻相同</p></li>
+<li><p><code>?&gt;</code></p>
+<p>文件1的最近更新时刻要比文件2的新</p></li>
+<li><p><code>?&lt;</code></p>
+<p>文件1的最近更新时刻要比文件2的旧</p></li>
+<li><p><code>?-</code></p>
+<p>文件2对文件1发出了硬连接指令</p></li>
+</ul></li>
+</ul></dd>
+<dt><a name="throw" id="throw"><code>throw(<var>tag</var>[, <var>value</var>=<var>nil</var>])</code></a><!-- RDLabel: "throw" --></dt>
+<dd>
+<p>跳到使用了相同的<var>tag</var>的<a href="#catch" title="内部函数 (30d)" class="modified-month">catch</a>块的终点(跳过方法)。若没有使用相同<var>tag</var>的catch的话，就以<font color=blue>NameError</font>结束线程。<var>tag</var>可以是字符串或符号。<var>value</var>将变为<code>catch</code>的返回值。</p>
+<p>例:</p>
+<pre>
+ret = catch(:exit) {
+   throw :exit, 25
+   some_process()    # 决不会被执行
+   10
+}
+p ret   #=&gt; 25
+</pre>
+</dd>
+<dt><a name="trace_var" id="trace_var"><code>trace_var(<var>varname</var>, <var>hook</var>)</code></a><!-- RDLabel: "trace_var" --></dt>
+<dt><a name="trace_var_2" id="trace_var_2"><code>trace_var(<var>varname</var>) {|<var>newval</var>| .... }</code></a><!-- RDLabel: "trace_var" --></dt>
+<dd>
+<p>注册钩子以监视对全局变量<var>varname</var>所进行的赋值。<var>varname</var>可以是字符串或<font color=blue>Symbol</font>。</p>
+<p>这里所说的“全局变量”是指以“$”开头的变量，包括<font color=blue>特殊变量</font>。</p>
+<p>调用之后，只要<var>varname</var>所指的全局变量被赋值，就会计算字符串或<font color=blue>Proc</font>对象<var>hook</var>。若钩子是Proc对象的话，将把块参数中的值向外传递。另外，可注册多个钩子。</p>
+<p>若想解除跟踪的话，可以把<var>hook</var>设为<code>nil</code>，还可以使用<a href="#untrace_var" title="内部函数 (30d)" class="modified-month">untrace_var</a>。</p>
+<p>例:</p>
+<pre>
+trace_var(:$v) {|val| puts "$v=#{val.inspect}" }
+$v = "foo"   #=&gt; $v="foo"
+$v = 1       #=&gt; $v=1
+</pre>
+
+<p>若<var>hook</var>为<code>nil</code>，将返回<var>hook</var>的数组(若是以块注册的话，将以<font color=blue>Proc</font>对象返回)。除此之外，将返回nil。</p></dd>
+<dt><a name="trap" id="trap"><code>trap(<var>signal</var>, <var>command</var>)</code></a><!-- RDLabel: "trap" --></dt>
+<dt><a name="trap_2" id="trap_2"><code>trap(<var>signal</var>) { ... }</code></a><!-- RDLabel: "trap" --></dt>
+<dd>
+<p>※ 在Ruby 1.8 以后的版本中，推荐使用<font color=blue>Signal.trap</font>。</p>
+<p>将<var>command</var>注册为<var>signal</var>所指的中断的处理程序。<var>signal</var>可以是信号名字符串、<font color=blue>Symbol</font>或信号编号。</p>
+<p><var>command</var>可以是字符串或块。若将其设为<code>nil</code>、空字符串<code>""</code>、<code>"SIG_IGN"</code>或者<code>"IGNORE"</code>时，将忽略该信号(若可能的话)。若将其设为<code>"SIG_DFL"</code>或<code>"DEFAULT"</code>时，将进行默认的动作。若设为<code>"EXIT"</code>时，在接到信号之后将进行<a href="./lanstyle_exit.html">结束时的相关处理</a>，然后以status 0 的状态结束。</p>
+<p>还可以将<var>signal</var>设为0或<code>"EXIT"</code>等特殊值。这表示“程序结束时”。</p>
+<p>Ruby解释器会为一些特定的信号引发异常<font color=blue>Interrupt</font>或<font color=blue>SignalException</font>。还可以使用异常处理来捕捉这些信号。</p>
+<pre>
+begin
+  Process.kill :QUIT, $$   # 对自己发出SIGQUIT
+rescue SignalException
+  puts "rescue #$!"
+end
+# =&gt; rescue SIGQUIT
+</pre>
+
+<p>用trap()捕捉到的信号不会引发异常。</p>
+<p>若注册了与信号相对应的<var>command</var>时，trap将返回它(若是块的话，将被当作<font color=blue>Proc</font>对象返回。若是"IGNORE"或"DEFAULT"则返回nil)。若没有注册的话则返回nil。</p>
+<p><font color=blue>ruby 1.8 特性</font>：在执行trap之前，若注册了"IGNORE"或"DEFAULT"的话，则返回"IGNORE"、"DEFAULT"。若注册了ruby解释器无法识别的信号处理程序时将返回nil。</p>
+<pre>
+p trap(:INT, "p true")     # =&gt; nil
+p trap(:INT) { }           # =&gt; "p true"
+p trap(:INT, "SIG_IGN")    # =&gt; #&lt;Proc:0x401b1328&gt;
+p trap(:INT, "DEFAULT")    # =&gt; nil
+p trap(:INT, "EXIT")       # =&gt; nil
+p trap(:INT, nil)          # =&gt; "EXIT"
+</pre>
+
+<p>若指定了并不存在的信号时，将引发<font color=blue>ArgumentError</font>异常。</p></dd>
+<dt><a name="untrace_var" id="untrace_var"><code>untrace_var(<var>varname</var>[, <var>hook</var>])</code></a><!-- RDLabel: "untrace_var" --></dt>
+<dd>
+<p>取消与全局变量<var>varname</var>有关的钩子。若指定了<var>hook</var>的话，将只会取消该钩子。若省略<var>hook</var>或将其设为<code>nil</code>时，将取消<var>varname</var>所有的钩子。返回取消钩子的数组。</p>
+<p>例:</p>
+<pre>
+$v = nil
+trace_var(:$v) {|val| puts "$v=#{val.inspect}" }
+$v = 'str'        #=&gt; $v="str"
+untrace_var :$v
+$v = 'str'        # 不输出任何信息
+</pre>
+</dd>
+<dt><a name="warn" id="warn"><code>warn(<var>mesg</var>)</code></a><!-- RDLabel: "warn" --></dt>
+<dd>
+<p><font color=blue>ruby 1.8 特性</font></p>
+<p>依次输出<var>mesg</var>和换行符到<font color=blue>$stderr</font>之中。若内部变量<font color=blue>$VERBOSE</font>为nil时，则不会输出。这等同于</p>
+<pre>
+$stderr.print mesg, "\n" unless $VERBOSE.nil?
+</pre>
+
+<p>返回<code>nil</code>。</p></dd>
+</dl>
+<hr />
+
+</div>
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+
+<title>Ruby参考手册 - 结束时的相关处理</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+
+<div class="body"><h1><a name="Ruby.a4.ce.bd.aa.ce.bb.bd.e8.cd.fd" id="Ruby.a4.ce.bd.aa.ce.bb.bd.e8.cd.fd">Ruby结束时的相关处理</a><!-- RDLabel: "Ruby结束时的相关处理" --></h1>
+<p>当到达脚本尾部或出现了未能捕捉到的异常时，Ruby会结束程序(当调用函数<font color=blue><b>exit</b></font>、<font color=blue><b>abort</b></font>或对主线程发出<font color=blue><b>Thread.kill</b></font>命令时，会引发<font color=blue><b>SystemExit</b></font>异常)。结束程序时会依次进行下列处理。</p>
+<ol>
+<li>对所有线程执行<font color=blue><b>Thread.kill</b></font>。</li>
+<li>若注册了<b>Ruby</b>的伪信号<b>SIGEXIT</b>的处理程序的话，就执行它(请参考<font color=blue><b>trap</b></font>)。</li>
+<li>若注册了<font color=blue>END</font>块(END {...}或<font color=blue>at_end</font>函数指定的块)的话,就以与记录相反的顺序执行它.若在该块的执行过程中发生大规模退出(non-local exit)的话,就中断该块的运行.但脚本仍将继续运行.</li>
+<li><p>在<font color=blue>ObjectSpace.define_finalizer</font>中,若注册了finalizer的话就执行它(执行顺序不定).若在执行finalizer的过程中,发生了大规模退出的话,就中断finalizer的运行,但脚本仍将继续运行.</p></li>
+<li><p>使用<font color=blue>exit(3)</font>结束程序.</p>
+     <p>此时传来的状态值取决于程序的结束方法.例如,</p>
+<ul>
+<li>到达脚本尾部时 值为0</li>
+<li>传递给<font color=blue>exit</font>的参数</li>
+<li>若非由<font color=blue>SystemExit</font>引起的异常的话,其值为1</li>
+<li>若明显是<font color=blue>SystemExit</font>的话,其值为0</li>
+</ul></li>
+</ol>
+<p>使用<font color=blue>exit!</font>函数时,将只执行<font color=blue>exit(2)</font>,而不会执行上述任何步骤.</p>
+
+</div>
+<hr >
+
+
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

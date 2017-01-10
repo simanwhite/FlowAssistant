@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+
+<title>Ruby参考手册 - 环境变量</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+
+<div class="body"><h1><a name="a.b4.c4.b6.ad.ca.d1.bf.f4" id="a.b4.c4.b6.ad.ca.d1.bf.f4">环境变量</a><!-- RDLabel: "环境变量" --></h1>
+<p>Ruby解释器使用下列环境变量。</p>
+<dl>
+<dt><a name="RUBYOPT" id="RUBYOPT"><code>RUBYOPT</code></a><!-- RDLabel: "RUBYOPT" --></dt>
+<dd>
+<p>指定默认情况下传给Ruby解释器的选项。</p>
+<ul>
+<li><p><code>sh系</code></p>
+<pre>
+RUBYOPT='-Ke -rkconv'
+export RUBYOPT
+</pre></li>
+<li><p><code>csh系</code></p>
+<pre>
+setenv RUBYOPT '-Ke -rkconv'
+</pre></li>
+<li><p><code>MS-DOS系</code></p>
+<pre>
+set RUBYOPT=-Ke -rkconv
+</pre></li>
+</ul>
+</dd>
+<dt><a name="RUBYPATH" id="RUBYPATH"><code>RUBYPATH</code></a><!-- RDLabel: "RUBYPATH" --></dt>
+<dd>
+<p>指定<font color=blue>-S</font>选项后，Ruby会搜索环境变量PATH指定的Ruby脚本。此时，该环境变量指定的目录也被纳入搜索范围(其优先程度高于PATH)。</p>
+<ul>
+<li><p><code>sh系</code></p>
+<pre>
+RUBYPATH=$HOME/ruby:/opt/ruby
+export RUBYPATH
+</pre></li>
+<li><p><code>csh系</code></p>
+<pre>
+setenv RUBYPATH $HOME/ruby:/opt/ruby
+</pre></li>
+<li><p><code>MS-DOS系</code></p>
+<pre>
+set RUBYPATH=%HOME%\ruby:\opt\ruby
+</pre></li>
+</ul>
+</dd>
+<dt><a name="RUBYLIB" id="RUBYLIB"><code>RUBYLIB</code></a><!-- RDLabel: "RUBYLIB" --></dt>
+<dd>
+<p>该环境变量把自己的值添加在Ruby库的搜索路径<font color=blue>$:</font>的默认值之前。</p>
+<ul>
+<li><p><code>sh系</code></p>
+<pre>
+RUBYLIB=$HOME/ruby/lib:/opt/ruby/lib
+export RUBYLIB
+</pre></li>
+<li><p><code>csh系</code></p>
+<pre>
+setenv RUBYLIB $HOME/ruby/lib:/opt/ruby/lib
+</pre></li>
+<li><p><code>MS-DOS系</code></p>
+<pre>
+set RUBYLIB=%HOME%\ruby\lib:\opt\ruby\lib
+</pre></li>
+</ul>
+</dd>
+<dt><a name="RUBYLIB_PREFIX" id="RUBYLIB_PREFIX"><code>RUBYLIB_PREFIX</code></a><!-- RDLabel: "RUBYLIB_PREFIX" --></dt>
+<dd>
+<p>该环境变量只在<font color=blue>DJGPP</font>版、<font color=blue>Gygwin</font>版、<font color=blue>mswin32</font>版和<font color=blue>mingw32</font>版的Ruby中有效。</p>
+<p>该环境变量的值是path1;path2或path1 path2。若Ruby库的搜索路径<font color=blue>$:</font>的前面部分与path1一致时，则将其替换为path2。</p>
+<ul>
+<li><p><code>MS-DOS系</code></p>
+<pre>
+set RUBYLIB_PREFIX=/usr/local/lib/ruby;d:/ruby
+</pre></li>
+</ul>
+</dd>
+<dt><a name="RUBYSHELL" id="RUBYSHELL"><code>RUBYSHELL</code></a><!-- RDLabel: "RUBYSHELL" --></dt>
+<dd>
+<p>该环境变量只在<font color=blue>OS2</font>版、<font color=blue>mswin32</font>版和<font color=blue>mingw32</font>版的Ruby中有效。</p>
+<p>指定用<font color=blue>system</font>执行命令时所使用的shell。若省略此环境变量，则使用COMSPEC的值。</p>
+</dd>
+<dt><a name="PATH" id="PATH"><code>PATH</code></a><!-- RDLabel: "PATH" --></dt>
+<dd>
+<p>用<font color=blue>system</font>等执行命令时的搜索路径。若没有设定时(其值为nil)，将按照“/usr/local/bin:/usr/ucb:/usr/bin:/bin:.”进行搜索。</p>
+</dd>
+</dl>
+
+</div>
+<hr />
+
+
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

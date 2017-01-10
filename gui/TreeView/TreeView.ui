@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>345</width>
-    <height>688</height>
+    <width>318</width>
+    <height>748</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,6 +20,9 @@
    <enum>QFrame::Raised</enum>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QTreeView" name="treeView"/>
    </item>

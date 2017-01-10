@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>静态时序分析与动态仿真</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_July_2016.html" class="wikidpad">calendar_July_2016</a></span> | <span class="wikidpad parent-node"><a href="vsi.html" class="wikidpad">vsi</a></span> | <span class="wikidpad parent-node"><a href="work_process-SCBU_UPFG_training.html" class="wikidpad">work_process-SCBU_UPFG_training</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">静态时序分析与动态仿真</h2>
+<hr class="wikidpad" />
+<br class="wikidpad" />
+动态时序分析 动态时序分析就是通常我们所说的仿真，该仿真可以验证功能，也可以验证时序，首先确定测试向量，输入硬件模型，进行仿真。由于为了完整地测试每条路径的功能<br class="wikidpad" />
+或者时序是否都满足，测试向量需要很大，也不能保证100%的覆盖率。如果到了门级的仿真将非常消耗时间。<br class="wikidpad" />
+<br class="wikidpad" />
+静态时序分析 静态时序分析只能分析时序要求而不能进行功能验证。不需要测试向量，能比动态时序分析快地多的完成分析。静态时序分析只能对同步电路进行分析，而不能对异步<br class="wikidpad" />
+电路进行时序分析。但是它却可以验证每一条路径，发现时序的重大问题，比如建立时间和保持时间冲突，slow path以及过大的时钟偏移。<br class="wikidpad" />
+<br class="wikidpad" />
+静态时序分析的优缺点 静态时序分析可以大大提高仿真时间，并能100%覆盖所有的路径。它通过预先计算所有的延时来提高速度。包括内部门延时以及外部的线延时。静态时序<br class="wikidpad" />
+分析并不是简单的把各个延时相加，而是引入真值表，分析各种输入情况下所有可能经过的路径，而且能识别flase path。但是由于在深亚微米的工艺条件下，静态时序分<br class="wikidpad" />
+析不能完整的把所有影响延时的因素给包含进去，因此在关键路径方面，便可以用STA工具导出关键路径的spice网表，用门级或者管级仿真工具进行电路仿真，以确定时序的<br class="wikidpad" />
+正确性。<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<span class="wikidpad property attribute">[alias: 静态验证]</span>    </body>
+</html>

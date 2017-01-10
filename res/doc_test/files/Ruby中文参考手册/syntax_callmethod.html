@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<title>Ruby参考手册 - 方法调用</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+<div class="body"><h1><a name="a.a5.e1.a5.bd.a5.c3.a5.c9.b8.c6.a4.d3.bd.d0.a4.b7" id="a.a5.e1.a5.bd.a5.c3.a5.c9.b8.c6.a4.d3.bd.d0.a4.b7">方法调用</a><!-- RDLabel: "方法调用" --></h1>
+<ul>
+<li><a href="#super" title="方法调用 (12d)" class="modified-month">super</a></li>
+<li><a href="#a.a5.d6.a5.ed.a5.c3.a5.af.c9.d5.a4.ad.a5.e1.a5.bd.a5.c3.a5.c9.b8.c6.a4.d3.bd.d0.a4.b7" title="方法调用 (12d)" class="modified-month">带块的方法调用</a></li>
+<li><a href="#yield" title="方法调用 (12d)" class="modified-month">yield</a></li>
+</ul>
+<p>例:</p>
+<pre>
+foo.bar()
+foo.bar
+bar()
+print "hello world\n"
+print
+Class::new
+</pre>
+
+<p>语法:</p>
+<pre>
+[表达式  `.'] 标识符 [`(' 表达式 ... [`*' [表达式]],[`&amp;' 表达式] `)']
+[表达式 `::'] 标识符 [`(' 表达式 ... [`*' [表达式]],[`&amp;' 表达式] `)']
+</pre>
+
+<p>方法调用表达式表示调用被调(receiver,"."左侧表达式的值)的方法。若未指定被调，则调用self的方法。</p>
+<p>"."与"::"的意义大体相同。但表示常数时，必须使用"::"(例：<font color=blue>Math::PI</font>，<font color=blue>Errno::ERANGE</font>)。若写成</p>
+<pre>
+Klass::Foo
+</pre>
+
+<p>的话，通常会被认为是常数。请注意，通常是将"::"用作类方法的调用。若方法名是以大写字母开始的时候，要写成</p>
+<pre>
+Klass.Foo
+</pre>
+
+<p>或者写成</p>
+<pre>
+Klass::Foo()
+</pre>
+
+<p>但要用括号显式地表明这是方法调用。</p>
+<p>方法名中除了通常的标识符以外，还可以添加"?"或"!"等后缀。通常在布尔型(返回真或伪的方法)方法名后添加"?"，在比同名(无"!")方法更具破坏性的方法名(例：tr和tr!)后添加"!"。</p>
+<p>若最后一个参数带"*"的话，将会先展开该参数的值，然后才传递。也就是：</p>
+<pre>
+foo(1,*[2,3,4])
+foo(1,*[])
+</pre>
+
+<p>和下例</p>
+<pre>
+foo(1,2,3,4)
+foo(1)
+</pre>
+
+<p>等效。</p>
+<p>若最后一个参数带"&"，则该参数指定的过程对象(<font color=blue>Proc</font>)以及方法对象(<font color=blue>Method</font>)等会被当作一个块传递给方法。详情请参考<font color=blue>迭代器</font>。</p>
+<p>方法调用时，<var>private</var>方法只能用函数形式(省略被调的形式)来调用。而<var>protected</var>方法只能在拥有该方法的对象的方法定义表达式内进行调用。(请参考<font color=blue>方法调用的限制</font>)</p>
+<h2><a name="super" id="super">super</a><!-- RDLabel: "super" --></h2>
+<p>例:</p>
+<pre>
+super
+super(1,2,3)
+</pre>
+
+<p>语法:</p>
+<pre>
+super
+super(表达式, ... )
+</pre>
+
+<p>super将调用被当前方法覆盖的父类中的同名方法。若省略括号和参数时，将会把当前方法的参数原封不动地传递给父类中的同名方法。若调用时不想使用参数的话，请使用括号显式地标出，像super()这样。</p>
+<p>例:</p>
+<pre>
+class Foo
+  def foo(arg=nil)
+    p arg
+  end
+end
+
+class Bar &lt; Foo
+  def foo(arg)
+    super(5)       # 以5作为参数进行调用
+    super(arg)     # 以5作为参数进行调用
+    super          # 以5作为参数进行调用，super(arg)的简写
+    arg = 1
+    super          # 以1作为参数进行调用，super(arg)的简写
+    super()        # 无参数的调用
+  end
+end
+Bar.new.foo 5
+</pre>
+
+<h2><a name="a.a5.d6.a5.ed.a5.c3.a5.af.c9.d5.a4.ad.a5.e1.a5.bd.a5.c3.a5.c9.b8.c6.a4.d3.bd.d0.a4.b7" id="a.a5.d6.a5.ed.a5.c3.a5.af.c9.d5.a4.ad.a5.e1.a5.bd.a5.c3.a5.c9.b8.c6.a4.d3.bd.d0.a4.b7">带块的方法调用</a><!-- RDLabel: "带块的方法调用" --></h2>
+<p>例:</p>
+<pre>
+[1,2,3].each do |i| print i*2, "\n" end
+[1,2,3].each {|i| print i*2, "\n" }
+</pre>
+
+<p>语法:</p>
+<pre>
+method(arg1, arg2, ...)  do [`|' 表达式 ... `|'] 表达式 ... end
+method(arg1, arg2, ...) `{' [`|' 表达式 ... `|'] 表达式 ... `}'
+method(arg1, arg2, ..., `&amp;' proc_object)
+</pre>
+
+<p>所谓带块的方法是指，为了对控制结构进行抽象化而设计的方法。最初常用于对循环进行抽象化，所以有时也叫迭代器。将do...end或{...}中的代码片段(也就是块)添加在方法后面，然后再调用该方法时，就能从该方法内部对快进行计算。在带块的方法内进行块调用时使用<font color=blue> yield </font>表达式。传给yield的值会被赋值给夹在"｜｜"中的变量。</p>
+<p>{...}比do...end块的结合能力强。例如：</p>
+<pre>
+foobar a, b do .. end   # foobar 是带块的方法
+foobar a, b { .. }      # b    成了带块的方法
+</pre>
+
+<p>块中首次被赋值(声明)的局部变量的作用域仅限于该块。例如：</p>
+<pre>
+foobar {
+  i = 20                # 声明了局部变量i
+   ...
+}
+print defined? i        # 此处的i尚未定义，false
+foobar a, b do
+  i = 11                # 声明了一个新变量i
+   ...
+end
+</pre>
+
+<p>如下所示，在块外仍然有效。</p>
+<pre>
+i = 10
+[1,2,3].each do |m|
+  p i * m               # 马上就能使用i
+end
+</pre>
+
+<p>还可以把过程对象(<font color=blue> Proc </font>)当作块传递给带块的方法。这时要在过程对象名前面添加"&"，并把该过程对象传递给带块的方法的最后一个参数。除了过程对象以外，还可以传递方法对象(<font color=blue> Method </font>)。这时将生成一个调用该方法的过程对象，然后把这个过程对象传给带块的方法。</p>
+<pre>
+pobj = proc {|v|
+  p v
+}
+
+[1,2,3].each(&amp;pobj)
+=&gt; 1
+   2
+   3
+</pre>
+
+<p><font color=blue>ruby 1.7 特性</font>: 在version 1.7中，若该对象自带to_proc方法的话，就可以把它当作带"&"的参数传给带块方法(默认状态下，Proc、Method对象都有to_proc方法)。方法调用时会执行to_proc，它将返回Proc对象。</p>
+<pre>
+class Foo
+  def to_proc
+    Proc.new {|v| p v}
+  end
+end
+
+[1,2,3].each(&amp;Foo.new)
+
+=&gt; 1
+   2
+   3
+</pre>
+
+<p>带块方法的返回值与通常的方法是一样的。若块中的<font color=blue> break </font>引起中断时，将返回nil。<font color=blue> ruby 1.7 特性 </font>：若break带参数的话，该参数的值就是带块方法的返回值。</p>
+<h2><a name="yield" id="yield">yield</a><!-- RDLabel: "yield" --></h2>
+<p>例:</p>
+<pre>
+yield data
+</pre>
+
+<p>语法:</p>
+<pre>
+yield `(' [表达式 [`,' 表达式 ... ]] `)'
+yield [表达式 [`,' 表达式 ... ]]
+</pre>
+
+<p>把参数传给块之后，对块进行计算。因为yield定义<font color=blue>迭代器</font>，所以是在<font color=blue>方法定义</font>内使用。</p>
+<pre>
+def foo
+  yield(1,2)
+end
+
+foo {|a,b| p [a,b]}
+</pre>
+
+<p>对块参数进行赋值时遵从<font color=blue>多重赋值</font>规律。若执行yield时，方法并没有带块(不是迭代器)的话，就会引发<font color=blue> LocalJumpError </font>异常。</p>
+<p>yield将会返回块内最后被计算的表达式的值。若因<font color=blue> next </font>引起块的运行中断的话，返回nil。</p>
+<p><font color=blue> ruby 1.7 特性 </font>:若next带参数的话，该参数的值就是yield的返回值。</p>
+<p><font color=blue> ruby 1.8 特性 </font>：关于块参数的交付问题，以后可能会对下述内容进行变更(会发出警告)。</p>
+<pre>
+def foo
+  yield 1,2,3
+end
+
+foo {|v| p v}
+
+# =&gt; -:5: warning: multiple values for a block parameter (3 for 1)
+     [1, 2, 3]
+</pre>
+
+<p>应该写成</p>
+<pre>
+yield [1,2,3]
+</pre>
+
+<p>或者</p>
+<pre>
+foo {|*v| p v}
+</pre>
+
+<p>这样才对。虽然现在使用</p>
+<pre>
+v = 1,2,3
+</pre>
+
+<p>这样的多重赋值还不会有警告，但最好不要使用。</p>
+
+<hr />
+</div>
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

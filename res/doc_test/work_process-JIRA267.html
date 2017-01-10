@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-JIRA267</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Augst_2016.html" class="wikidpad">calendar_Augst_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-JIRA267</h2>
+<hr class="wikidpad" />
+标题: Isolation cell removal<br class="wikidpad" />
+JIRA地址: <span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DMVMTVRF-267" class="wikidpad">http://ontrack-internal.amd.com/browse/DMVMTVRF-267</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h195" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" /><br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h308" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+vnc: srdcws293:2<br class="wikidpad" />
+password: welcome<br class="wikidpad" />
+workspace: /local_vol1_nobackup/regwang/proj/dcn2_2<br class="wikidpad" />
+bootenv: bootenv -v nlp<br class="wikidpad" />
+run command: <br class="wikidpad" />
+dj -v -l logs/uvm_diga_tmds_hdmi_vbi_packet_all_0_nofmt_power_gating_dc_core_sim<br class="wikidpad" />
+_build.log -DVCS_NLP rt dc::dc/uvm_diga_tmds_hdmi_vbi_packet_all_0_nofmt_power_g<br class="wikidpad" />
+ating_dc_core<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+<br class="wikidpad" />
+For Navi10, DCN sub-block DCHUBP and DPP will be assigned to the same power domain.<br class="wikidpad" />
+While in current workspace(cloned from Raven), DCHUBP and DPP are assigned to di<br class="wikidpad" />
+fferent power domain. So for the interface between DCHUBP and DPP, there are iso<br class="wikidpad" />
+lation cells.<br class="wikidpad" />
+So the request is to remove those isolation cells from UPF file. We don't want t<br class="wikidpad" />
+o do any update on .idl file, so the removal action should be done in .params ge<br class="wikidpad" />
+neration or .upf generation flow.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1177" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+<a name=".h1280" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-8-22</h4>
+DCN有两个sub-block, DCHUBP和DPP. 这两个block是被分配到同一power domain的. 但是当前<br class="wikidpad" />
+的工作环境(从raven拷过来的, 不知道是raven几, 应该是1吧), 两个block被分配到了不同的<br class="wikidpad" />
+power domain. 所以当前两个block之间有isolation cell. <br class="wikidpad" />
+需求是, 去掉这些isolation cell, 在不改动design的前提下.<br class="wikidpad" />
+<br class="wikidpad" />
+需要通过修改param或者flow来去掉这些isolation.<br class="wikidpad" />
+<br class="wikidpad" />
+先搞清楚目前的现象和想要的样子都是啥.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<hr class="wikidpad" />
+<hr class="wikidpad" />
+<span class="wikidpad property attribute">[tags: isolation]</span><br class="wikidpad" />
+    </body>
+</html>

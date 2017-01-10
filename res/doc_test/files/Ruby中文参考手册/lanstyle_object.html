@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<title>Ruby参考手册 - 对象</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+
+<div class="body"><h1><a name="a.a5.aa.a5.d6.a5.b8.a5.a7.a5.af.a5.c8" id="a.a5.aa.a5.d6.a5.b8.a5.a7.a5.af.a5.c8">对象</a><!-- RDLabel: "对象" --></h1>
+<h2><a name="a.a5.aa.a5.d6.a5.b8.a5.a7.a5.af.a5.c8.a4.c8.a4.cf" id="a.a5.aa.a5.d6.a5.b8.a5.a7.a5.af.a5.c8.a4.c8.a4.cf">对象概述</a><!-- RDLabel: "对象概述" --></h2>
+<p>Ruby所能处理的值都是对象。Ruby操作对象时的办法只有一种，那就是方法调用。对象所属的类决定了对象所包含的方法。生成对象时，对象的所属类也就确定了，除非导入特殊类以外，对象的所属类不会改变。可以说对象是某个特定类的“实例”。</p>
+<p>生成对象一般是通过调用别的对象的方法来实现的。</p>
+<h2><a name="a.a5.af.a5.e9.a5.b9" id="a.a5.af.a5.e9.a5.b9">类</a><!-- RDLabel: "类" --></h2>
+<p>类决定了归属其下的对象的方法。若能调用归属对象的某方法时，我们就说该方法是“由类定义的”。方法由类和方法名决定。</p>
+<p>每个类都必然拥有一个“超类”。若在超类中定义了一个方法，则在当前类中必然也会出现一个相同的方法，这叫做“继承”。继承是发展的，所以超类的超类中的方法也会出现在当前类中。</p>
+<h3><a name="a.a5.e2.a5.b8.a5.e5.a1.bc.a5.eb" id="a.a5.e2.a5.b8.a5.e5.a1.bc.a5.eb">模块</a><!-- RDLabel: "模块" --></h3>
+<p>include</p>
+<p>这个有点特殊，它并不是类，但功能相同。</p>
+<h2><a name="a.a5.e1.a5.bd.a5.c3.a5.c9" id="a.a5.e1.a5.bd.a5.c3.a5.c9">方法</a><!-- RDLabel: "方法" --></h2>
+<p>方法是可以执行的。通常我们把执行方法的动作叫做“调用”。调用方法时可以传递对象，这个对象就是“参数”。可接受的参数数量是在定义方法时确定的，不可改变。</p>
+</div>
+<hr />
+
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

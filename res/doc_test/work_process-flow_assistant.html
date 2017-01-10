@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-flow_assistant</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Dec_2016.html" class="wikidpad">calendar_Dec_2016</a></span> | <span class="wikidpad parent-node"><a href="calendar_Nov_2016.html" class="wikidpad">calendar_Nov_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-flow_assistant</h2>
+<hr class="wikidpad" />
+<br class="wikidpad" />
+<span class="wikidpad wiki-link"><a href="flow_asist-flow_docs.html" class="wikidpad">flow_asist-flow_docs</a></span><br class="wikidpad" />
+Twiki: <span class="wikidpad url-link"><a href="http://twiki.amd.com/twiki/bin/view/DesignCAD/FlowAssistant" class="wikidpad">http://twiki.amd.com/twiki/bin/view/DesignCAD/FlowAssistant</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+Qt Assistant 提供了现成的文档呈现与索引方案, 可以参考下面:<ul class="wikidpad normalindent"><span class="wikidpad url-link"><a href="http://blog.chinaunix.net/uid-28194872-id-3672811.html" class="wikidpad">http://blog.chinaunix.net/uid-28194872-id-3672811.html</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+</ul>
+<a name=".h302" class="wikidpad"></a><h4 class="wikidpad heading-level4">2017-1-4</h4>
+<hr class="wikidpad" />
+<ul class="wikidpad bulletlist">
+<li class="wikidpad" />一个问题:</ul>
+当总是报No handler for logger 'yapsy'时, 可以加下面一段, 这样就可以看到真正的报错了:<br class="wikidpad" />
+import logging
+ch = logging.StreamHandler()
+log = logging.getLogger('yapsy')
+log.addHandler(ch)
+<br class="wikidpad" />
+说明yapsy的logging加的有点问题. <br class="wikidpad" />
+<ul class="wikidpad bulletlist">
+<li class="wikidpad" />一个问题:</ul>
+Plugin脚本去import PyQt4写的GUI时会找不到module, 似乎说明当Plugin中import东西时, yapsy<br class="wikidpad" />
+寻找的路径还是站在当前主程序脚本的路径下去搜索的. 因此从主程序相对路径应该可以导入成功.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<hr class="wikidpad" />
+    </body>
+</html>

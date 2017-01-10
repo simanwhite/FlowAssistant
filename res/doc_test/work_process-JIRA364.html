@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-JIRA364</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Dec_2016.html" class="wikidpad">calendar_Dec_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-JIRA364</h2>
+<hr class="wikidpad" />
+标题: 两个TOP怎么跑upfg<br class="wikidpad" />
+JIRA地址: <span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DMVMTVRF-364" class="wikidpad">http://ontrack-internal.amd.com/browse/DMVMTVRF-364</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h185" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" /><br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h298" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+vncviewer ltipc966:9<br class="wikidpad" />
+123456<br class="wikidpad" />
+<br class="wikidpad" />
+pciecore5_0/pciecore5_0_main@2567387<br class="wikidpad" />
+<br class="wikidpad" />
+/local_vol1_nobackup/user/zhangjt/pcie/5.0/1130/<br class="wikidpad" />
+<br class="wikidpad" />
+dj -v -x pcie_swus1x16_serial -e 'run_test "pciecore pg_SDP_TRANS_pcie_cpp_sr_tb<br class="wikidpad" />
+_nlp -v "' -DUSER_ARGS="-spc=random,-speed=0000000,-lane_config=random,-lane_deg<br class="wikidpad" />
+rade=random,-lclk_ds=2" -DPCIE_SYM -DSEED=49984176 -m -DDEBU<br class="wikidpad" />
+<br class="wikidpad" />
+dj -v -c -DPUBLISH_DEPERL_VPP -DAUTOMGR_OPTS=-strict 
+<ul class="wikidpad normalindent">-DGENERATE_GLOBAL_FEATURES -DUSE_FDL -DRELAX_FEATURE_ACCESS_CKS -v -x 
+pcie_swus1x16_serial -e 
+'run_test "pciecore pg_SDP_TRANS_pcie_cpp_sr_tb_nlp -v "' 
+-DUSER_ARGS=-spc=random,-speed=0000000,-lane_config=random,-lane_degrade=random,-lclk_ds=2 
+-DPCIE_SYM -DSEED=49984176 -m -DDEBUG<br class="wikidpad" />
+<br class="wikidpad" />
+</ul>
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1112" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+<a name=".h1215" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-12-8</h4>
+./configs.dj:    <br class="wikidpad" />
+self.sim_build_args &lt;&lt; " -build_opt ' <br class="wikidpad" />
+-param upf_param_flow.top_hierarchy=pmpcie_#{design.pcie::features['pcie.core.PCIEW_CFG_NAME']}'"<br class="wikidpad" />
+<br class="wikidpad" />
+pcs_rsmu_gasket_fifo_phy_wrapper_pcs_pciex16/<br class="wikidpad" />
+pcs_rsmu_gasket_fifo_phy_wrapper_pcs_pciex16/<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1480" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-12-9</h4>
+又说assert_dis.vh没有生成, 这可真是...<br class="wikidpad" />
+让我们来看看assert_dis.vh生成的条件有哪些?<br class="wikidpad" />
+<br class="wikidpad" />
+foreach my $blk (sort keys %pg_inst)<ul class="wikidpad normalindent">foreach my $inst (sort keys %{$pg_inst{$blk}})<ul class="wikidpad normalindent">if ($PG_TOP ne $blk)<ul class="wikidpad normalindent">if (!$tileview &amp;&amp; !$pgfsm_in_design &amp;&amp; defined($inst_p-&gt;{'pgfsm'}))<br class="wikidpad" />
+elsif (!$tileview  &amp;&amp; defined($inst_p-&gt;{'pgfsm'}))<br class="wikidpad" />
+</ul>
+if ($VI_TOP ne $blk)<ul class="wikidpad normalindent">if (defined($inst_p-&gt;{'pgfsm'}) &amp;&amp; !defined($inst_p-&gt;{'pgfsmSubInst'}))<br class="wikidpad" />
+</ul>
+</ul>
+</ul>
+foreach my $blk (sort keys %cgpg_inst)<ul class="wikidpad normalindent">foreach my $inst (sort keys %{$cgpg_inst{$blk}})<ul class="wikidpad normalindent">if ($PG_TOP ne $blk)<ul class="wikidpad normalindent">if (!$tileview &amp;&amp; defined($inst_p-&gt;{'pgfsm'}))<br class="wikidpad" />
+<br class="wikidpad" />
+</ul>
+</ul>
+</ul>
+<a name=".h2111" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-12-12</h4>
+打印出来log发现pg_inst中不存在$inst_p-&gt;{'pgfsm'}<br class="wikidpad" />
+<pre class="wikidpad">#Warn: no pgfsm block: bif_core_rsmu_wrap_pp1x16 founded
+#   1. are you control power gated block through pgfsm?
+#   1. if yes, please make sure pgfsm can be found in compfiles[vcs|ncsim].f
+</pre>
+pcs_rsmu_gasket_fifo_phy_wrapper_pcs_pciex16<br class="wikidpad" />
+但是tileview=1. ???<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+[tags: <br class="wikidpad" />
+    </body>
+</html>

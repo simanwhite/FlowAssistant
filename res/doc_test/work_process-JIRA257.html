@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-JIRA257</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Augst_2016.html" class="wikidpad">calendar_Augst_2016</a></span> | <span class="wikidpad parent-node"><a href="calendar_July_2016.html" class="wikidpad">calendar_July_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-JIRA257</h2>
+<hr class="wikidpad" />
+标题: UPF file and assert_dis.vh can't be generated in SRDC server<br class="wikidpad" />
+JIRA地址: <span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DMVMTVRF-257#" class="wikidpad">http://ontrack-internal.amd.com/browse/DMVMTVRF-257#</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h234" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" />问题解决, 发现是DJ_CONTEXT环境变量设置为pciecore_design, 但是实际的路径名为<br class="wikidpad" />
+pcie_rc5x8_pipe.<br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h419" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+项目: Raven2<br class="wikidpad" />
+联系人: Zhang Tommy, PCIE IP<br class="wikidpad" />
+VNC: srdcws310:2(123456)<br class="wikidpad" />
+工作目录: /local_vol1_nobackup/zhangjt/PCIE/4.1/ver<br class="wikidpad" />
+工具版本: powerflow_pkg/38.2.1.rc1<br class="wikidpad" />
+<br class="wikidpad" />
+DJ命令: rm out ; bootenv ; dj -v -x pcie_rc5x8_pipe -e 'run_test "pciecore pg_BASI<br class="wikidpad" />
+C_SMN_pcie_cpp_tb_nlp -v"' -DUSER_ARGS="-spc=random,-speed=random,-lane_config=r<br class="wikidpad" />
+andom,-lane_degrade=random" -DPCIE_SYM -m -DDEBUG<br class="wikidpad" />
+<br class="wikidpad" />
+环境版本: pciecore4_1/pciecore4_1_main@2443926<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+<span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DMVMTVRF-233" class="wikidpad">http://ontrack-internal.amd.com/browse/DMVMTVRF-233</a></span> 解决后Tommy他们说SRDC上面还有<br class="wikidpad" />
+问题. 但是这个fix不应该是跟server相关的. <br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">运行环境</b>:<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h1036" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+问题类型: IP<br class="wikidpad" />
+依然是assert_dis.vh没有被生成.<br class="wikidpad" />
+<br class="wikidpad" />
+调用的make命令:<pre class="wikidpad">make -f /local_vol1_nobackup/zhangjt/PCIE/4.1/ver/out/linux_2.6.18_64/common/pub
+/src/meta/tools/dfp/Makefile.body PG_TOP=tb CHIP_UPF_MODE=pg COMPFILE_VF=NOT_USE
+D SIMWS=/local_vol1_nobackup/zhangjt/PCIE/4.1/ver/out/linux_2.6.18_64/pcie_rc5x8
+_pipe/config/cpp_tb_nlp/pub/sim DV_SUITE=NOT_USED DV_TEST=NOT_USED DESIGN_PUB_PA
+TH=/local_vol1_nobackup/zhangjt/PCIE/4.1/ver/out/linux_2.6.18_64/pcie_rc5x8_pipe
+/common/pub HIER_FILE_BASE=hier *nlp_upf2*
+</pre>
+在pub/sim下调用的Xeperl命令如下:<pre class="wikidpad">env XEPERL=/proj/verif_release_ro/powerflow_pkg/38.2.1.rc1/src/bin/Xeperl OUT_DE
+SIGN_pub=/local_vol1_nobackup/zhangjt/PCIE/4.1/ver/out/linux_2.6.18_64/pcie_rc5x
+8_pipe/common/pub /local_vol1_nobackup/zhangjt/PCIE/4.1/ver/out/linux_2.6.18_64/
+common/pub/src/meta/tools/dfp/template/*power.tmpl* -P -d EPERL=/proj/verif_releas
+e_ro/powerflow_pkg/38.2.1.rc1/src/bin/Xeperl -d COMPFILE_VF=NOT_USED -d TOP_MODU
+LE=tb -d CHIP_UPF_MODE=pg -o tb.upf.2.0 -d POWER_FILE_FORMAT=upf -d PG_TOP=tb -d
+ HIER_FILE_BASE=hier -d UPF2=1 -d SIMULATION=1 -d NLP_UPF=1 -p /local_vol1_nobac
+kup/zhangjt/PCIE/4.1/ver/out/linux_2.6.18_64/pcie_rc5x8_pipe/common/pub/src/meta
+/dfp/params/nlp.params -d PERL5LIB=/proj/verif_release_ro/p4w/257:/local_vol1_no
+backup/zhangjt/PCIE/4.1/ver/out/linux_2.6.18_64/pcie_rc5x8_pipe/common/pub/lib/p
+erl:/local_vol1_nobackup/zhangjt/PCIE/4.1/ver/src/meta/tools/rgb/:/proj/verif_re
+lease_ro/testflow_pkg/55.6/src/dv/lib:/proj/verif_release_ro/smsgen/current/bin:
+/proj/verif_release_ro/releaseflow_pkg/18.1/src/rtldrop/tools/bin:/local_vol1_no
+backup/zhangjt/PCIE/4.1/ver/out/linux_2.6.18_64/common/pub/lib/perl:/local_vol1_
+nobackup/zhangjt/PCIE/4.1/ver/out/linux_2.6.18_64/common/pub/bin:/proj/verif_rel
+ease_ro/lint_verif/24:/proj/verif_release_ro/leda_rules/2015.Q3_2015.09/lib:/pro
+j/verif_release_ro/CDC_Verif/90/lib/perl:/proj/verif_release_ro/rgb_build/224.0.
+6:/proj/verif_release_ro/rgb/80.0.1:/proj/verif_release_ro/rgb/80.0.1/aleLexer/b
+lib/lib:/proj/verif_release_ro/compression_utils/22/lib/perl:/proj/verif_release
+_ro/utils/70/lib/perl:/proj/verif_release_ro/siteconfig/current/lib/perl:/proj/v
+erif_release_ro/error_reporting/34/lib/perl:/proj/verif_release_ro/ustat_send/40
+/lib/perl:/proj/verif_release_ro/project_config/27/lib/perl:/proj/verif_release_
+ro/cbwa/224/lib/perl:/proj/verif_release_ro/xml_utils/48/lib/perl:/proj/verif_re
+lease_ro/p4_mkwa/current:/proj/verif_release_ro/cbwa_bootcore/current/lib/perl:/
+local_vol1_nobackup/zhangjt/PCIE/4.1/ver/out/linux_2.6.18_64/pcie_rc5x8_pipe/lib
+rary/buildflow/pub/include/features
+</pre>
+<br class="wikidpad" />
+<a name=".h3739" class="wikidpad"></a><h4 class="wikidpad heading-level4">2016-8-10</h4>
+比较奇怪的是Tommy回复:<br class="wikidpad" />
+<br class="wikidpad" />
+Hi Quan,<br class="wikidpad" />
+I saw the log in ATL server, DJ_CONTEXT setting is also the pciecore_design. But<ul class="wikidpad normalindent">in the ATL, powerflow can excute successfully. If the DJ_CONTEXT issue, ATL/MKD</ul>
+C should get this error as well. Actually PCIe tree is the same among the simula<br class="wikidpad" />
+tion running in all the servers, all settings are the same, it can work in MKDC,<ul class="wikidpad normalindent">CYB ATL, but we only got error in SRDC. The passed log in atlnonveu-0111:1(1234</ul>
+56), Can you please take a check?<br class="wikidpad" />
+Thanks,<br class="wikidpad" />
+Tommy<br class="wikidpad" />
+<br class="wikidpad" />
+从build.log上来看, srdc上跑到pre_get_hier.csh时, bootenv被调用了.<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<hr class="wikidpad" />
+<hr class="wikidpad" />
+<span class="wikidpad property attribute">[tags: raven2]</span><span class="wikidpad property attribute">[tags: PCIE]</span><span class="wikidpad property attribute">[tags: assert_dis.vh]</span><br class="wikidpad" />
+    </body>
+</html>

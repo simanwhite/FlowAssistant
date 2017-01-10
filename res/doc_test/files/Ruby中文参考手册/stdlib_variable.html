@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="gb2312"?>
+<html lang="gb2312" xml:lang="gb2312">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=gb2312" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<title>Ruby参考手册 - 内部变量</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="navi">
+<a id="header-navi" name="head-navi"></a>
+<span class="navi">[<a href="../index.html">Ruby首页</a>]</span>
+<span class="navi">[<a href="./index.html">参考手册</a>]</span>
+</div>
+
+
+
+<div class="body"><h1><a name="a.c1.c8.a4.df.b9.fe.a4.df.ca.d1.bf.f4" id="a.c1.c8.a4.df.b9.fe.a4.df.ca.d1.bf.f4">内部变量</a><!-- RDLabel: "内部变量" --></h1>
+<p>本参考手册使用下列术语.</p>
+<dl>
+<dt><a name="a.a5.b0.a5.ed.a1.bc.a5.d0.a5.eb.ca.d1.bf.f4" id="a.a5.b0.a5.ed.a1.bc.a5.d0.a5.eb.ca.d1.bf.f4">全局变量</a><!-- RDLabel: "全局变量" --></dt>
+<dd>
+<p>所有以`$'开头的变量</p>
+</dd>
+<dt><a name="a.c1.c8.a4.df.b9.fe.a4.df.ca.d1.bf.f4_2" id="a.c1.c8.a4.df.b9.fe.a4.df.ca.d1.bf.f4_2">内部变量</a><!-- RDLabel: "内部变量" --></dt>
+<dd>
+<p>全局变量中的内部变量(本网页介绍的变量)</p>
+</dd>
+<dt><a name="a.c6.c3.bc.ec.ca.d1.bf.f4" id="a.c6.c3.bc.ec.ca.d1.bf.f4">特殊变量</a><!-- RDLabel: "特殊变量" --></dt>
+<dd>
+<p>内部变量中,形如"`$' + 1位数字或符号"的变量</p>
+</dd>
+<dt><a name="a.a5.aa.a5.d7.a5.b7.a5.e7.a5.f3.ca.d1.bf.f4" id="a.a5.aa.a5.d7.a5.b7.a5.e7.a5.f3.ca.d1.bf.f4">选项变量</a><!-- RDLabel: "选项变量" --></dt>
+<dd>
+<p>内部变量中,由命令行选项设定的变量,形如"`$-' +1个选项字符"</p>
+</dd>
+</dl>
+<p>有时,内部变量(有特殊的功能和用途)的有效作用域不只限于全局,尽管如此,上述定义还是把它们划入到全局变量的范畴中(可以在任何地方使用内部变量,从这种意义上说它们是全局的,但它们的值并不只限于全局).</p>
+<p>根据变量值的作用域的不同,大致将内部变量划分如下.</p>
+<h2><a name="a.a5.ed.a1.bc.a5.ab.a5.eb.a5.b9.a5.b3.a1.bc.a5.d7" id="a.a5.ed.a1.bc.a5.ab.a5.eb.a5.b9.a5.b3.a1.bc.a5.d7">局部域</a><!-- RDLabel: "局部域" --></h2>
+<p>下列也可看做是线程内的局部变量.</p>
+<dl>
+<dt><a name="a.24_" id="a.24_"><code>$_</code></a><!-- RDLabel: "$_" --></dt>
+<dd>
+<p><code>gets</code>或<code>readline</code>最后读入的字符串.若遇到EOF则为nil.该变量的作用域是局部域.(记忆方法:与 Perl相同)</p></dd>
+<dt><a name="a.24.26" id="a.24.26"><code>$&amp;</code></a><!-- RDLabel: "$&" --></dt>
+<dd>
+<p>在当前作用域中,正则表达式最后一次匹配成功的字符串.若最后一次匹配失败,则为nil.(记忆方法: 它和某些编辑器中的<code>&amp;</code>是相同的)</p>
+<p>等同于<font color=blue>Regexp.last_match</font>[0].</p></dd>
+<dt><a name="a.24.7e" id="a.24.7e"><code>$~</code></a><!-- RDLabel: "$~" --></dt>
+<dd>
+<p>在当前作用域中,最后一次匹配成功的相关信息(<font color=blue>MatchData</font>对象).若对其进行设定的话, 则<code>$&amp;</code>以及<code>$1 ... $9</code>等的值也会发生变化.</p>
+<p>可以使用<code>$~[n]</code>的形式从该数据中抽取第n个匹配结果($n).(记忆方法: ~ 是用来进行匹配的)</p>
+<p>等同于<font color=blue>Regexp.last_match</font>.</p></dd>
+<dt><a name="a.24.60" id="a.24.60"><code>$`</code></a><!-- RDLabel: "$`" --></dt>
+<dd>
+<p>在当前作用域中,正则表达式最后一次匹配成功的字符串前面的字符串.若最后的匹配失败则为nil.(记忆方法: <code>`</code>被放在字符串前面)</p>
+<p>等同于<font color=blue>Regexp.last_match.pre_match</font>.</p></dd>
+<dt><a name="a.24.27" id="a.24.27"><code>$'</code></a><!-- RDLabel: "$'" --></dt>
+<dd>
+<p>在当前作用域中,正则表达式最后一次匹配成功的字符串后面的字符串.若最后的匹配失败则为nil.(记忆方法: <code>'</code>被放在字符串后面)</p>
+<p>等同于<font color=blue>Regexp.last_match.post_match</font>.</p>
+</dd>
+<dt><a name="a.24.2b" id="a.24.2b"><code>$+</code></a><!-- RDLabel: "$+" --></dt>
+<dd>
+<p>在当前作用域中,正则表达式最后一次匹配成功的字符串部分中,与最后一个括号相对应的那部分字符串.若最后的匹配失败则为nil.在多项选择型匹配模型中,若您无法断定是哪个部分匹配成功时,该变量将会非常有用.(记忆方法: be positive and forward looking.)</p></dd>
+<dt><a name="a.241" id="a.241"><code>$1</code></a><!-- RDLabel: "$1" --></dt>
+<dt><a name="a.242" id="a.242"><code>$2</code></a><!-- RDLabel: "$2" --></dt>
+<dt><a name="a.243.20.2e.2e.2e" id="a.243.20.2e.2e.2e"><code>$3 ...</code></a><!-- RDLabel: "$3 ..." --></dt>
+<dd>
+<p>分别存储着最后一次模型匹配成功时与第n个括号相匹配的值.若没有相应的括号时,其值为nil.(记忆方法: 类似于 \数字)</p>
+<p>等同于<font color=blue>Regexp.last_match[1], Regexp.last_match[2]</font>,...</p></dd>
+</dl>
+<h2><a name="a.a5.b9.a5.ec.a5.c3.a5.c9.a5.ed.a1.bc.a5.ab.a5.eb.a5.b9.a5.b3.a1.bc.a5.d7" id="a.a5.b9.a5.ec.a5.c3.a5.c9.a5.ed.a1.bc.a5.ab.a5.eb.a5.b9.a5.b3.a1.bc.a5.d7">线程局部域</a><!-- RDLabel: "线程局部域" --></h2>
+<p>下列变量在一个线程内部时是全局域变量,但在不同的线程之间是彼此独立的.</p>
+<dl>
+<dt><a name="a.24.3f" id="a.24.3f"><code>$?</code></a><!-- RDLabel: "$?" --></dt>
+<dd>
+<p>本线程中最后结束的子进程的状态值. 1.6版本以前是整数,从1.7版本开始变为<font color=blue>Process::Status</font>对象.另外,请参考<font color=blue>Process#wait</font>等.</p>
+<p>整数值就是使用wait()系统调用所获得的值,要想得到子进程的exit status的话,还得除以256($?/256). 1.7版本以后还可以使用<font color=blue>Process::Status#exitstatus</font>.</p></dd>
+<dt><a name="a.24.21" id="a.24.21"><code>$!</code></a><!-- RDLabel: "$!" --></dt>
+<dd>
+<p>最近发生的异常的信息.由<font color=blue>raise</font>设定.</p></dd>
+<dt><a name="a.24.40" id="a.24.40"><code>$@</code></a><!-- RDLabel: "$@" --></dt>
+<dd>
+<p>以数组形式保存着发生异常时的back trace信息. 数组元素是字符串,它显示了方法调用的位置,其形式为</p>
+<pre>
+"filename:line"
+</pre>
+
+<p>或</p>
+<pre>
+"filename:line:in `methodname'"
+</pre>
+
+
+
+<p>这和<font color=blue>caller</font>的返回值形式一致。</p>
+<p>在向<code>$@</code>赋值时，<font color=blue>$!</font>不能为nil。调用$@的方法与<font color=blue>$!.backtrace</font>相同。而赋值方法与<font color=blue>$!.set_backtrace</font>相同。</p>
+<p>(记忆方法：where exception occurred <em>at</em>.)</p></dd>
+<dt><a name="a.24SAFE" id="a.24SAFE"><code>$SAFE</code></a><!-- RDLabel: "$SAFE" --></dt>
+<dd>
+<p>当前线程的安全等级。关于安全等级，请参考<a href="./lanstyle_securitymodel.html">安全模型</a>。</p>
+<p>与<font color=blue>Thread.current.safe_level</font>相同。</p></dd>
+</dl>
+<h2><a name="a.a5.b0.a5.ed.a1.bc.a5.d0.a5.eb.a5.b9.a5.b3.a1.bc.a5.d7" id="a.a5.b0.a5.ed.a1.bc.a5.d0.a5.eb.a5.b9.a5.b3.a1.bc.a5.d7">全局域</a><!-- RDLabel: "全局域" --></h2>
+<dl>
+<dt><a name="a.24.3d" id="a.24.3d"><code>$=</code></a><!-- RDLabel: "$=" --></dt>
+<dd>
+<p><font color=blue>obsolete</font>: 该变量将被废止。</p>
+<p>说明在模式匹配或字符串比较中是否要区分大小写字母的标识。默认值为nil。</p></dd>
+<dt><a name="a.24.2f" id="a.24.2f"><code>$/</code></a><!-- RDLabel: "$/" --></dt>
+<dd>
+<p>输入记录分隔符。默认值为<code>"\n"</code>。其运作类似于<code>awk</code>的RS变量。</p>
+<p>若将该变量设为 nil 时，将一次读入整个文件。若设为空字符串 "" 则将是段落模式，此时会把2个以上的连续的换行符当作记录切分符。</p>
+<p>不能在<code>$/</code>中使用正则表达式。</p>
+<p>(记忆方法: 在诗歌中使用 / 作为行的切分)</p></dd>
+<dt><a name="a.24.5c" id="a.24.5c"><code>$\</code></a><!-- RDLabel: "$\" --></dt>
+<dd>
+<p>输出记录分隔符。<font color=blue>print</font>会在最后输出该字符串。</p>
+<p>默认值为<code>nil</code>，此时不会输出任何字符。</p></dd>
+<dt><a name="a.24.2c" id="a.24.2c"><code>$,</code></a><!-- RDLabel: "$," --></dt>
+<dd>
+<p>默认的切分字符。若<font color=blue>Array#join</font>中省略了参数时或在<font color=blue>print</font>的各个参数间将会输出它。</p>
+<p>默认值为 nil ，等同于空字符串。</p></dd>
+<dt><a name="a.24.3b" id="a.24.3b"><code>$;</code></a><!-- RDLabel: "$;" --></dt>
+<dd>
+<p>当<font color=blue>String#split</font>中省略参数时的切分字符。默认值为nil，此时将进行特殊的分割。详情请参考<font color=blue>String#split</font>。</p>
+<p><font color=blue>ruby 1.8 feature</font>：在1.6版本中只能把字符串赋值给$;。在1.8版本中则可以将任何对象代入其中，但考虑到<font color=blue>String#split</font>的变更问题，还是应该使用正则表达式。</p>
+<p>同时，为了提供兼容性，最好不要依赖于 $; 。</p></dd>
+<dt><a name="a.24.2e" id="a.24.2e"><code>$.</code></a><!-- RDLabel: "$." --></dt>
+<dd>
+<p>最后读入的输入文件的行号。</p>
+<p>与<font color=blue>ARGF.lineno</font>相同。若需要取得每个参数文件的行号时，需要使用<font color=blue>ARGF.file.lineno</font>。</p></dd>
+<dt><a name="a.24.3c" id="a.24.3c"><code>$&lt;</code></a><!-- RDLabel: "$<" --></dt>
+<dd>
+<p>由参数(若没的话就使用标准输入)构成的虚拟文件。也就是常数<font color=blue>ARGF</font>的别名。(记忆方法: <code>&lt;</code>指定了shell的输入源)</p></dd>
+<dt><a name="a.24deferr" id="a.24deferr"><code>$deferr     ((&lt;<var>ruby</var> <var>1</var>.<var>8</var> <var>特性</var>&gt;)) ((&lt;<var>obsolete</var>&gt;))</code></a><!-- RDLabel: "$deferr" --></dt>
+<dd>
+<p>Ruby解释器输出错误信息、警告信息和<font color=blue>warn</font>时的输出对象。</p>
+<p>只能将内部带有write方法的对象赋值给该变量。(warn 等内部方法最终将调用$deferr.write方法)。</p>
+<p>$deferr 是 $stderr 的别名。$deferr (尽管它刚出现不久) 将被废止。</p></dd>
+<dt><a name="a.24.3e" id="a.24.3e"><code>$&gt;</code></a><!-- RDLabel: "$>" --></dt>
+<dt><a name="a.24defout" id="a.24defout"><code>$defout     ((&lt;<var>obsolete</var>&gt;))</code></a><!-- RDLabel: "$defout" --></dt>
+<dd>
+<p>内部函数<font color=blue>print</font>、<font color=blue>puts</font>或<font color=blue>p</font>等的默认输出对象。初始值为<font color=blue>STDOUT</font>。若指定了<font color=blue>-i[extension]</font>选项的话，则将使用与读取源同名的文件。(记忆方法: <code>&gt;</code>指定了shell的输出对象)</p>
+<p>只能将内部带有write方法的对象赋值给该变量(print等内部方法最终将调用write方法)。</p>
+<p>若想改变print等Ruby内部函数的输出对象时，可以将该变量的值设定为别的<font color=blue>IO</font>即可。若想要改变子进程或C语言扩展库的标准输出时，则必须使用<font color=blue>IO#reopen</font>将标准输出重定向(redirect)到别的IO。请参考<font color=blue>$stdout</font>。</p>
+<p><font color=blue>ruby 1.8 特性</font>:</p>
+<p>$defout 是 $stdout 的别名。$defout 是<font color=blue>obsolete</font>。</p></dd>
+
+
+
+     
+<dt><a name="a.240" id="a.240"><code>$0</code></a><!-- RDLabel: "$0" --></dt>
+<dt><a name="a.24PROGRAM_NAME" id="a.24PROGRAM_NAME"><code>$PROGRAM_NAME       ((&lt;<var>ruby</var> <var>1</var>.<var>8</var> <var>特性</var>&gt;))</code></a><!-- RDLabel: "$PROGRAM_NAME" --></dt>
+<dd>
+<p>当前运行中的Ruby脚本名.根据OS的不同,有时向该变量赋值后,<font color=blue>ps(1)</font>的输出会发生变化.该功能适合于用来表示当前程序的状态.(记忆方法: 与sh 或 ksh 相同)</p></dd>
+<dt><a name="a.24.2a" id="a.24.2a"><code>$*</code></a><!-- RDLabel: "$*" --></dt>
+<dd>
+<p>传递给Ruby脚本的参数.内部常数<font color=blue>ARGV</font>的别名.Ruby自身用的参数已经被摘除.(记忆方法: 与sh 或 ksh 相同)</p></dd>
+<dt><a name="a.24.24" id="a.24.24"><code>$$</code></a><!-- RDLabel: "$$" --></dt>
+<dd>
+<p>当前运行中的Ruby进程的pid。(记忆方法: 与shell相同)</p>
+<p>与<font color=blue>Process.pid</font>相同.</p></dd>
+<dt><a name="a.24.3a" id="a.24.3a"><code>$:</code></a><!-- RDLabel: "$:" --></dt>
+<dt><a name="a.24LOAD_PATH" id="a.24LOAD_PATH"><code>$LOAD_PATH</code></a><!-- RDLabel: "$LOAD_PATH" --></dt>
+<dd>
+<p>包含一个数组,其内容是<font color=blue>load</font>或<font color=blue>require</font>加载文件时用的搜索目录列表.(记忆方法: 冒号是环境变量<var>PATH</var>的切分符)</p>
+<p>包含下列内容:启动时<font color=blue>-I directory</font> 选项所指定的目录,环境变量<font color=blue>RUBYLIB</font>的值,编译时指定的默认值还有"."(当前目录).下列就是典型的UNIX系统上的加载路径.</p>
+<pre>
+-I 指定的路径
+环境变量 RUBYLIB 的值
+/usr/local/lib/ruby/site_ruby/VERSION        site固有的,取决于VERSION的库
+/usr/local/lib/ruby/site_ruby/VERSION/ARCH   site固有的,取决于系统的扩展库
+/usr/local/lib/ruby/site_ruby                site固有的库
+/usr/local/lib/ruby/VERSION                  标准库
+/usr/local/lib/ruby/VERSION/ARCH             标准的,取决于系统的扩展库
+.                                            当前目录
+</pre>
+
+<p>上表中的VERSION是表示Ruby版本的字符串,如"1.6"或"1.8"等.ARCH是表示硬件和OS的字符串,如"i686-linux"或"alpha-osf5.1"等.可以从<font color=blue>Config::CONFIG['arch']</font>中得到这些信息.</p>
+<p>在多数UNIX系统中,编译时的默认路径是"/usr/local/lib/ruby".在<font color=blue>mswin32,mingw32,cygwin,bccwin32,mswince</font>这些环境中,是以ruby.dll所在位置为起点的相对路径.而在<font color=blue>djgpp,emx</font>(OS/2)中,则是以ruby.exe所在位置为起点的相对路径.</p>
+<p>在使用-T 选项启动时,若将<font color=blue>$SAFE</font>设为1以上的值的话,则"." (当前目录)不会被纳入加载路径.</p>
+<p>如<code>require 'foo'</code>时,将交互搜索.rb和.so.</p>
+<pre>
+/usr/local/lib/ruby/site_ruby/VERSION/foo.rb
+/usr/local/lib/ruby/site_ruby/VERSION/foo.so
+/usr/local/lib/ruby/site_ruby/VERSION/ARCH/foo.rb
+/usr/local/lib/ruby/site_ruby/VERSION/ARCH/foo.so
+  :
+  :
+</pre>
+
+<p>有的系统的共享库扩展名并非.so,此时将自动使用新的扩展名.例如在HP-UX上require 'foo.so'时将搜索foo.sl.因此在Ruby内部,可以一直使用.so.</p>
+<p>若想用命令行查看加载路径的话,可以这样</p>
+<pre>
+$ ruby -e 'puts $:'
+</pre>
+
+<p>即可.</p></dd>
+<dt><a name="a.24.22" id="a.24.22"><code>$"</code></a><!-- RDLabel: "$"" --></dt>
+<dt><a name="a.24LOADED_FEATURES" id="a.24LOADED_FEATURES"><code>$LOADED_FEATURES    ((&lt;<var>ruby</var> <var>1</var>.<var>8</var> <var>特性</var>&gt;))</code></a><!-- RDLabel: "$LOADED_FEATURES" --></dt>
+<dd>
+<p>包含以<font color=blue>require</font>加载的文件名的数组.这可以防止<font color=blue>require</font>多次加载同一个文件.</p></dd>
+<dt><a name="a.24DEBUG" id="a.24DEBUG"><code>$DEBUG</code></a><!-- RDLabel: "$DEBUG" --></dt>
+<dd>
+<p>若此值为真则变成调试模式。它由<font color=blue>-d</font>选项进行设定。</p>
+<p>调试模式与普通的运行有以下不同。</p>
+<ul>
+<li><p>若某线程因发生异常而结束时，整个解释器也将中止工作。这等同于将<font color=blue>Thread.abort_on_exception</font>设置为true的效果，但是在调试模式中，即使在脚本中使用 abort_on_exception= 类方法来重置标识也无法取消该效果。</p>
+<p>在通常的运行中，若某线程发生了异常却并没有被<font color=blue>Thread#join</font>等检测到的话，该线程将被无警告地终止。</p></li>
+<li>不管有没有捕捉到异常，只要它一旦发生就会被报告到 $stderr 。处理会继续进行。</li>
+</ul></dd>
+<dt><a name="a.24FILENAME" id="a.24FILENAME"><code>$FILENAME</code></a><!-- RDLabel: "$FILENAME" --></dt>
+<dd>
+<p>虚拟文件<font color=blue>ARGF</font>中，当前正在读入的(gets方法正在读的)文件名。与<font color=blue>ARGF.filename</font>相同。</p></dd>
+<dt><a name="a.24LOAD_PATH" id="a.24LOAD_PATH"><code>$LOAD_PATH</code></a><!-- RDLabel: "$LOAD_PATH" --></dt>
+<dd>
+<p><font color=blue>$:</font>的别名。</p></dd>
+<dt><a name="a.24stdin" id="a.24stdin"><code>$stdin</code></a><!-- RDLabel: "$stdin" --></dt>
+<dt><a name="a.24stdout" id="a.24stdout"><code>$stdout</code></a><!-- RDLabel: "$stdout" --></dt>
+<dt><a name="a.24stderr" id="a.24stderr"><code>$stderr</code></a><!-- RDLabel: "$stderr" --></dt>
+<dd>
+<p>标准输入，标准输出，标准错误输出。</p>
+<p><font color=blue>ruby 1.8 特性</font></p>
+<p>$stdout, $stderr 是 <font color=blue>$defout</font>,<font color=blue>$deferr</font> 的别名。($defout, $deferr 已经废止)</p>
+<p>$stdout, $stderr的对应对象中必须要有名为write的方法。详细情况请参考<font color=blue>defout</font>,<font color=blue>deferr</font>。</p>
+<p>$stdin同$stdout、$stderr一样，即使没有特定的方法也可以对其赋值。若执行<font color=blue>gets</font>等方法时，该方法将被投射到$stdin对应的对象中。(将执行$stdin.gets)</p>
+<p>$stdin所对应的对象中应该定义下列方法。(请根据需要取舍)</p>
+<pre>
+gets, readline, readlines, getc, readchar, tell, seek,
+pos=, rewind, fileno, to_io, eof, each_line, each_byte,
+binmode, closed?
+</pre>
+
+<p>例:</p>
+<pre>
+$stdin = Object.new
+def $stdin.gets
+  "foo"
+end
+p gets
+
+# =&gt; "foo"
+</pre>
+
+<p>若想对标准输入、输出、错误输出等进行重定向(redirect)时，可以使用<font color=blue>IO#reopen</font>(1.6版也是如此)。例如</p>
+<pre>
+$stdout = File.open("/tmp/foo", "w")
+</pre>
+
+<p>写成这样</p>
+<pre>
+STDOUT.reopen("/tmp/foo", "w")
+</pre>
+
+<p>就可以了。若想取消重定向时</p>
+<pre>
+stdout_sv = STDOUT.dup          # 保存 STDOUT
+STDOUT.reopen("/tmp/foo")       # 将 STDOUT 重定向到 /tmp/foo
+
+puts "foo"                      # 输出到 /tmp/foo
+
+STDOUT.flush                    # 必须(?)
+STDOUT.reopen(stdout_sv)        # 恢复原状
+</pre>
+
+<p>就可以了。若您不想让重定向影响到子进程的话，只要向<font color=blue>$stdout</font>等赋值就足够了。</p>
+<pre>
+# 改变输出方法的默认输出对象
+$stdout = File.open("/tmp/foo", "w")
+
+puts "foo"
+
+# 取回输出方法的默认输出对象。
+$stdout = STDOUT
+</pre>
+
+<p><font color=blue>ruby 1.6 特性</font>: 向$stdin、$stdout、$stderr赋值时，会进行重定向。</p>
+<p><font color=blue>ruby 1.7 特性</font>: 暂时修改了重定向的运作方式<font color=blue>[ruby-dev:14601]</font>。</p></dd>
+<dt><a name="a.24VERBOSE" id="a.24VERBOSE"><code>$VERBOSE</code></a><!-- RDLabel: "$VERBOSE" --></dt>
+<dd>
+<p>冗长消息标识。由面向Ruby解释器的<font color=blue>-v</font>选项进行设定。</p>
+<p><font color=blue>ruby 1.8 特性</font></p>
+<p>警告等级分为三级，分别如下。</p>
+<ul>
+<li>nil: 不输出警告</li>
+<li>false: 只输出重要警告(默认)</li>
+<li>true: 输出所有警告</li>
+</ul>
+<p>可以使用命令行选项<font color=blue>-W[level]</font>来指定警告等级，分别为-W0、-W1、-W2 (or -W)。指定<font color=blue>-v</font>或<font color=blue>-w</font>时，等同于-W2。</p>
+<p>若设定为nil、false之外的值时，其值为变为true。</p></dd>
+<dt><a name="a.24KCODE" id="a.24KCODE"><code>$KCODE</code></a><!-- RDLabel: "$KCODE" --></dt>
+<dd>
+<p>Ruby可识别的多字节字符串的编码。变量值为"EUC" "SJIS" "UTF8" "NONE"之一。</p>
+<p>当$KCODE的值为"EUC"时，将假定字符串或正则表达式的编码为EUC-JP。同样地，若为"SJIS"时则认定为Shift JIS。若为"UTF8"时则认定为UTF-8。若为"NONE"时，将不会识别多字节字符串。</p>
+<p>在向该变量赋值时，只有第1个字节起作用，且不区分大小写字母。"e" "E" 代表 "EUC"，"s" "S" 代表 "SJIS"，"u" "U" 代表 "UTF8"，而"n" "N" 则代表 "NONE"。</p>
+<p>默认值为"NONE"。</p>
+<p>[参考]</p>
+<p>目前<code>$KCODE</code>将对Ruby的下列动作产生影响。</p>
+<ul>
+<li>解释器的字句解析器</li>
+<li><font color=blue>Regexp</font>的编码标识的默认值</li>
+<li>(<font color=blue>正则表达式字面值</font></li>
+<li><font color=blue>Regexp.new</font>)</li>
+<li><font color=blue>upcase</font></li>
+<li><font color=blue>downcase</font></li>
+<li><font color=blue>swapcase</font></li>
+<li><font color=blue>capitalize</font></li>
+<li><font color=blue>inspect</font></li>
+<li><font color=blue>split</font></li>
+<li><font color=blue>gsub</font></li>
+<li><font color=blue>scan</font></li>
+</ul></dd>
+</dl>
+<h3><a name="a.a5.aa.a5.d7.a5.b7.a5.e7.a5.f3.ca.d1.bf.f4_2" id="a.a5.aa.a5.d7.a5.b7.a5.e7.a5.f3.ca.d1.bf.f4_2">选项变量</a><!-- RDLabel: "选项变量" --></h3>
+<p>用来显示Ruby解释器命令行信息的变量。其形式为<code>$-?</code>，?的部分是1位选项字符。</p>
+<dl>
+<dt><a name="a.24-0" id="a.24-0"><code>$-0</code></a><!-- RDLabel: "$-0" --></dt>
+<dd>
+<p><a href="#a.24.2f" title="内部变量 (4d)" class="modified-month">$/</a> 的别名。</p></dd>
+<dt><a name="a.24-a" id="a.24-a"><code>$-a</code></a><!-- RDLabel: "$-a" --></dt>
+<dd>
+<p>若指定了<font color=blue>-a</font>时，其值为真。只读变量。</p></dd>
+<dt><a name="a.24-d" id="a.24-d"><code>$-d</code></a><!-- RDLabel: "$-d" --></dt>
+<dd>
+<p><a href="#a.24DEBUG" title="内部变量 (4d)" class="modified-month">$DEBUG</a> 的别名。</p></dd>
+<dt><a name="a.24-F" id="a.24-F"><code>$-F</code></a><!-- RDLabel: "$-F" --></dt>
+<dd>
+<p><a href="#a.24.3b" title="内部变量 (4d)" class="modified-month">$;</a> 的别名。</p></dd>
+<dt><a name="a.24-i" id="a.24-i"><code>$-i</code></a><!-- RDLabel: "$-i" --></dt>
+<dd>
+<p>若指定了<font color=blue>-i[extension]</font>时，它将保存扩展名字符串。否则其值为nil。也可以在脚本中对其进行赋值，此时将在开始读入<font color=blue>ARGV</font>中的下一个文件之前进行in-place替换。</p></dd>
+<dt><a name="a.24-I" id="a.24-I"><code>$-I</code></a><!-- RDLabel: "$-I" --></dt>
+<dd>
+<p><a href="#a.24LOAD_PATH" title="内部变量 (4d)" class="modified-month">$LOAD_PATH</a> 的别名。</p></dd>
+<dt><a name="a.24-K" id="a.24-K"><code>$-K</code></a><!-- RDLabel: "$-K" --></dt>
+<dd>
+<p><a href="#a.24KCODE" title="内部变量 (4d)" class="modified-month">$KCODE</a> 的别名。</p></dd>
+<dt><a name="a.24-l" id="a.24-l"><code>$-l</code></a><!-- RDLabel: "$-l" --></dt>
+<dd>
+<p>若指定了<font color=blue>-l</font>时，其值为真。只读变量。</p></dd>
+<dt><a name="a.24-p" id="a.24-p"><code>$-p</code></a><!-- RDLabel: "$-p" --></dt>
+<dd>
+<p>若指定了<font color=blue>-p</font>时，其值为真。只读变量。</p></dd>
+<dt><a name="a.24-v" id="a.24-v"><code>$-v</code></a><!-- RDLabel: "$-v" --></dt>
+<dt><a name="a.24-w" id="a.24-w"><code>$-w</code></a><!-- RDLabel: "$-w" --></dt>
+<dd>
+<p><a href="#a.24VERBOSE" title="内部变量 (4d)" class="modified-month">$VERBOSE</a> 的别名。</p></dd>
+<dt><a name="a.24-W" id="a.24-W"><code>$-W         ((&lt;<var>ruby</var> <var>1</var>.<var>9</var> <var>特性</var>&gt;))</code></a><!-- RDLabel: "$-W" --></dt>
+<dd>
+<p>返回由<font color=blue>-W[level]</font>指定的值。</p>
+<p>也就是说，根据<a href="#a.24VERBOSE" title="内部变量 (4d)" class="modified-month">$VERBOSE</a>的取值不同</p>
+<ul>
+<li>nil: 不输出警告 -&gt; 0</li>
+<li>false: 只输出重要警告(默认) -&gt; 1</li>
+<li>true: 输出所有警告 -&gt; 2</li>
+</ul>
+<p>而返回上述诸值之一。只读变量。</p></dd>
+</dl><hr />
+
+
+</div>
+
+<div class="footer">
+Originally Written by webmaster@ruby-lang.org<br>
+Translated by <a href="http://cn.ce-lab.net/">Community Engine China</a> (<a href="mailto:rubycn@ce-lab.net">Mail</a>)<br>
+Last update on 2004-12-22
+</div>
+</body>
+</html>
+
+

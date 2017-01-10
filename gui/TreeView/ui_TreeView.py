@@ -25,10 +25,11 @@ except AttributeError:
 class Ui_Frame(object):
     def setupUi(self, Frame):
         Frame.setObjectName(_fromUtf8("Frame"))
-        Frame.resize(345, 688)
+        Frame.resize(318, 748)
         Frame.setFrameShape(QtGui.QFrame.StyledPanel)
         Frame.setFrameShadow(QtGui.QFrame.Raised)
         self.verticalLayout = QtGui.QVBoxLayout(Frame)
+        self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.treeView = QtGui.QTreeView(Frame)
         self.treeView.setObjectName(_fromUtf8("treeView"))

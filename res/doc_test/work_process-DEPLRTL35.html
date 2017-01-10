@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>work_process-DEPLRTL35</title>
+        <link type="text/css" rel="stylesheet" href="appbase.css">
+    </head>
+    <body class="wikidpad">
+<span class="wikidpad parent-nodes">parent nodes: <span class="wikidpad parent-node"><a href="calendar_Augst_2016.html" class="wikidpad">calendar_Augst_2016</a></span> | <span class="wikidpad parent-node"><a href="calendar_July_2016.html" class="wikidpad">calendar_July_2016</a></span> | <span class="wikidpad parent-node"><a href="work%20projects.html" class="wikidpad">work projects</a></span><br class="wikidpad" /><br class="wikidpad" /></span>
+<a name=".h0" class="wikidpad"></a><h2 class="wikidpad heading-level2">work_process-DEPLRTL35</h2>
+<hr class="wikidpad" />
+标题: Generate mcphy_t upf by UPF generation flow<br class="wikidpad" />
+JIRA地址: <span class="wikidpad url-link"><a href="http://ontrack-internal.amd.com/browse/DEPLRTL-35" class="wikidpad">http://ontrack-internal.amd.com/browse/DEPLRTL-35</a></span><br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h216" class="wikidpad"></a><h3 class="wikidpad heading-level3">状态及下一步(newest on top)</h3>
+<hr class="wikidpad" />
+<ol class="wikidpad orderedlist">
+<li class="wikidpad" />让Jiubin重新设一下CHIP_UPF_MODE, 应该设成baco+vi吧.<br class="wikidpad" />
+<br class="wikidpad" />
+</ol>
+<a name=".h369" class="wikidpad"></a><h3 class="wikidpad heading-level3">环境及问题描述</h3>
+<hr class="wikidpad" />
+<b class="wikidpad">环境</b>:<br class="wikidpad" />
+VNC(atlnonveu-0182:3 123456)<br class="wikidpad" />
+<br class="wikidpad" />
+DJ command: lsf_bsub -q fstsim -P gnl-ver -R "select[(gb128||gb256)&amp;&amp;(type==RHEL<br class="wikidpad" />
+5_64)] rusage<span class="wikidpad property attribute">[mem: 30000]</span>" -J Polaris22_soc_baco_upf_bring_up_2429208 dj -c -v -e<ul class="wikidpad normalindent">'run_test "baco/baco_basic_entry_exit_ccbypass_short -v"' -l logs/Polaris22_soc</ul>
+_baco_bring_up_upf_CL2429208_20160719 -m -DTECH_CDCBUF_DISABLE_BEHAVIORAL_VERILO<br class="wikidpad" />
+G -DDISABLE_ABV -DNO_PSL -DDEBUG -DDUMPCTRL=$STEM/dump/dump.f -DCOMP_MAX_ERRORS=<br class="wikidpad" />
+99999 -DSIM_MAX_ERRORS=99999<br class="wikidpad" />
+<br class="wikidpad" />
+powerflow_pkg/38.0.2<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">问题描述</b>:<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<b class="wikidpad">运行环境</b>:<br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+<a name=".h975" class="wikidpad"></a><h3 class="wikidpad heading-level3">日志(oldest on top)</h3>
+<hr class="wikidpad" />
+mcphy_t产生不出来应该是CHIP_UPF_MODE设错了. 他设的=baco, 而mcphy_t是vdci_tiles中<br class="wikidpad" />
+的一个, 所以肯定不会跑到generate mcphy_t这一路. <br class="wikidpad" />
+<br class="wikidpad" />
+<br class="wikidpad" />
+[tags: <br class="wikidpad" />
+    </body>
+</html>
