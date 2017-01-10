@@ -1,7 +1,7 @@
 import sys
 import os
 from PyQt4.QtGui import *
-# from PyQt4.QtCore import *
+from PyQt4.QtCore import *
 import ui_DocShowTab
 
 from gui.WebView import WebView
@@ -19,8 +19,9 @@ class DocForm(QWidget, ui_DocShowTab.Ui_Dialog):
             index_url = possible_url
         web_view = WebView.WebViewForm(index_url)
         model = QDirModel()
+        model.setNameFilters(['*.html'])
+        model.setFilter(QDir.AllDirs | QDir.Files | QDir.NoDotAndDotDot)
         doc_root = os.path.abspath(doc_root)
-        print doc_root
         tree_view = TreeView.TreeView(model, model.index(doc_root))
         attach_one_form_to_another(tree_view, self.frame)
         attach_one_form_to_another(web_view, self.frame_2)
