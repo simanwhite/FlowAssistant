@@ -14,12 +14,14 @@ class DocForm(QWidget, ui_DocShowTab.Ui_Dialog):
     def __init__(self, index_url, doc_root):
         super(DocForm, self).__init__(parent=None)
         self.setupUi(self)
+        doc_root = os.path.abspath(doc_root)
         possible_url = os.path.join(doc_root, index_url)
         if os.path.exists(possible_url):
             index_url = possible_url
+        print index_url
         self.web_view = WebView.WebViewForm(index_url)
         self.model = QDirModel()
-        self.model.setNameFilters(['*.html'])
+        self.model.setNameFilters(['*.html'])  # Here set the supported file format for webview.
         self.model.setFilter(QDir.AllDirs | QDir.Files | QDir.NoDotAndDotDot)
         doc_root = os.path.abspath(doc_root)
         self.tree_view = TreeView.TreeViewForm(self.model, self.model.index(doc_root))
@@ -33,7 +35,6 @@ class DocForm(QWidget, ui_DocShowTab.Ui_Dialog):
         selected_index = self.tree_view.treeView.selectedIndexes()[0]
         file_path = unicode(self.model.filePath(selected_index))
         if os.path.isfile(file_path):
-            file_path = r'file:///' + file_path
             self.web_view.set_url(file_path)
 
 
