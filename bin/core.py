@@ -3,6 +3,8 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from gui.MainWindow import ui_MainWindow
 
+from lib.GuiUtils import attach_one_form_to_another
+
 
 class MainForm(QMainWindow, ui_MainWindow.Ui_MainWindow):
     def __init__(self):
@@ -31,10 +33,7 @@ class MainForm(QMainWindow, ui_MainWindow.Ui_MainWindow):
 
         # add customized gui
         try:
-            plugin.form.setParent(tab)
-            vertical_layout = QVBoxLayout(tab)
-            vertical_layout.setMargin(0)
-            vertical_layout.addWidget(plugin.form)
+            attach_one_form_to_another(plugin.form, tab)
         except AttributeError:
             print 'ignore this err'
 
