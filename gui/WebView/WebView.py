@@ -18,8 +18,10 @@ class WebViewForm(QFrame, ui_WebView.Ui_Frame):
         self.webView.load(self.url)
 
     def set_url(self, url):
+        self.webView.setHtml('<h3>Loading...</h3>')
         self.url = QUrl(url)
-        self.load_url()
+        # noinspection PyTypeChecker,PyCallByClass
+        QTimer.singleShot(0, self.load_url)
 
 
 def main():
