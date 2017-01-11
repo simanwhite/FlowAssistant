@@ -33,7 +33,7 @@ class DocForm(QWidget, ui_DocShowTab.Ui_Dialog):
         selected_index = self.tree_view.treeView.selectedIndexes()[0]
         file_path = unicode(self.model.filePath(selected_index))
         if os.path.isfile(file_path):
-            print file_path
+            file_path = r'file:///' + file_path
             self.web_view.set_url(file_path)
 
 
