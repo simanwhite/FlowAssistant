@@ -14,7 +14,7 @@ class TabularPlugin(IPlugin):
     name = 'Tabular Plugin'
     _this_directory = os.path.dirname(__file__)
     icon = '%s/default_res/alarm.gif' % _this_directory
-    action_lst = []
+    action_info_lst = []
 
     def __init__(self):
         super(TabularPlugin, self).__init__()

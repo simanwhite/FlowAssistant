@@ -23,7 +23,7 @@ def main():
     manager.collectPlugins()
     for plugin in manager.getPluginsOfCategory('TabularPlugins'):
         print 'Adding plugin: %s' % plugin.plugin_object.name
-        form.add_tabular_plugin(plugin=plugin.plugin_object)
+        form.add_tabular_plugin(plugin_object=plugin.plugin_object)
 
     form.show()
     app.exec_()

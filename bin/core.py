@@ -11,27 +11,27 @@ class MainForm(QMainWindow, ui_MainWindow.Ui_MainWindow):
         super(MainForm, self).__init__(parent=None)
         self.setupUi(self)
 
-    def add_tabular_plugin(self, plugin):
+    def add_tabular_plugin(self, plugin_object):
         # add tabular in main window
         tab = QWidget()
-        icon = QIcon(plugin.icon)
-        self.tabWidget.addTab(tab, icon, plugin.name)
+        icon = QIcon(plugin_object.icon)
+        self.tabWidget.addTab(tab, icon, plugin_object.name)
 
         # add customized actions in menu -> Plugins
         plugin_menu = QMenu(self.menuPlugins)
-        plugin_menu.setTitle(plugin.name)
+        plugin_menu.setTitle(plugin_object.name)
         try:
-            for each_action_info in plugin.action_info_lst:
+            for each_action_info in plugin_object.action_info_lst:
                 plugin_action = action_generator(self, each_action_info)
                 plugin_menu.addAction(plugin_action)
                 self.menuPlugins.addAction(plugin_menu.menuAction())
         except AttributeError:
-            print 'No action to add for plugin: %s' % plugin.name
+            print 'No action to add for plugin: %s' % plugin_object.name
 
         # add customized gui
         try:
-            attach_one_form_to_another(plugin.form, tab)
+            attach_one_form_to_another(plugin_object.form, tab)
         except AttributeError:
-            print 'No form to add for plugin: %s' % plugin.name
+            print 'No form to add for plugin: %s' % plugin_object.name
 
 
