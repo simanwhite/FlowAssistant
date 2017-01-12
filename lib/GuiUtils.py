@@ -1,5 +1,5 @@
 from PyQt4.QtGui import *
-# from PyQt4.QtCore import *
+from PyQt4.QtCore import *
 
 
 def attach_one_form_to_another(one_form, another_form):
@@ -25,3 +25,23 @@ def attach_one_form_to_another(one_form, another_form):
                 layout_widget.setShown(False)
     layout.addWidget(one_form)
     one_form.setShown(True)
+
+
+def action_generator(parent, action_info):
+    """
+    This function take action_info dict, and return a QAction instance.
+    :param action_info: is a dictionary that describes an action.
+    :return: QAction
+    """
+    action = QAction(parent)
+    for each_key in action_info:
+        each_val = action_info[each_key]
+        if each_key == 'description':
+            action.setText(each_val)
+        elif each_key == 'function_handle':
+            parent.connect(action, SIGNAL('triggered()'), each_val)
+        elif each_key == 'icon':
+            action.setIcon(QIcon(each_val))
+        elif each_key == 'shortcut':  # shortcut val should be of QKeySequence type.
+            action.setShortcut(each_val)
+    return action

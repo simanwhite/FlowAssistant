@@ -15,5 +15,21 @@ class DocShowPlugin(TabularPlugin):
         print doc_root
         self.form = DocShowTab.DocForm('work projects.html', doc_root)
 
-    def print_name(self):
-        print 'This is plugin: #%s#' % self.name
+        # actions in action dictionary will be added in Plugins menu bar
+        # of the MainWindow
+        self.action_info_lst = [
+            # (description, function_handle, icon, key-shortcut),
+            {
+                'description': 'Go back',
+                'function_handle': self.form.web_view.webView.back,
+                'icon': '../res/tb_back.gif',
+                'shortcut': QKeySequence.Back,
+            },
+            {
+                'description': 'Go forward',
+                'function_handle': self.form.web_view.webView.forward,
+                'icon': '../res/tb_forward.gif',
+                'shortcut': QKeySequence.Forward,
+            }
+        ]
+

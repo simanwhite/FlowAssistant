@@ -21,10 +21,8 @@ def main():
     manager.setPluginPlaces(['../plugins'])
 
     manager.collectPlugins()
-    print manager.getPluginsOfCategory('TabularPlugins')
     for plugin in manager.getPluginsOfCategory('TabularPlugins'):
-        plugin.plugin_object.print_name()
-        print type(plugin)
+        print 'Adding plugin: %s' % plugin.plugin_object.name
         form.add_tabular_plugin(plugin=plugin.plugin_object)
 
     form.show()
