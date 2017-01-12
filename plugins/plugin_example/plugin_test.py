@@ -1,4 +1,6 @@
 import os
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
 from plugins.Categories import *
 from gui.WebView import WebView
 
@@ -14,23 +16,14 @@ class PluginOne(TabularPlugin):
         print 'init of tabular plugin 1'
 
         # actions in action dictionary will be added in Plugins menu bar
-        self.action_lst = [
-            # (Description, function handle, action icon),
-            (
-                'Print Plugin Name',
-                self.print_name,
-                '%s/res/bottom-top.gif' % self._this_directory
-            ),
-            (
-                'Go back',
-                self.form.webView.back,
-                '../res/tb_back.gif'
-            ),
-            (
-                'Go forward',
-                self.form.webView.forward,
-                '../res/tb_forward.gif'
-            )
+        self.action_info_lst = [
+            # (description, function_handle, icon, key-shortcut),
+            {
+                'description': 'Print Name',
+                'function_handle': self.print_name,
+                'icon': '../res/tb_back.gif',
+                'shortcut': QKeySequence.Print,
+            },
         ]
 
     @staticmethod

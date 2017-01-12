@@ -1,9 +1,0 @@
-[Core]
-Name = Plugin 2
-Module = plugin_test
-
-[Documentation]
-Author = Zuo Quan
-Version = 0.1
-Website = http://weibo.com
-Description = My first plugin for tabular GUI.
