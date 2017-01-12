@@ -24,7 +24,7 @@ def main():
     for plugin in manager.getPluginsOfCategory('TabularPlugins'):
         print 'Adding plugin: %s' % plugin.plugin_object.name
         form.add_tabular_plugin(plugin_object=plugin.plugin_object)
-
+    form.initialize_main_form()
     form.show()
     app.exec_()
 
